@@ -14,7 +14,7 @@ export const topicApi = createApi({
     addTopic: builder.mutation<any, TopicModel>({
       query: (topic: TopicModel) => {
         return {
-          url: `topics`,
+          url: `/admin/topics`,
           method: "POST",
           body: topic,
         };
@@ -31,7 +31,7 @@ export const topicApi = createApi({
         keywordList,
       }) => {
         return {
-          url: `topics/${chapter}/${title}`,
+          url: `/admin/topics/${title}`,
           method: "PATCH",
           body: {
             chapter,
@@ -48,7 +48,7 @@ export const topicApi = createApi({
     deleteTopic: builder.mutation({
       query: ({ chapter, title }) => {
         return {
-          url: `topics/${chapter}/${title}`,
+          url: `/admin/topics/${title}`,
           method: "DELETE",
         };
       },

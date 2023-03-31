@@ -7,13 +7,13 @@ export const chapterApi = createApi({
   tagTypes: ["ChapterList"],
   endpoints: (builder) => ({
     getChapters: builder.query<ChapterListModel, void>({
-      query: () => `chapters`,
+      query: () => `/admin/chapters`,
       providesTags: ["ChapterList"],
     }),
     addChapter: builder.mutation({
       query: ({ number, title }) => {
         return {
-          url: `chapters`,
+          url: `/admin/chapters`,
           method: "POST",
           body: { number, title },
         };
@@ -23,7 +23,7 @@ export const chapterApi = createApi({
     updateChapter: builder.mutation({
       query: ({ number, title }) => {
         return {
-          url: `chapters/${number}`,
+          url: `/admin/chapters/${number}`,
           method: "PATCH",
           body: { number, title },
         };
@@ -33,7 +33,7 @@ export const chapterApi = createApi({
     deleteChapter: builder.mutation({
       query: ({ number }) => {
         return {
-          url: `chapters/${number}`,
+          url: `/admin/chapters/${number}`,
           method: "DELETE",
         };
       },
