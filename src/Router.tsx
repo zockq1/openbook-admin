@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Info from "./pages/Info";
-import Infos from "./pages/infos";
+import TopicInfo from "./pages/TopicInfo";
+import Topic from "./pages/Topic";
+import TopicCreate from "./pages/TopicCreate";
 
 const router = createBrowserRouter([
   {
@@ -9,12 +10,16 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/infos",
-    element: <Infos />,
+    path: "/topic",
+    element: <Topic />,
     children: [
       {
         path: ":id",
-        element: <Info />,
+        element: <TopicInfo />,
+      },
+      {
+        path: "create",
+        element: <TopicCreate />,
       },
     ],
   },

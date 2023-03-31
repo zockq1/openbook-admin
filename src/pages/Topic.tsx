@@ -1,19 +1,20 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import ChapterList from "../components/ChapterList";
-import ThemeList from "../components/ThemeList";
+import TopicList from "../components/TopicList";
 
 const InfosLayout = styled.div`
   display: flex;
 `;
-function Infos() {
+
+function Topic() {
   return (
     <InfosLayout>
       <ChapterList />
-      <ThemeList />
+      <TopicList />
       <Outlet />
     </InfosLayout>
   );
 }
 
-export default Infos;
+export default Topic;
