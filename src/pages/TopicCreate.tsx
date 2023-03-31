@@ -5,7 +5,6 @@ import { RootState } from "../store/store";
 import { TopicModel } from "../types/topicTypes";
 import { useAddTopicMutation } from "../store/api/topic.Api";
 import { useNavigate } from "react-router-dom";
-const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
@@ -15,9 +14,18 @@ function TopicCreate() {
   const currentChapterNumber = useSelector(
     (state: RootState) => state.chapter.currentChapterNumber
   );
-  const onFinish = async (values: TopicModel) => {
+  const onFinish = async (values: any) => {
+    const newTopic: TopicModel = {
+      chapter: values.chapter,
+      title: values.title,
+      category: values.category,
+      startDate: new Date(values.startDate),
+      endDate: new Date(values.endDate),
+      detail: values.detail,
+      keywordList: values.keywordList,
+    };
     try {
-      await addTopic(values).unwrap();
+      await addTopic(newTopic).unwrap();
       navigate(`/topic/${values.title}`);
     } catch (error) {
       console.error(error);
@@ -62,11 +70,19 @@ function TopicCreate() {
       </Form.Item>
 
       <Form.Item
-        name="Date"
-        label="년도"
-        rules={[{ required: true, message: "년도를 입력해 주세요!" }]}
+        name="startDate"
+        label="시작 년도"
+        rules={[{ required: true, message: "시작 년도를 입력해 주세요!" }]}
       >
-        <RangePicker picker="year" />
+        <DatePicker picker="year" />
+      </Form.Item>
+
+      <Form.Item
+        name="endDate"
+        label="종료 년도"
+        rules={[{ required: true, message: "종료 년도를 입력해 주세요!" }]}
+      >
+        <DatePicker picker="year" />
       </Form.Item>
 
       <Form.Item
@@ -87,7 +103,7 @@ function TopicCreate() {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-          Submit
+          저장
         </Button>
       </Form.Item>
     </Form>
