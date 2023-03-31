@@ -30,14 +30,22 @@ function TopicInfo() {
     }
   };
 
+  const handleUpdateClick = () => {
+    navigate(`/topic/${params}/edit`);
+  };
+
   return (
     <Card
       title={topic?.title}
       style={{ width: 600, margin: "auto auto" }}
       extra={
-        <Button danger type="primary" onClick={handleDeleteClick}>
-          X
-        </Button>
+        <div>
+          <Button onClick={handleUpdateClick}>수정</Button>
+          <span> </span>
+          <Button danger type="primary" onClick={handleDeleteClick}>
+            삭제
+          </Button>
+        </div>
       }
     >
       <p>단원: {topic?.chapter}</p>

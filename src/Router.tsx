@@ -3,6 +3,7 @@ import App from "./App";
 import TopicInfo from "./pages/TopicInfo";
 import Topic from "./pages/Topic";
 import TopicCreate from "./pages/TopicCreate";
+import TopicEdit from "./pages/topicEdit";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "create",
         element: <TopicCreate />,
+      },
+      {
+        path: ":id/edit",
+        element: <TopicEdit />,
       },
     ],
   },
