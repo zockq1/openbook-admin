@@ -24,6 +24,7 @@ function TopicList() {
   const { currentChapterNumber, currentChapterTitle } = useSelector(
     (state: RootState) => state.chapter
   );
+  const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
   const [items, setItems] = useState<MenuProps["items"]>([]);
   // const [topicList] = useState({
   //   topicList: [
@@ -65,8 +66,13 @@ function TopicList() {
 
   return (
     <TopicContainer>
-      <Typography.Title editable level={5}>
-        {currentChapterTitle}
+      <Typography.Title
+        editable={{
+          onChange: setChapterTitle,
+        }}
+        level={5}
+      >
+        {chapterTitle}
       </Typography.Title>
       <TopicMenu
         onClick={onClick}
