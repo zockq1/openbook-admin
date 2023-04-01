@@ -32,7 +32,8 @@ function ChapterList() {
   //   numberList: [1, 2, 3],
   // });
 
-  const { data: chapterList } = useGetChaptersQuery();
+  const { data: chapterList, isError, error } = useGetChaptersQuery();
+  console.log(chapterList, error);
   const [addChapter] = useAddChapterMutation();
 
   useEffect(() => {

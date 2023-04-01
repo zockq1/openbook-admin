@@ -36,7 +36,7 @@ function LoginForm() {
       />
       <Form form={form} onFinish={handleFinish}>
         <Form.Item
-          name="id"
+          name="loginId"
           rules={[{ required: true, message: "아이디를 입력해주세요" }]}
         >
           <Input placeholder="Id" />
