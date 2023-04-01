@@ -3,11 +3,14 @@ import { ChapterListModel } from "../../types/chapterTypes";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "",
+    credentials: "include",
+  }),
   tagTypes: ["ChapterList"],
   endpoints: (builder) => ({
     getChapters: builder.query<ChapterListModel, void>({
-      query: () => `/admin/chapters`,
+      query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
     }),
     addChapter: builder.mutation({

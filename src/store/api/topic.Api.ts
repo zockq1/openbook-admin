@@ -3,13 +3,16 @@ import { TopicListModel, TopicModel } from "../../types/topicTypes";
 
 export const topicApi = createApi({
   reducerPath: "topicApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "",
+    credentials: "include",
+  }),
   endpoints: (builder) => ({
     getTopicList: builder.query<TopicListModel, number | null>({
       query: (chapter) => `/topics/${chapter}`,
     }),
-    getTopic: builder.query<TopicModel, string | undefined>({
-      query: (title) => `/topics/${title}`,
+    getTopic: builder.query<TopicModel, any>({
+      query: ({ title, chapter }) => `/topics/${chapter}/${title}`,
     }),
     addTopic: builder.mutation<any, TopicModel>({
       query: (topic: TopicModel) => {
@@ -20,28 +23,12 @@ export const topicApi = createApi({
         };
       },
     }),
-    updateTopic: builder.mutation({
-      query: ({
-        chapter,
-        title,
-        category,
-        startDate,
-        endDate,
-        detail,
-        keywordList,
-      }) => {
+    updateTopic: builder.mutation<any, TopicModel>({
+      query: (topic: TopicModel) => {
         return {
-          url: `/admin/topics/${title}`,
+          url: `/admin/topics/${topic.title}`,
           method: "PATCH",
-          body: {
-            chapter,
-            title,
-            category,
-            startDate,
-            endDate,
-            detail,
-            keywordList,
-          },
+          body: topic,
         };
       },
     }),
