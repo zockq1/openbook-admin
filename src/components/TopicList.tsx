@@ -5,7 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import getItem from "../services/getItem";
 import { useGetTopicListQuery } from "../store/api/topic.Api";
-import { useUpdateChapterMutation } from "../store/api/chapterApi";
+import {
+  useDeleteChapterMutation,
+  useUpdateChapterMutation,
+} from "../store/api/chapterApi";
 import { RootState } from "../store/store";
 
 const TopicMenu = styled(Menu)`
@@ -28,6 +31,7 @@ function TopicList() {
   const isFirstRender = useRef(true);
   const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
   const [updateChapter] = useUpdateChapterMutation();
+  const [deleteChapter] = useDeleteChapterMutation();
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const { data: topicList } = useGetTopicListQuery(currentChapterNumber);
   const [page, setPage] = useState(1);
@@ -68,6 +72,14 @@ function TopicList() {
     setPage(pageNumber);
   }
 
+  const handleDeleteClick = async () => {
+    try {
+      await deleteChapter({ number: currentChapterNumber }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <TopicContainer>
       <Typography.Title
@@ -78,6 +90,7 @@ function TopicList() {
       >
         {chapterTitle}
       </Typography.Title>
+
       <TopicMenu
         onClick={onClick}
         mode="inline"
@@ -95,6 +108,15 @@ function TopicList() {
       <Link to="/topic/create" style={{ width: "90%" }}>
         <Button style={{ width: "100%" }}>+</Button>
       </Link>
+      <br />
+      <Button
+        danger
+        type="primary"
+        onClick={handleDeleteClick}
+        style={{ width: "90%" }}
+      >
+        현재 단원 삭제
+      </Button>
     </TopicContainer>
   );
 }
