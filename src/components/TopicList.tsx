@@ -26,25 +26,6 @@ function TopicList() {
   );
   const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
   const [items, setItems] = useState<MenuProps["items"]>([]);
-  // const [topicList] = useState({
-  //   topicList: [
-  //     "1번 주제",
-  //     "2번 주제",
-  //     "3번 주제",
-  //     "4번 주제",
-  //     "5번 주제",
-  //     "6번 주제",
-  //     "7번 주제",
-  //     "8번 주제",
-  //     "9번 주제",
-  //     "10번 주제",
-  //     "11번 주제",
-  //     "12번 주제",
-  //     "13번 주제",
-  //     "14번 주제",
-  //     "15번 주제",
-  //   ],
-  // });
   const { data: topicList } = useGetTopicListQuery(currentChapterNumber);
   const [page, setPage] = useState(1);
   const limit = 10;

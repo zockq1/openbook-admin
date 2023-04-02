@@ -9,15 +9,6 @@ import {
 import { RootState } from "../store/store";
 
 function TopicInfo() {
-  // const [topic] = useState({
-  //   chapter: 1,
-  //   title: "Topic Title",
-  //   category: "Science",
-  //   startDate: new Date("2023-04-01"),
-  //   endDate: new Date("2023-04-30"),
-  //   detail: "This is the topic detail.",
-  //   keywordList: "keyword1, keyword2, keyword3",
-  // });
   const navigate = useNavigate();
   let { params } = useParams();
   const { currentChapterNumber } = useSelector(

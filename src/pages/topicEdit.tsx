@@ -37,7 +37,6 @@ function TopicEdit() {
       onFinish={onFinish}
       style={{ width: 600, margin: "auto auto" }}
       labelCol={{ span: 4 }}
-      //wrapperCol={{ span: 14 }}
     >
       <Form.Item
         name="chapter"

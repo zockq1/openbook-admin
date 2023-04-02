@@ -23,17 +23,8 @@ function ChapterList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const [chapterMap, setChapterMap] = useState<Map<number, string>>(new Map());
-  // const [chapterList, setChapterList] = useState({
-  //   titleList: [
-  //     "동아시아 역사의 시작",
-  //     "동아시아 세계의 성립과 변화",
-  //     "동아시아의 사회 변동과 문화 교류",
-  //   ],
-  //   numberList: [1, 2, 3],
-  // });
 
-  const { data: chapterList, isError, error } = useGetChaptersQuery();
-  console.log(chapterList, error);
+  const { data: chapterList } = useGetChaptersQuery();
   const [addChapter] = useAddChapterMutation();
 
   useEffect(() => {
