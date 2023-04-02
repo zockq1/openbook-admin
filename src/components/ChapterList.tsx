@@ -23,7 +23,6 @@ function ChapterList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const [chapterMap, setChapterMap] = useState<Map<number, string>>(new Map());
-
   const { data: chapterList } = useGetChaptersQuery();
   const [addChapter] = useAddChapterMutation();
 
@@ -60,12 +59,6 @@ function ChapterList() {
     } catch (error) {
       console.error(error);
     }
-    // chapterList.numberList.push(Number(values.chapterNumber));
-    // chapterList.titleList.push(values.chapterTitle);
-    // setChapterList({
-    //   titleList: chapterList.titleList,
-    //   numberList: chapterList.numberList,
-    // });
     setIsModalOpen(false);
   };
 
