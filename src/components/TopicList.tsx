@@ -1,10 +1,11 @@
 import { Button, Menu, MenuProps, Pagination, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import getItem from "../services/getItem";
 import { useGetTopicListQuery } from "../store/api/topic.Api";
+import { useUpdateChapterMutation } from "../store/api/chapterApi";
 import { RootState } from "../store/store";
 
 const TopicMenu = styled(Menu)`
@@ -24,12 +25,34 @@ function TopicList() {
   const { currentChapterNumber, currentChapterTitle } = useSelector(
     (state: RootState) => state.chapter
   );
+  const isFirstRender = useRef(true);
   const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
+  const [updateChapter] = useUpdateChapterMutation();
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const { data: topicList } = useGetTopicListQuery(currentChapterNumber);
   const [page, setPage] = useState(1);
   const limit = 10;
   const offset = (page - 1) * limit;
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (chapterTitle !== currentChapterTitle) {
+      const fetchData = async () => {
+        try {
+          await updateChapter({
+            number: currentChapterNumber,
+            title: chapterTitle,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  }, [chapterTitle]);
 
   useEffect(() => {
     const currentPageTopic = topicList?.topicList.slice(offset, offset + 10);
