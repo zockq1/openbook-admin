@@ -1,16 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ChapterListModel } from "../../types/chapterTypes";
+import apiUrl from "./config";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "",
+    baseUrl: apiUrl,
     credentials: "include",
   }),
   tagTypes: ["ChapterList"],
   endpoints: (builder) => ({
     getChapters: builder.query<ChapterListModel, void>({
-      query: () => "/admin/chapters",
+      query: () => "/admin/chaptersasdasdads",
       providesTags: ["ChapterList"],
     }),
     addChapter: builder.mutation({

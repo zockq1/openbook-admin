@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TopicListModel, TopicModel } from "../../types/topicTypes";
+import apiUrl from "./config";
 
 export const topicApi = createApi({
   reducerPath: "topicApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "",
+    baseUrl: apiUrl,
     credentials: "include",
   }),
   endpoints: (builder) => ({
