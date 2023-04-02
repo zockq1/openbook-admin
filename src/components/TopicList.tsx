@@ -73,10 +73,14 @@ function TopicList() {
   }
 
   const handleDeleteClick = async () => {
-    try {
-      await deleteChapter({ number: currentChapterNumber }).unwrap();
-    } catch (error) {
-      console.error(error);
+    if (topicList?.topicList.length === 0) {
+      try {
+        await deleteChapter({ number: currentChapterNumber }).unwrap();
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      window.alert("해당 단원에 주제가 없을 때만 삭제 가능합니다.!");
     }
   };
 
