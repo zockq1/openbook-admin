@@ -46,8 +46,8 @@ function TopicInfo() {
     >
       <p>단원: {topic?.chapter}</p>
       <p>분류: {topic?.category}</p>
-      <p>시작 년도: {topic?.startDate.getFullYear()}</p>
-      <p>종료 년도: {topic?.endDate.getFullYear()}</p>
+      <p>시작 년도: {topic?.startDate}</p>
+      <p>종료 년도: {topic?.endDate}</p>
       <p>상세설명: {topic?.detail}</p>
       <p>키워드: {topic?.keywordList}</p>
     </Card>

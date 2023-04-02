@@ -19,8 +19,8 @@ function TopicEdit() {
       chapter: values.chapter,
       title: values.title,
       category: values.category,
-      startDate: new Date(values.startDate),
-      endDate: new Date(values.endDate),
+      startDate: values.startDate.$y,
+      endDate: values.endDate.$y,
       detail: values.detail,
       keywordList: values.keywordList,
     };

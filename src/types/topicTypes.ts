@@ -2,8 +2,8 @@ export interface TopicModel {
   chapter: number;
   title: string;
   category: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: number;
+  endDate: number;
   detail: string;
   keywordList: string[];
 }
