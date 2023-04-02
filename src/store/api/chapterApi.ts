@@ -11,7 +11,7 @@ export const chapterApi = createApi({
   tagTypes: ["ChapterList"],
   endpoints: (builder) => ({
     getChapters: builder.query<ChapterListModel, void>({
-      query: () => "/admin/chaptersasdasdads",
+      query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
     }),
     addChapter: builder.mutation({
@@ -32,7 +32,6 @@ export const chapterApi = createApi({
           body: { number, title },
         };
       },
-      invalidatesTags: ["ChapterList"],
     }),
     deleteChapter: builder.mutation({
       query: ({ number }) => {
