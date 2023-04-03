@@ -25,7 +25,7 @@ function TopicEdit() {
       keywordList: values.keywordList,
     };
     try {
-      const title = topic?.title;
+      const title = topic?.title ? topic?.title : "";
       await updateTopic({ updatedTopic, title }).unwrap();
       navigate(`/topic/${values.title}`);
     } catch (error) {

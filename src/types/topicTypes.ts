@@ -8,6 +8,11 @@ export interface TopicModel {
   keywordList: string[];
 }
 
+export interface UpdateTopicModel {
+  updatedTopic: TopicModel;
+  title: string;
+}
+
 export interface TopicListModel {
   topicList: string[];
 }

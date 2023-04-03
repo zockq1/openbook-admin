@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TopicModel } from "../../types/topicTypes";
+import { TopicModel, UpdateTopicModel } from "../../types/topicTypes";
 import apiUrl from "./config";
 
 export const topicApi = createApi({
@@ -21,12 +21,12 @@ export const topicApi = createApi({
         };
       },
     }),
-    updateTopic: builder.mutation<any, any>({
-      query: ({ topic, title }) => {
+    updateTopic: builder.mutation<any, UpdateTopicModel>({
+      query: ({ updatedTopic, title }: UpdateTopicModel) => {
         return {
           url: `/admin/topics/${title}`,
           method: "PATCH",
-          body: topic,
+          body: updatedTopic,
         };
       },
     }),
