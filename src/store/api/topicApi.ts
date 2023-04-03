@@ -21,10 +21,10 @@ export const topicApi = createApi({
         };
       },
     }),
-    updateTopic: builder.mutation<any, TopicModel>({
-      query: (topic: TopicModel) => {
+    updateTopic: builder.mutation<any, any>({
+      query: ({ topic, title }) => {
         return {
-          url: `/admin/topics/${topic.title}`,
+          url: `/admin/topics/${title}`,
           method: "PATCH",
           body: topic,
         };

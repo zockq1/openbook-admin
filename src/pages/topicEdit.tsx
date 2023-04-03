@@ -4,7 +4,7 @@ import { TopicModel } from "../types/topicTypes";
 import {
   useGetTopicQuery,
   useUpdateTopicMutation,
-} from "../store/api/topic.Api";
+} from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
 const { Option } = Select;
 
@@ -25,7 +25,8 @@ function TopicEdit() {
       keywordList: values.keywordList,
     };
     try {
-      await updateTopic(updatedTopic).unwrap();
+      const title = topic?.title;
+      await updateTopic({ updatedTopic, title }).unwrap();
       navigate(`/topic/${values.title}`);
     } catch (error) {
       console.error(error);

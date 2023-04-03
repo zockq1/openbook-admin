@@ -29,7 +29,7 @@ import storage from "redux-persist/lib/storage";
 import chapterReducer from "./slices/chapterSlice";
 import authReducer from "./slices/authSlice";
 import { chapterApi } from "./api/chapterApi";
-import { topicApi } from "./api/topic.Api";
+import { topicApi } from "./api/topicApi";
 import { authApi } from "./api/authApi";
 
 const persistConfig = {

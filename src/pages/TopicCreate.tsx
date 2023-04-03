@@ -3,7 +3,7 @@ import { Form, Input, DatePicker, Select, Button } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { TopicModel } from "../types/topicTypes";
-import { useAddTopicMutation } from "../store/api/topic.Api";
+import { useAddTopicMutation } from "../store/api/topicApi";
 import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;

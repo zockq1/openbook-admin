@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteTopicMutation,
   useGetTopicQuery,
-} from "../store/api/topic.Api";
+} from "../store/api/topicApi";
 
 function TopicInfo() {
   const navigate = useNavigate();
