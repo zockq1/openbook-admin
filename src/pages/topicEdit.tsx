@@ -11,7 +11,7 @@ const { Option } = Select;
 function TopicEdit() {
   const navigate = useNavigate();
   let { params } = useParams();
-  const { data: topic } = useGetTopicQuery(params);
+  const { data: topic } = useGetTopicQuery(params ? params : "");
   const [updateTopic] = useUpdateTopicMutation();
 
   const onFinish = async (values: any) => {

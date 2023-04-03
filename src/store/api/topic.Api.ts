@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TopicListModel, TopicModel } from "../../types/topicTypes";
+import { TopicModel } from "../../types/topicTypes";
 import apiUrl from "./config";
 
 export const topicApi = createApi({
@@ -9,11 +9,8 @@ export const topicApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    getTopicList: builder.query<TopicListModel, number | null>({
-      query: (chapter) => `/topics/${chapter}`,
-    }),
-    getTopic: builder.query<TopicModel, any>({
-      query: ({ title, chapter }) => `/topics/${chapter}/${title}`,
+    getTopic: builder.query<TopicModel, string>({
+      query: (title) => `/topics/${title}`,
     }),
     addTopic: builder.mutation<any, TopicModel>({
       query: (topic: TopicModel) => {
@@ -45,7 +42,6 @@ export const topicApi = createApi({
 });
 
 export const {
-  useGetTopicListQuery,
   useGetTopicQuery,
   useAddTopicMutation,
   useUpdateTopicMutation,

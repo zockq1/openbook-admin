@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import getItem from "../services/getItem";
-import { useGetTopicListQuery } from "../store/api/topic.Api";
+
 import {
   useDeleteChapterMutation,
+  useGetChapterTopicListQuery,
   useUpdateChapterMutation,
 } from "../store/api/chapterApi";
 import { RootState } from "../store/store";
@@ -33,7 +34,7 @@ function TopicList() {
   const [updateChapter] = useUpdateChapterMutation();
   const [deleteChapter] = useDeleteChapterMutation();
   const [items, setItems] = useState<MenuProps["items"]>([]);
-  const { data: topicList } = useGetTopicListQuery(currentChapterNumber);
+  const { data: topicList } = useGetChapterTopicListQuery(currentChapterNumber);
   const [page, setPage] = useState(1);
   const limit = 10;
   const offset = (page - 1) * limit;

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ChapterListModel } from "../../types/chapterTypes";
+import { TopicListModel } from "../../types/topicTypes";
 import apiUrl from "./config";
 
 export const chapterApi = createApi({
@@ -13,6 +14,9 @@ export const chapterApi = createApi({
     getChapters: builder.query<ChapterListModel, void>({
       query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
+    }),
+    getChapterTopicList: builder.query<TopicListModel, number | null>({
+      query: (chapter) => `/chapters/${chapter}/topics`,
     }),
     addChapter: builder.mutation({
       query: ({ number, title }) => {
@@ -47,6 +51,7 @@ export const chapterApi = createApi({
 
 export const {
   useGetChaptersQuery,
+  useGetChapterTopicListQuery,
   useAddChapterMutation,
   useUpdateChapterMutation,
   useDeleteChapterMutation,

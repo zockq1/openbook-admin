@@ -1,20 +1,15 @@
 import { Button, Card } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteTopicMutation,
   useGetTopicQuery,
 } from "../store/api/topic.Api";
-import { RootState } from "../store/store";
 
 function TopicInfo() {
   const navigate = useNavigate();
   let { params } = useParams();
-  const { currentChapterNumber } = useSelector(
-    (state: RootState) => state.chapter
-  );
-  const { data: topic } = useGetTopicQuery({ params, currentChapterNumber });
+  const { data: topic } = useGetTopicQuery(params ? params : "");
   const [deleteTopic] = useDeleteTopicMutation();
 
   const handleDeleteClick = async () => {
