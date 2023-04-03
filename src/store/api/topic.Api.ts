@@ -31,7 +31,7 @@ export const topicApi = createApi({
       },
     }),
     deleteTopic: builder.mutation({
-      query: ({ chapter, title }) => {
+      query: ({ title }) => {
         return {
           url: `/admin/topics/${title}`,
           method: "DELETE",
