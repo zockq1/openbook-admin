@@ -45,7 +45,7 @@ function TopicEdit() {
         rules={[{ required: true, message: "단원을 입력해주세요!" }]}
         initialValue={topic?.chapter}
       >
-        <Input />
+        <Input type="number" />
       </Form.Item>
 
       <Form.Item

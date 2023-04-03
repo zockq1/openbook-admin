@@ -45,7 +45,7 @@ function TopicCreate() {
         rules={[{ required: true, message: "단원을 입력해주세요!" }]}
         initialValue={currentChapterNumber ? currentChapterNumber : ""}
       >
-        <Input />
+        <Input type="number" />
       </Form.Item>
 
       <Form.Item
