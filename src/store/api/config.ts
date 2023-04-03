@@ -1,3 +1,3 @@
-const apiUrl = "https://fd7f-182-210-250-64.jp.ngrok.io";
+const apiUrl = "http://localhost:8080";
 
 export default apiUrl;
