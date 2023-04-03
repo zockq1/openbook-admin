@@ -3,7 +3,7 @@ import App from "./App";
 import TopicInfo from "./pages/TopicInfo";
 import Topic from "./pages/Topic";
 import TopicCreate from "./pages/TopicCreate";
-import TopicEdit from "./pages/topicEdit";
+import TopicEdit from "./pages/TopicEdit";
 
 const router = createBrowserRouter([
   {
