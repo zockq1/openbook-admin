@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <Topic />,
     children: [
       {
-        path: "title",
+        path: ":title",
         element: <TopicInfo />,
       },
       {
