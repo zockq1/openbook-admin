@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, DatePicker, Select, Button } from "antd";
+import { Form, Input, Select, Button } from "antd";
 import { TopicModel } from "../types/topicTypes";
 import {
   useGetTopicQuery,
@@ -76,7 +76,7 @@ function TopicEdit() {
         rules={[{ required: true, message: "시작 년도를 입력해 주세요!" }]}
         initialValue={topic?.startDate}
       >
-        <DatePicker picker="year" />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -85,7 +85,7 @@ function TopicEdit() {
         rules={[{ required: true, message: "종료 년도를 입력해 주세요!" }]}
         initialValue={topic?.endDate}
       >
-        <DatePicker picker="year" />
+        <Input />
       </Form.Item>
 
       <Form.Item

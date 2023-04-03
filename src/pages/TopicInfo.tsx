@@ -9,8 +9,8 @@ import {
 function TopicInfo() {
   const navigate = useNavigate();
   let { title } = useParams();
-  console.log(title);
   const { data: topic } = useGetTopicQuery(title ? title : "");
+  console.log(title);
   const [deleteTopic] = useDeleteTopicMutation();
 
   const handleDeleteClick = async () => {
