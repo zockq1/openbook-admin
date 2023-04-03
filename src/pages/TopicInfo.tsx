@@ -8,13 +8,14 @@ import {
 
 function TopicInfo() {
   const navigate = useNavigate();
-  let { params } = useParams();
-  const { data: topic } = useGetTopicQuery(params ? params : "");
+  let { title } = useParams();
+  console.log(title);
+  const { data: topic } = useGetTopicQuery(title ? title : "");
   const [deleteTopic] = useDeleteTopicMutation();
 
   const handleDeleteClick = async () => {
     try {
-      await deleteTopic({ id: params }).unwrap();
+      await deleteTopic({ title: title }).unwrap();
       navigate("/topic");
     } catch (error) {
       console.error(error);
@@ -22,7 +23,7 @@ function TopicInfo() {
   };
 
   const handleUpdateClick = () => {
-    navigate(`/topic/${params}/edit`);
+    navigate(`/topic/${title}/edit`);
   };
 
   return (

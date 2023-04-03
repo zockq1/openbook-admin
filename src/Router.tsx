@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <Topic />,
     children: [
       {
-        path: ":id",
+        path: "title",
         element: <TopicInfo />,
       },
       {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <TopicCreate />,
       },
       {
-        path: ":id/edit",
+        path: ":title/edit",
         element: <TopicEdit />,
       },
     ],

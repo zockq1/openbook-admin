@@ -10,8 +10,8 @@ const { Option } = Select;
 
 function TopicEdit() {
   const navigate = useNavigate();
-  let { params } = useParams();
-  const { data: topic } = useGetTopicQuery(params ? params : "");
+  let { title } = useParams();
+  const { data: topic } = useGetTopicQuery(title ? title : "");
   const [updateTopic] = useUpdateTopicMutation();
 
   const onFinish = async (values: any) => {
