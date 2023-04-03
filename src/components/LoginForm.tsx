@@ -4,15 +4,19 @@ import { useLoginMutation } from "../store/api/authApi";
 import { LoginModel } from "../types/authType";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { login as loginAction } from "../store/slices/authSlice";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [login, { isLoading }] = useLoginMutation();
 
   const handleFinish = async (input: LoginModel) => {
     try {
       await login(input).unwrap();
+      dispatch(loginAction());
       navigate(`/topic`);
     } catch (error) {
       console.error(error);
