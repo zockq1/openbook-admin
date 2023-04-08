@@ -1,14 +1,13 @@
-import { Button, Input, Menu, MenuProps, Modal, Form } from "antd";
+import { Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setChapter } from "../store/slices/chapterSlice";
 import getItem from "../services/getItem";
 import Title from "antd/es/typography/Title";
-import {
-  useAddChapterMutation,
-  useGetChaptersQuery,
-} from "../store/api/chapterApi";
+import { useGetChaptersQuery } from "../store/api/chapterApi";
+import CreateChapterModal from "./CreateChpterModal";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ChpterContainer = styled.div`
   width: 90px;
@@ -20,11 +19,11 @@ const ChpterContainer = styled.div`
 
 function ChapterList() {
   const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  let { chapter } = useParams();
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const [chapterMap, setChapterMap] = useState<Map<number, string>>(new Map());
   const { data: chapterList } = useGetChaptersQuery();
-  const [addChapter] = useAddChapterMutation();
 
   useEffect(() => {
     const newItems = chapterList?.numberList.map((number) =>
@@ -39,29 +38,6 @@ function ChapterList() {
     setChapterMap(newChapterMap);
   }, [chapterList]);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const onSubmit = async (values: any) => {
-    console.log("Received values of form: ", values);
-    try {
-      const { chapterTitle, chapterNumber } = values;
-      await addChapter({
-        number: chapterNumber,
-        title: chapterTitle,
-      });
-      console.log("챕터 추가 성공");
-    } catch (error) {
-      console.error(error);
-    }
-    setIsModalOpen(false);
-  };
-
   const onClick: MenuProps["onClick"] = (e) => {
     dispatch(
       setChapter({
@@ -69,6 +45,7 @@ function ChapterList() {
         number: Number(e.key),
       })
     );
+    navigate(`/topic/${e.key}`);
   };
 
   return (
@@ -78,51 +55,10 @@ function ChapterList() {
         onClick={onClick}
         mode="inline"
         items={items}
+        defaultSelectedKeys={[`${chapter}`]}
         style={{ borderInlineEnd: "unset" }}
       />
-
-      <Button onClick={showModal} style={{ width: "90%" }}>
-        +
-      </Button>
-      <Modal
-        title="단원 추가"
-        open={isModalOpen}
-        onOk={onSubmit}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Form name="chapter-form" onFinish={onSubmit} layout="vertical">
-          <Form.Item
-            name="chapterTitle"
-            label="단원명"
-            rules={[
-              {
-                required: true,
-                message: "단원명을 입력해주세요.",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="chapterNumber"
-            label="단원 순서"
-            rules={[
-              {
-                required: true,
-                message: "단원 순서를 입력해주세요.",
-              },
-            ]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              저장
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <CreateChapterModal />
     </ChpterContainer>
   );
 }
