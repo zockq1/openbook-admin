@@ -36,6 +36,7 @@ export const chapterApi = createApi({
           body: { number, title },
         };
       },
+      invalidatesTags: ["ChapterList"],
     }),
     deleteChapter: builder.mutation({
       query: ({ number }) => {
