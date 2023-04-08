@@ -15,16 +15,22 @@ const router = createBrowserRouter([
     element: <Topic />,
     children: [
       {
-        path: ":title",
-        element: <TopicInfo />,
-      },
-      {
-        path: "create",
-        element: <TopicCreate />,
-      },
-      {
-        path: ":title/edit",
-        element: <TopicEdit />,
+        path: ":chapter",
+        element: null,
+        children: [
+          {
+            path: ":title",
+            element: <TopicInfo />,
+          },
+          {
+            path: "create",
+            element: <TopicCreate />,
+          },
+          {
+            path: ":title/edit",
+            element: <TopicEdit />,
+          },
+        ],
       },
     ],
   },
