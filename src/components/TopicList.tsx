@@ -1,16 +1,14 @@
-import { Button, Menu, MenuProps, Pagination, Typography } from "antd";
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Menu, MenuProps, Pagination } from "antd";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import getItem from "../services/getItem";
 
 import {
   useDeleteChapterMutation,
   useGetChapterTopicListQuery,
-  useUpdateChapterMutation,
 } from "../store/api/chapterApi";
-import { RootState } from "../store/store";
+import ChapterTitle from "./ChapterTitle";
 
 const TopicMenu = styled(Menu)`
   width: 300px;
@@ -26,38 +24,13 @@ const TopicContainer = styled.div`
 
 function TopicList() {
   const navigate = useNavigate();
-  const { currentChapterNumber, currentChapterTitle } = useSelector(
-    (state: RootState) => state.chapter
-  );
-  const isFirstRender = useRef(true);
-  const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
-  const [updateChapter] = useUpdateChapterMutation();
+  let { chapter } = useParams();
   const [deleteChapter] = useDeleteChapterMutation();
   const [items, setItems] = useState<MenuProps["items"]>([]);
-  const { data: topicList } = useGetChapterTopicListQuery(currentChapterNumber);
+  const { data: topicList } = useGetChapterTopicListQuery(Number(chapter));
   const [page, setPage] = useState(1);
   const limit = 10;
   const offset = (page - 1) * limit;
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (chapterTitle !== currentChapterTitle) {
-      const fetchData = async () => {
-        try {
-          await updateChapter({
-            number: currentChapterNumber,
-            title: chapterTitle,
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }
-  }, [chapterTitle]);
 
   useEffect(() => {
     const currentPageTopic = topicList?.topicList.slice(offset, offset + 10);
@@ -66,7 +39,7 @@ function TopicList() {
   }, [page, topicList, offset]);
 
   const onClick: MenuProps["onClick"] = (e) => {
-    navigate(`/topic/${e.key}`);
+    navigate(`/topic/${chapter}/${e.key}`);
   };
 
   function handleChange(pageNumber: number) {
@@ -76,7 +49,7 @@ function TopicList() {
   const handleDeleteClick = async () => {
     if (topicList?.topicList.length === 0) {
       try {
-        await deleteChapter({ number: currentChapterNumber }).unwrap();
+        await deleteChapter({ number: Number(chapter) }).unwrap();
       } catch (error) {
         console.error(error);
       }
@@ -87,15 +60,7 @@ function TopicList() {
 
   return (
     <TopicContainer>
-      <Typography.Title
-        editable={{
-          onChange: setChapterTitle,
-        }}
-        level={5}
-      >
-        {chapterTitle}
-      </Typography.Title>
-
+      <ChapterTitle />
       <TopicMenu
         onClick={onClick}
         mode="inline"
@@ -110,7 +75,7 @@ function TopicList() {
         onChange={handleChange}
       />
       <br />
-      <Link to="/topic/create" style={{ width: "90%" }}>
+      <Link to={`/topic/${chapter}/create`} style={{ width: "90%" }}>
         <Button style={{ width: "100%" }}>+</Button>
       </Link>
       <br />
