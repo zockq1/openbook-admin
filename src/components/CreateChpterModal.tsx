@@ -30,6 +30,7 @@ function CreateChapterMoal() {
     }
     setIsModalOpen(false);
   };
+
   return (
     <>
       <Button onClick={showModal} style={{ width: "90%" }}>
@@ -73,7 +74,7 @@ function CreateChapterMoal() {
             <Input type="number" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{ float: "right" }}>
               저장
             </Button>
           </Form.Item>
