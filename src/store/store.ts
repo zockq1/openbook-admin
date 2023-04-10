@@ -31,6 +31,7 @@ import authReducer from "./slices/authSlice";
 import { chapterApi } from "./api/chapterApi";
 import { topicApi } from "./api/topicApi";
 import { authApi } from "./api/authApi";
+import { categoryApi } from "./api/categoryApi";
 
 const persistConfig = {
   key: "root",
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
   [chapterApi.reducerPath]: chapterApi.reducer,
   [topicApi.reducerPath]: topicApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [categoryApi.reducerPath]: categoryApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -55,7 +57,12 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ["persist/PERSIST"],
       },
-    }).concat(chapterApi.middleware, topicApi.middleware, authApi.middleware),
+    }).concat(
+      chapterApi.middleware,
+      topicApi.middleware,
+      authApi.middleware,
+      categoryApi.middleware
+    ),
 });
 
 export const persistor = persistStore(store);
