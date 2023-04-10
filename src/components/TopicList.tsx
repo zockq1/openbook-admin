@@ -4,11 +4,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import getItem from "../services/getItem";
 
-import {
-  useDeleteChapterMutation,
-  useGetChapterTopicListQuery,
-} from "../store/api/chapterApi";
+import { useDeleteChapterMutation } from "../store/api/chapterApi";
 import ChapterTitle from "./ChapterTitle";
+import { useGetChapterTopicListQuery } from "../store/api/topicApi";
 
 const TopicMenu = styled(Menu)`
   width: 300px;
@@ -46,7 +44,7 @@ function TopicList() {
     setPage(pageNumber);
   }
 
-  const handleDeleteClick = async () => {
+  const handleDelete = async () => {
     if (topicList?.topicList.length === 0) {
       try {
         await deleteChapter({ number: Number(chapter) }).unwrap();
@@ -82,7 +80,7 @@ function TopicList() {
       <Button
         danger
         type="primary"
-        onClick={handleDeleteClick}
+        onClick={handleDelete}
         style={{ width: "90%" }}
       >
         현재 단원 삭제
