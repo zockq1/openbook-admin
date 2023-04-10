@@ -1,9 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TopicModel, UpdateTopicModel } from "../../types/topicTypes";
+import {
+  TopicListModel,
+  TopicModel,
+  UpdateTopicModel,
+} from "../../types/topicTypes";
 import apiUrl from "./config";
 
 export const topicApi = createApi({
   reducerPath: "topicApi",
+  tagTypes: ["TopicList"],
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
     credentials: "include",
@@ -11,6 +16,10 @@ export const topicApi = createApi({
   endpoints: (builder) => ({
     getTopic: builder.query<TopicModel, string>({
       query: (title) => `/topics/${title}`,
+    }),
+    getChapterTopicList: builder.query<TopicListModel, number>({
+      query: (chapter) => `/chapters/${chapter}/topics`,
+      providesTags: ["TopicList"],
     }),
     addTopic: builder.mutation<any, TopicModel>({
       query: (topic: TopicModel) => {
@@ -20,6 +29,7 @@ export const topicApi = createApi({
           body: topic,
         };
       },
+      invalidatesTags: ["TopicList"],
     }),
     updateTopic: builder.mutation<any, UpdateTopicModel>({
       query: ({ updatedTopic, title }: UpdateTopicModel) => {
@@ -29,6 +39,7 @@ export const topicApi = createApi({
           body: updatedTopic,
         };
       },
+      invalidatesTags: ["TopicList"],
     }),
     deleteTopic: builder.mutation({
       query: ({ title }) => {
@@ -37,12 +48,14 @@ export const topicApi = createApi({
           method: "DELETE",
         };
       },
+      invalidatesTags: ["TopicList"],
     }),
   }),
 });
 
 export const {
   useGetTopicQuery,
+  useGetChapterTopicListQuery,
   useAddTopicMutation,
   useUpdateTopicMutation,
   useDeleteTopicMutation,
