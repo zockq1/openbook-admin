@@ -5,6 +5,8 @@ import { RootState } from "../store/store";
 import { TopicModel } from "../types/topicTypes";
 import { useAddTopicMutation } from "../store/api/topicApi";
 import { useNavigate } from "react-router-dom";
+import { useGetCategoryListQuery } from "../store/api/categoryApi";
+import CategoryEditModal from "../components/CategoryEditModal";
 
 const { Option } = Select;
 
@@ -14,6 +16,8 @@ function TopicCreate() {
   const currentChapterNumber = useSelector(
     (state: RootState) => state.chapter.currentChapterNumber
   );
+  const { data: categoryList } = useGetCategoryListQuery();
+
   const onFinish = async (values: any) => {
     const newTopic: TopicModel = {
       chapter: values.chapter,
@@ -26,7 +30,7 @@ function TopicCreate() {
     };
     try {
       await addTopic(newTopic).unwrap();
-      navigate(`/topic/${values.title}`);
+      navigate(`/topic/${currentChapterNumber}/${values.title}`);
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +41,6 @@ function TopicCreate() {
       onFinish={onFinish}
       style={{ width: 600, margin: "auto auto" }}
       labelCol={{ span: 4 }}
-      //wrapperCol={{ span: 14 }}
     >
       <Form.Item
         name="chapter"
@@ -62,11 +65,16 @@ function TopicCreate() {
         rules={[{ required: true, message: "분류를 선택해 주세요!" }]}
       >
         <Select>
-          <Option value="인물">인물</Option>
-          <Option value="사건">사건</Option>
-          <Option value="국가">국가</Option>
-          <Option value="유물">유물</Option>
+          {categoryList?.map((category: string) => (
+            <Option value={category} key={category}>
+              {category}
+            </Option>
+          ))}
         </Select>
+      </Form.Item>
+
+      <Form.Item>
+        <CategoryEditModal />
       </Form.Item>
 
       <Form.Item
@@ -88,7 +96,7 @@ function TopicCreate() {
       <Form.Item
         name="detail"
         label="상세설명"
-        rules={[{ required: true, message: "상세설명을 입려갷 주세요!" }]}
+        rules={[{ required: true, message: "상세설명을 입력해 주세요!" }]}
       >
         <Input.TextArea rows={10} />
       </Form.Item>
