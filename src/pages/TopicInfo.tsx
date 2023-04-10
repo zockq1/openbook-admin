@@ -8,22 +8,21 @@ import {
 
 function TopicInfo() {
   const navigate = useNavigate();
-  let { title } = useParams();
+  let { title, chapter } = useParams();
   const { data: topic } = useGetTopicQuery(title ? title : "");
-  console.log(title);
   const [deleteTopic] = useDeleteTopicMutation();
 
   const handleDeleteClick = async () => {
     try {
       await deleteTopic({ title: title }).unwrap();
-      navigate("/topic");
+      navigate(`/topic/${chapter}`);
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleUpdateClick = () => {
-    navigate(`/topic/${title}/edit`);
+    navigate(`/topic/${chapter}/${title}/edit`);
   };
 
   return (
