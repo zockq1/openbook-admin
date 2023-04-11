@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ChapterList from "../components/ChapterList";
 import TopicList from "../components/TopicList";
@@ -8,10 +8,11 @@ const InfosLayout = styled.div`
 `;
 
 function Topic() {
+  const params = useParams();
   return (
     <InfosLayout>
       <ChapterList />
-      <TopicList />
+      {params.chapter && <TopicList />}
       <Outlet />
     </InfosLayout>
   );
