@@ -6,11 +6,12 @@ import {
   useUpdateTopicMutation,
 } from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
+import CategoryEditModal from "../components/CategoryEditModal";
 const { Option } = Select;
 
 function TopicEdit() {
   const navigate = useNavigate();
-  let { title } = useParams();
+  let { title, chapter } = useParams();
   const { data: topic } = useGetTopicQuery(title ? title : "");
   const [updateTopic] = useUpdateTopicMutation();
 
@@ -27,7 +28,7 @@ function TopicEdit() {
     try {
       const title = topic?.title ? topic?.title : "";
       await updateTopic({ updatedTopic, title }).unwrap();
-      navigate(`/topic/${values.title}`);
+      navigate(`/topic/${chapter}/${values.title}`);
     } catch (error) {
       console.error(error);
     }
@@ -69,6 +70,10 @@ function TopicEdit() {
           <Option value="국가">국가</Option>
           <Option value="유물">유물</Option>
         </Select>
+      </Form.Item>
+
+      <Form.Item>
+        <CategoryEditModal />
       </Form.Item>
 
       <Form.Item
