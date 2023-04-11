@@ -1,4 +1,4 @@
-import { Button, Menu, MenuProps, Pagination } from "antd";
+import { Button, Menu, MenuProps, Modal, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -45,15 +45,25 @@ function TopicList() {
   }
 
   const handleDelete = async () => {
-    if (topicList?.topicList.length === 0) {
-      try {
-        await deleteChapter({ number: Number(chapter) }).unwrap();
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      window.alert("해당 단원에 주제가 없을 때만 삭제 가능합니다.!");
-    }
+    Modal.confirm({
+      title: "주의",
+      content: "정말 이 항목을 삭제하시겠습니까?",
+      okText: "예",
+      okType: "danger",
+      cancelText: "아니오",
+      onOk: async () => {
+        if (topicList?.topicList.length === 0) {
+          try {
+            await deleteChapter({ number: Number(chapter) }).unwrap();
+            navigate(`/topic`);
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          window.alert("해당 단원에 주제가 없을 때만 삭제 가능합니다.!");
+        }
+      },
+    });
   };
 
   return (

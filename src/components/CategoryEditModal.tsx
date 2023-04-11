@@ -26,7 +26,6 @@ function CategoryEditModal() {
   };
 
   const onSubmit = async (values: any) => {
-    console.log("Received values of form: ", values);
     try {
       const { categoryName } = values;
       await addCategory(categoryName);
@@ -37,11 +36,20 @@ function CategoryEditModal() {
   };
 
   const handleDelete = async (category: string) => {
-    try {
-      await deleteCategory(category).unwrap();
-    } catch (error) {
-      console.error(error);
-    }
+    Modal.confirm({
+      title: "주의",
+      content: "정말 이 항목을 삭제하시겠습니까?",
+      okText: "예",
+      okType: "danger",
+      cancelText: "아니오",
+      onOk: async () => {
+        try {
+          await deleteCategory(category).unwrap();
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    });
   };
 
   return (
