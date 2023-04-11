@@ -8,7 +8,7 @@ import apiUrl from "./config";
 
 export const topicApi = createApi({
   reducerPath: "topicApi",
-  tagTypes: ["TopicList"],
+  tagTypes: ["TopicList", "TopicInfo"],
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
     credentials: "include",
@@ -16,6 +16,7 @@ export const topicApi = createApi({
   endpoints: (builder) => ({
     getTopic: builder.query<TopicModel, string>({
       query: (title) => `/topics/${title}`,
+      providesTags: ["TopicInfo"],
     }),
     getChapterTopicList: builder.query<TopicListModel, number>({
       query: (chapter) => `/chapters/${chapter}/topics`,
@@ -39,7 +40,7 @@ export const topicApi = createApi({
           body: updatedTopic,
         };
       },
-      invalidatesTags: ["TopicList"],
+      invalidatesTags: ["TopicList", "TopicInfo"],
     }),
     deleteTopic: builder.mutation({
       query: ({ title }) => {
@@ -48,7 +49,7 @@ export const topicApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["TopicList"],
+      invalidatesTags: ["TopicList", "TopicInfo"],
     }),
   }),
 });
