@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import { useLoginMutation } from "../store/api/authApi";
 import { LoginModel } from "../types/authType";
 import { useNavigate } from "react-router-dom";
@@ -18,8 +18,14 @@ function LoginForm() {
       await login(input).unwrap();
       dispatch(loginAction());
       navigate(`/topic`);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      error.data.forEach((data: any) => {
+        notification.error({
+          message: "Error",
+          description: data.message,
+        });
+      });
     }
   };
 

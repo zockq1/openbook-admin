@@ -1,5 +1,5 @@
-import { Button, Form, Input, Modal, Space } from "antd";
-import { useState } from "react";
+import { Button, Form, Input, Modal, Space, notification } from "antd";
+import { useEffect, useState } from "react";
 import {
   useAddCategoryMutation,
   useDeleteCategoryMutation,
@@ -11,7 +11,18 @@ function CategoryEditModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addCategory] = useAddCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
-  const { data: categoryList } = useGetCategoryListQuery();
+  const { data: categoryList, error: categoryListError } =
+    useGetCategoryListQuery();
+
+  useEffect(() => {
+    if (categoryListError) {
+      console.error(categoryListError);
+      notification.error({
+        message: "에러 발생",
+        description: "카테고리 목록을 불러오는 도중에 에러가 발생했습니다.",
+      });
+    }
+  }, [categoryListError]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -30,8 +41,14 @@ function CategoryEditModal() {
       const { categoryName } = values;
       await addCategory(categoryName);
       form.resetFields();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      error.data.forEach((data: any) => {
+        notification.error({
+          message: "Error",
+          description: data.message,
+        });
+      });
     }
   };
 
@@ -45,8 +62,14 @@ function CategoryEditModal() {
       onOk: async () => {
         try {
           await deleteCategory(category).unwrap();
-        } catch (error) {
+        } catch (error: any) {
           console.error(error);
+          error.data.forEach((data: any) => {
+            notification.error({
+              message: "Error",
+              description: data.message,
+            });
+          });
         }
       },
     });
