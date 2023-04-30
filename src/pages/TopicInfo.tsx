@@ -5,6 +5,8 @@ import {
   useDeleteTopicMutation,
   useGetTopicQuery,
 } from "../store/api/topicApi";
+import ChoiceForm from "../components/ChoiceForm";
+import ChoiceList from "../components/ChoiceList";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ function TopicInfo() {
   return (
     <Card
       title={topic?.title}
-      style={{ width: 600, margin: "auto auto" }}
+      style={{ width: 1000, margin: "0 auto" }}
       extra={
         <div>
           <Button onClick={handleUpdateClick}>수정</Button>
@@ -50,9 +52,8 @@ function TopicInfo() {
     >
       <p>단원: {topic?.chapter}</p>
       <p>분류: {topic?.category}</p>
-      <p>시작 년도: {topic?.startDate}</p>
-      <p>종료 년도: {topic?.endDate}</p>
-      <p>키워드: {topic?.keywordList}</p>
+      <p>시작 년도: {topic?.startDate[0]}</p>
+      <p>종료 년도: {topic?.endDate[0]}</p>
       <div
         style={{
           border: "1px solid rgba(5, 5, 5, 0.06)",
@@ -71,6 +72,26 @@ function TopicInfo() {
         {topic?.detail.split("\n").map((line, index) => {
           return <p key={index}>{line}</p>;
         })}
+      </div>
+      <br />
+      <div
+        style={{
+          border: "1px solid rgba(5, 5, 5, 0.06)",
+          borderRadius: 12,
+          padding: 12,
+        }}
+      >
+        <div
+          style={{
+            borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+            paddingBottom: 12,
+          }}
+        >
+          선지
+        </div>
+        <br />
+        <ChoiceForm />
+        <ChoiceList />
       </div>
     </Card>
   );
