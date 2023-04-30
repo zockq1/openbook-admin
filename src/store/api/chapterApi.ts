@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ChapterListModel } from "../../types/chapterTypes";
-import apiUrl from "./config";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: apiUrl,
+    baseUrl: process.env.REACT_APP_API_URL,
     credentials: "include",
   }),
   tagTypes: ["ChapterList"],

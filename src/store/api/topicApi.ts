@@ -4,13 +4,12 @@ import {
   TopicModel,
   UpdateTopicModel,
 } from "../../types/topicTypes";
-import apiUrl from "./config";
 
 export const topicApi = createApi({
   reducerPath: "topicApi",
   tagTypes: ["TopicList", "TopicInfo"],
   baseQuery: fetchBaseQuery({
-    baseUrl: apiUrl,
+    baseUrl: process.env.REACT_APP_API_URL,
     credentials: "include",
   }),
   endpoints: (builder) => ({
@@ -19,7 +18,7 @@ export const topicApi = createApi({
       providesTags: ["TopicInfo"],
     }),
     getChapterTopicList: builder.query<TopicListModel, number>({
-      query: (chapter) => `/chapters/${chapter}/topics`,
+      query: (chapter) => `/admin/chapters/${chapter}/topics`,
       providesTags: ["TopicList"],
     }),
     addTopic: builder.mutation<any, TopicModel>({
