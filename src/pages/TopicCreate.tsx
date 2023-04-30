@@ -23,10 +23,9 @@ function TopicCreate() {
       chapter: values.chapter,
       title: values.title,
       category: values.category,
-      startDate: values.startDate.$y,
-      endDate: values.endDate.$y,
+      startDate: new Date(values.startDate),
+      endDate: new Date(values.endDate),
       detail: values.detail,
-      keywordList: values.keywordList,
     };
     try {
       await addTopic(newTopic).unwrap();
@@ -96,17 +95,9 @@ function TopicCreate() {
       <Form.Item
         name="detail"
         label="상세설명"
-        rules={[{ required: true, message: "상세설명을 입력해 주세요!" }]}
+        rules={[{ required: false, message: "상세설명을 입력해 주세요!" }]}
       >
         <Input.TextArea rows={10} />
-      </Form.Item>
-
-      <Form.Item
-        name="keywordList"
-        label="키워드"
-        rules={[{ required: true, message: "키워드를 입력해 주세요!" }]}
-      >
-        <Input />
       </Form.Item>
 
       <Form.Item>

@@ -2,10 +2,9 @@ export interface TopicModel {
   chapter: number;
   title: string;
   category: string;
-  startDate: number;
-  endDate: number;
+  startDate: any;
+  endDate: any;
   detail: string;
-  keywordList: string[];
 }
 
 export interface UpdateTopicModel {

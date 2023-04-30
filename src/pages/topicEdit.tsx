@@ -20,10 +20,9 @@ function TopicEdit() {
       chapter: values.chapter,
       title: values.title,
       category: values.category,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      startDate: new Date(values.startDate),
+      endDate: new Date(values.endDate),
       detail: values.detail,
-      keywordList: values.keywordList,
     };
     try {
       const title = topic?.title ? topic?.title : "";
@@ -97,19 +96,10 @@ function TopicEdit() {
       <Form.Item
         name="detail"
         label="상세설명"
-        rules={[{ required: true, message: "상세설명을 입려갷 주세요!" }]}
+        rules={[{ required: true, message: "상세설명을 입력해 주세요!" }]}
         initialValue={topic?.detail}
       >
         <Input.TextArea rows={10} />
-      </Form.Item>
-
-      <Form.Item
-        name="keywordList"
-        label="키워드"
-        rules={[{ required: true, message: "키워드를 입력해 주세요!" }]}
-        initialValue={topic?.keywordList}
-      >
-        <Input />
       </Form.Item>
 
       <Form.Item>
