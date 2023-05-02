@@ -2,7 +2,7 @@ import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { useAddChapterMutation } from "../store/api/chapterApi";
 
-function CreateChapterMoal() {
+function CreateChapterModal() {
   const [addChapter] = useAddChapterMutation();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,4 +84,4 @@ function CreateChapterMoal() {
   );
 }
 
-export default CreateChapterMoal;
+export default CreateChapterModal;

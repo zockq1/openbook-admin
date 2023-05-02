@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  ChoiceModel,
-  addChoiceModel,
-  updateChoiceModel,
-} from "../../types/choiceType";
+import { ChoiceModel, addChoiceModel } from "../../types/choiceType";
 
 export const choicesApi = createApi({
   reducerPath: "choicesApi",
@@ -28,21 +24,20 @@ export const choicesApi = createApi({
       invalidatesTags: ["ChoiceList"],
     }),
     updateChoice: builder.mutation({
-      query: (choices: updateChoiceModel) => {
+      query: ({ id, content }) => {
         return {
-          url: `/admin/choices/`,
+          url: `/admin/choices/${id}`,
           method: "PATCH",
-          body: choices,
+          body: { content },
         };
       },
       invalidatesTags: ["ChoiceList"],
     }),
     deleteChoice: builder.mutation({
-      query: (id: number[]) => {
+      query: (id: number) => {
         return {
-          url: `/admin/choices/`,
+          url: `/admin/choices/${id}`,
           method: "DELETE",
-          body: id,
         };
       },
       invalidatesTags: ["ChoiceList"],

@@ -6,7 +6,6 @@ import {
 } from "../store/api/choicesApi";
 import { List } from "antd";
 import Choice from "./Choice";
-import { updateChoiceModel } from "../types/choiceType";
 
 function ChoiceList() {
   let { title } = useParams();
@@ -16,10 +15,7 @@ function ChoiceList() {
 
   const handleEdit = async (id: number, content: string) => {
     try {
-      const newChoice: updateChoiceModel = {
-        choiceList: [{ content, id }],
-      };
-      await updateChoice(newChoice);
+      await updateChoice({ id, content });
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +23,7 @@ function ChoiceList() {
 
   const handleDelete = async (id: number) => {
     try {
-      await deleteChoice([id]);
+      await deleteChoice(id);
     } catch (error) {
       console.log(error);
     }
