@@ -39,7 +39,7 @@ function Question() {
   const handleClick2 = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/admin/temp-question?category=인물&type=2`,
+        `${process.env.REACT_APP_API_URL}/admin/temp-question?category=사건&type=2`,
         {
           method: "GET",
           credentials: "include",
