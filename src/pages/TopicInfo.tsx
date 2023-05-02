@@ -72,9 +72,10 @@ function TopicInfo() {
         >
           상세내용
         </div>
-        {topic?.detail.split("\n").map((line, index) => {
-          return <p key={index}>{line}</p>;
-        })}
+        {topic?.detail &&
+          topic?.detail.split("\n").map((line, index) => {
+            return <p key={index}>{line}</p>;
+          })}
       </div>
       <br />
       <div
