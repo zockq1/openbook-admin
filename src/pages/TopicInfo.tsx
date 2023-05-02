@@ -7,10 +7,13 @@ import {
 } from "../store/api/topicApi";
 import ChoiceForm from "../components/ChoiceForm";
 import ChoiceList from "../components/ChoiceList";
+import ChoicesAutoCompleteModal from "../components/ChoicesAutoCompleteModal";
+import DescriptionList from "../components/DescriptionList";
+import DescriptionForm from "../components/DescriptionForm";
 
 function TopicInfo() {
   const navigate = useNavigate();
-  let { title, chapter } = useParams();
+  const { title, chapter } = useParams();
   const { data: topic } = useGetTopicQuery(title ? title : "");
   const [deleteTopic] = useDeleteTopicMutation();
 
@@ -90,8 +93,30 @@ function TopicInfo() {
           선지
         </div>
         <br />
+        <ChoicesAutoCompleteModal />
         <ChoiceForm />
         <ChoiceList />
+      </div>
+      <br />
+      <div
+        style={{
+          border: "1px solid rgba(5, 5, 5, 0.06)",
+          borderRadius: 12,
+          padding: 12,
+        }}
+      >
+        <div
+          style={{
+            borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+            paddingBottom: 12,
+          }}
+        >
+          보기
+        </div>
+        <br />
+        {/* <DescriptionsAutoCompleteModal /> */}
+        <DescriptionForm />
+        <DescriptionList />
       </div>
     </Card>
   );
