@@ -10,6 +10,7 @@ import ChoiceList from "../components/ChoiceList";
 import ChoicesAutoCompleteModal from "../components/ChoicesAutoCompleteModal";
 import DescriptionList from "../components/DescriptionList";
 import DescriptionForm from "../components/DescriptionForm";
+import DescriptionsAutoCompleteModal from "../components/DescriptionsAutoCompleteModal";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -115,7 +116,7 @@ function TopicInfo() {
           보기
         </div>
         <br />
-        {/* <DescriptionsAutoCompleteModal /> */}
+        <DescriptionsAutoCompleteModal />
         <DescriptionForm />
         <DescriptionList />
       </div>
