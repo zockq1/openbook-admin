@@ -95,6 +95,10 @@ function TopicList() {
       >
         현재 단원 삭제
       </Button>
+      <br />
+      <Link to={`/topic/${chapter}/question`} style={{ width: "90%" }}>
+        <Button style={{ width: "100%" }}>문제</Button>
+      </Link>
     </TopicContainer>
   );
 }

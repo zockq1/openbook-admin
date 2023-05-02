@@ -4,6 +4,7 @@ import TopicInfo from "./pages/TopicInfo";
 import Topic from "./pages/Topic";
 import TopicCreate from "./pages/TopicCreate";
 import TopicEdit from "./pages/TopicEdit";
+import Question from "./pages/Question";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
           {
             path: "create",
             element: <TopicCreate />,
+          },
+          {
+            path: "question",
+            element: <Question />,
           },
           {
             path: ":title/edit",
