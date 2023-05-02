@@ -18,11 +18,11 @@ export const descriptionApi = createApi({
       providesTags: ["descriptionList"],
     }),
     addDescription: builder.mutation({
-      query: (description: AddDescriptionModel) => {
+      query: (descriptions: AddDescriptionModel) => {
         return {
           url: `/admin/descriptions/`,
           method: "POST",
-          body: description,
+          body: descriptions,
         };
       },
       invalidatesTags: ["descriptionList"],

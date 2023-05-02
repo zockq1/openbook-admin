@@ -11,7 +11,7 @@ function DescriptionForm() {
   const handleSubmit = async () => {
     if (typeof title === "string") {
       try {
-        await addDescription({ content, topicTitle: title });
+        await addDescription({ contentList: [content], topicTitle: title });
         setContent("");
       } catch (error) {
         console.log(error);
@@ -24,7 +24,7 @@ function DescriptionForm() {
   };
   return (
     <Space.Compact style={{ width: "100%" }}>
-      <Input.TextArea rows={6} value={content} onChange={handleChange} />
+      <Input.TextArea rows={5} value={content} onChange={handleChange} />
       <Button type="primary" onClick={handleSubmit}>
         추가
       </Button>

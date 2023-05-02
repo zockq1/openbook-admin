@@ -10,6 +10,6 @@ export interface UpdateDescriptionModel {
 }
 
 export interface AddDescriptionModel {
-  content: string;
+  contentList: string[];
   topicTitle: string;
 }
