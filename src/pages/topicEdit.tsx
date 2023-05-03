@@ -93,12 +93,7 @@ function TopicEdit() {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="detail"
-        label="상세설명"
-        rules={[{ required: true, message: "상세설명을 입력해 주세요!" }]}
-        initialValue={topic?.detail}
-      >
+      <Form.Item name="detail" label="상세설명" initialValue={topic?.detail}>
         <Input.TextArea rows={10} />
       </Form.Item>
 
