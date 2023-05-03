@@ -56,7 +56,6 @@ function ChoicesAutoCompleteModal() {
       if (typeof title === "string") {
         await addChoices({ choiceArr, topicTitle: title });
       }
-      console.log(data);
       form.resetFields();
     } catch (error) {
       console.log(error);

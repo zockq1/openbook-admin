@@ -47,15 +47,14 @@ function DescriptionsAutoCompleteModal() {
         }
       );
       const data = await response.json();
-      const description = data.choices[0].message.content;
+      let description = data.choices[0].message.content;
+
       if (typeof title === "string") {
         await addDescriptions({
           contentList: [description],
           topicTitle: title,
         });
       }
-      console.log(text);
-      console.log(data);
       form.resetFields();
     } catch (error) {
       console.log(error);
