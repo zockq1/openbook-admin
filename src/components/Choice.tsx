@@ -14,12 +14,12 @@ function Choice({ data, onEdit, onDelete }: ChoiceProps) {
   const [editContent, setEditContent] = useState(data.content);
 
   const handleEdit = () => {
+    setEditContent(data.content);
     setIsEditing(true);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setEditContent(data.content);
   };
 
   const handleSave = () => {

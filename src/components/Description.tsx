@@ -14,12 +14,12 @@ function Description({ data, onEdit, onDelete }: DescriptionProps) {
   const [editContent, setEditContent] = useState(data.content);
 
   const handleEdit = () => {
+    setEditContent(data.content);
     setIsEditing(true);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setEditContent(data.content);
   };
 
   const handleSave = () => {
@@ -47,7 +47,7 @@ function Description({ data, onEdit, onDelete }: DescriptionProps) {
       ]}
     >
       {isEditing ? (
-        <Input value={editContent} onChange={handleChange} />
+        <Input.TextArea rows={5} value={editContent} onChange={handleChange} />
       ) : (
         <div>{data.content}</div>
       )}
