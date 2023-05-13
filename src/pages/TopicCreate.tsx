@@ -1,10 +1,8 @@
 import React from "react";
 import { Form, Input, DatePicker, Select, Button } from "antd";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import { TopicModel } from "../types/topicTypes";
 import { useAddTopicMutation } from "../store/api/topicApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetCategoryListQuery } from "../store/api/categoryApi";
 import CategoryEditModal from "../components/CategoryEditModal";
 
@@ -13,9 +11,7 @@ const { Option } = Select;
 function TopicCreate() {
   const navigate = useNavigate();
   const [addTopic] = useAddTopicMutation();
-  const currentChapterNumber = useSelector(
-    (state: RootState) => state.chapter.currentChapterNumber
-  );
+  let { chapter } = useParams();
   const { data: categoryList } = useGetCategoryListQuery();
 
   const onFinish = async (values: any) => {
@@ -29,7 +25,7 @@ function TopicCreate() {
     };
     try {
       await addTopic(newTopic).unwrap();
-      navigate(`/topic/${currentChapterNumber}/${values.title}`);
+      navigate(`/topic/${chapter}/${values.title}`);
     } catch (error) {
       console.error(error);
     }
@@ -45,7 +41,7 @@ function TopicCreate() {
         name="chapter"
         label="단원"
         rules={[{ required: true, message: "단원을 입력해주세요!" }]}
-        initialValue={currentChapterNumber ? currentChapterNumber : ""}
+        initialValue={chapter}
       >
         <Input type="number" />
       </Form.Item>
