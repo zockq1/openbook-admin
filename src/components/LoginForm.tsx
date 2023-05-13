@@ -1,11 +1,18 @@
 import React from "react";
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button } from "antd";
 import { useLoginMutation } from "../store/api/authApi";
 import { LoginModel } from "../types/authType";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { login as loginAction } from "../store/slices/authSlice";
+
+const LoginFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+`;
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -20,21 +27,8 @@ function LoginForm() {
       navigate(`/topic`);
     } catch (error: any) {
       console.error(error);
-      error.data.forEach((data: any) => {
-        notification.error({
-          message: "Error",
-          description: data.message,
-        });
-      });
     }
   };
-
-  const LoginFormContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 100px;
-  `;
 
   return (
     <LoginFormContainer>
