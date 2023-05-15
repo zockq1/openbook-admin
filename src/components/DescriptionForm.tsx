@@ -6,7 +6,7 @@ import { useAddDescriptionMutation } from "../store/api/descriptionApi";
 function DescriptionForm() {
   const [content, setContent] = useState("");
   const [addDescription] = useAddDescriptionMutation();
-  let { title } = useParams();
+  const { title } = useParams();
 
   const handleSubmit = async () => {
     if (typeof title === "string") {

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function ChoiceForm() {
   const [content, setContent] = useState("");
   const [addChoices] = useAddChoicesMutation();
-  let { title } = useParams();
+  const { title } = useParams();
 
   const handleSubmit = async () => {
     if (typeof title === "string") {

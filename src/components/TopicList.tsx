@@ -22,7 +22,7 @@ const TopicContainer = styled.div`
 
 function TopicList() {
   const navigate = useNavigate();
-  let { chapter } = useParams();
+  const { chapter } = useParams();
   const [deleteChapter] = useDeleteChapterMutation();
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const { data: topicList } = useGetChapterTopicListQuery(Number(chapter));

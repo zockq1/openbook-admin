@@ -11,7 +11,7 @@ const { Option } = Select;
 function TopicCreate() {
   const navigate = useNavigate();
   const [addTopic] = useAddTopicMutation();
-  let { chapter } = useParams();
+  const { chapter } = useParams();
   const { data: categoryList } = useGetCategoryListQuery();
 
   const onFinish = async (values: any) => {

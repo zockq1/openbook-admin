@@ -14,7 +14,7 @@ function ChapterTitle() {
   const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
   const isFirstRender = useRef(true);
   const [updateChapter] = useUpdateChapterMutation();
-  let { chapter } = useParams();
+  const { chapter } = useParams();
 
   useEffect(() => {
     if (isFirstRender.current) {

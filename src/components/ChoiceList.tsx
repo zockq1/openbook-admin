@@ -8,7 +8,7 @@ import { List } from "antd";
 import Choice from "./Choice";
 
 function ChoiceList() {
-  let { title } = useParams();
+  const { title } = useParams();
   const { data } = useGetChoicesQuery(title || "");
   const [updateChoice] = useUpdateChoiceMutation();
   const [deleteChoice] = useDeleteChoiceMutation();

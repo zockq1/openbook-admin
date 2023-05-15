@@ -20,7 +20,7 @@ const ChpterContainer = styled.div`
 function ChapterList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let { chapter } = useParams();
+  const { chapter } = useParams();
   const [items, setItems] = useState<MenuProps["items"]>([]);
   const [chapterMap, setChapterMap] = useState<Map<number, string>>(new Map());
   const { data: chapterList } = useGetChaptersQuery();

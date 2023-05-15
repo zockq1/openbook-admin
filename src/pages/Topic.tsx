@@ -8,11 +8,11 @@ const InfosLayout = styled.div`
 `;
 
 function Topic() {
-  const params = useParams();
+  const { chapter } = useParams();
   return (
     <InfosLayout>
       <ChapterList />
-      {params.chapter && <TopicList />}
+      {chapter && <TopicList />}
       <Outlet />
     </InfosLayout>
   );

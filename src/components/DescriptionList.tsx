@@ -8,7 +8,7 @@ import {
 import Description from "./Description";
 
 function DescriptionList() {
-  let { title } = useParams();
+  const { title } = useParams();
   const { data } = useGetDescriptionsQuery(title || "");
   const [updateDescription] = useUpdateDescriptionMutation();
   const [deleteDescription] = useDeleteDescriptionMutation();
