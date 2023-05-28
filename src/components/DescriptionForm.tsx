@@ -11,7 +11,7 @@ function DescriptionForm() {
   const handleSubmit = async () => {
     if (typeof title === "string") {
       try {
-        await addDescription({ contentList: [content], topicTitle: title });
+        await addDescription({ contentList: [content], topic: title });
         setContent("");
       } catch (error) {
         console.log(error);

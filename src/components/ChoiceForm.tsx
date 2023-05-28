@@ -11,7 +11,7 @@ function ChoiceForm() {
   const handleSubmit = async () => {
     if (typeof title === "string") {
       try {
-        await addChoices({ choiceArr: [content], topicTitle: title });
+        await addChoices({ choiceArr: [content], topic: title });
         setContent("");
       } catch (error) {
         console.log(error);

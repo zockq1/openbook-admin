@@ -6,7 +6,7 @@ export interface ChoiceModel {
 
 export interface addChoiceModel {
   choiceArr: string[];
-  topicTitle: string;
+  topic: string;
 }
 
 interface choice {
