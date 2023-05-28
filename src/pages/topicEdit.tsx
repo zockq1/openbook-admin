@@ -17,11 +17,11 @@ function TopicEdit() {
 
   const onFinish = async (values: any) => {
     const updatedTopic: TopicModel = {
-      chapter: values.chapter,
+      chapter: Number(values.chapter),
       title: values.title,
       category: values.category,
-      startDate: new Date(values.startDate),
-      endDate: new Date(values.endDate),
+      startDate: Number(values.startDate),
+      endDate: Number(values.endDate),
       detail: values.detail,
     };
     try {
@@ -81,7 +81,7 @@ function TopicEdit() {
         rules={[{ required: true, message: "시작 년도를 입력해 주세요!" }]}
         initialValue={topic?.startDate}
       >
-        <Input />
+        <Input type="number" />
       </Form.Item>
 
       <Form.Item
@@ -90,7 +90,7 @@ function TopicEdit() {
         rules={[{ required: true, message: "종료 년도를 입력해 주세요!" }]}
         initialValue={topic?.endDate}
       >
-        <Input />
+        <Input type="number" />
       </Form.Item>
 
       <Form.Item name="detail" label="상세설명" initialValue={topic?.detail}>
