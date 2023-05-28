@@ -2,11 +2,11 @@ import { Button, Menu, MenuProps, Modal, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import getItem from "../services/getItem";
+import getItem from "../../services/getItem";
 
-import { useDeleteChapterMutation } from "../store/api/chapterApi";
+import { useDeleteChapterMutation } from "../../store/api/chapterApi";
 import ChapterTitle from "./ChapterTitle";
-import { useGetChapterTopicListQuery } from "../store/api/topicApi";
+import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
 
 const TopicMenu = styled(Menu)`
   width: 300px;

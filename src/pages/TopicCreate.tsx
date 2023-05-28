@@ -4,7 +4,7 @@ import { TopicModel } from "../types/topicTypes";
 import { useAddTopicMutation } from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCategoryListQuery } from "../store/api/categoryApi";
-import CategoryEditModal from "../components/CategoryEditModal";
+import CategoryEditModal from "../components/TopicContent/CategoryEditModal";
 
 const { Option } = Select;
 

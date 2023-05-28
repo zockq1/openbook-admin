@@ -1,10 +1,10 @@
 import { Typography } from "antd";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { useUpdateChapterMutation } from "../store/api/chapterApi";
+import { useUpdateChapterMutation } from "../../store/api/chapterApi";
 import { useParams } from "react-router-dom";
-import { setChapter } from "../store/slices/chapterSlice";
+import { setChapter } from "../../store/slices/chapterSlice";
 
 function ChapterTitle() {
   const dispatch = useDispatch();

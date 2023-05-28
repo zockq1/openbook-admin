@@ -1,28 +1,29 @@
 import { Button, Form, Input, Modal, Space, notification } from "antd";
 import { useEffect, useState } from "react";
 import {
-  useAddCategoryMutation,
-  useDeleteCategoryMutation,
-  useGetCategoryListQuery,
-} from "../store/api/categoryApi";
+  useAddKeywordMutation,
+  useDeleteKeywordMutation,
+  useGetKeywordListQuery,
+} from "../../../store/api/KeywordApi";
+import { KeywordModel } from "../../../types/keywordType";
 
-function CategoryEditModal() {
+function KeywordEditModal() {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addCategory] = useAddCategoryMutation();
-  const [deleteCategory] = useDeleteCategoryMutation();
-  const { data: categoryList, error: categoryListError } =
-    useGetCategoryListQuery();
+  const [addKeyword] = useAddKeywordMutation();
+  const [deleteKeyword] = useDeleteKeywordMutation();
+  const { data: keywordList, error: keywordListError } =
+    useGetKeywordListQuery();
 
   useEffect(() => {
-    if (categoryListError) {
-      console.error(categoryListError);
+    if (keywordListError) {
+      console.error(keywordListError);
       notification.error({
         message: "에러 발생",
         description: "카테고리 목록을 불러오는 도중에 에러가 발생했습니다.",
       });
     }
-  }, [categoryListError]);
+  }, [keywordListError]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -38,8 +39,8 @@ function CategoryEditModal() {
 
   const onSubmit = async (values: any) => {
     try {
-      const { categoryName } = values;
-      await addCategory(categoryName);
+      const { keyword } = values;
+      await addKeyword(keyword);
       form.resetFields();
     } catch (error: any) {
       console.error(error);
@@ -52,7 +53,7 @@ function CategoryEditModal() {
     }
   };
 
-  const handleDelete = async (category: string) => {
+  const handleDelete = async (keywordId: number) => {
     Modal.confirm({
       title: "주의",
       content: "정말 이 항목을 삭제하시겠습니까?",
@@ -61,7 +62,7 @@ function CategoryEditModal() {
       cancelText: "아니오",
       onOk: async () => {
         try {
-          await deleteCategory(category).unwrap();
+          await deleteKeyword(keywordId).unwrap();
         } catch (error: any) {
           console.error(error);
           error.data.forEach((data: any) => {
@@ -78,28 +79,28 @@ function CategoryEditModal() {
   return (
     <div style={{ float: "right" }}>
       <Button type="primary" onClick={showModal}>
-        분류 설정
+        키워드 설정
       </Button>
       <Modal
-        title="분류 설정"
+        title="키워드 설정"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
         <Form
-          name="category-form"
+          name="keyword-form"
           form={form}
           onFinish={onSubmit}
           layout="vertical"
         >
           <Form.Item
-            name="categoryName"
-            label="분류명"
+            name="keyword-name"
+            label="키워드"
             rules={[
               {
                 required: true,
-                message: "분류명을 입력해주세요.",
+                message: "키워드를 입력해주세요.",
               },
             ]}
           >
@@ -111,10 +112,10 @@ function CategoryEditModal() {
             </Button>
           </Form.Item>
         </Form>
-        {categoryList?.map((category: string) => (
-          <Space key={category}>
-            <span style={{ fontSize: 18 }}>{category}</span>
-            <Button onClick={() => handleDelete(category)} danger>
+        {keywordList?.map((keyword: KeywordModel) => (
+          <Space key={keyword.id}>
+            <span style={{ fontSize: 18 }}>{keyword.keyword}</span>
+            <Button onClick={() => handleDelete(keyword.id)} danger>
               삭제
             </Button>
             <span> </span>
@@ -125,4 +126,4 @@ function CategoryEditModal() {
   );
 }
 
-export default CategoryEditModal;
+export default KeywordEditModal;

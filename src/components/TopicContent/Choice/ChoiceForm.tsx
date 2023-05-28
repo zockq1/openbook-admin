@@ -1,6 +1,6 @@
 import { Button, Input, Space } from "antd";
 import { useState } from "react";
-import { useAddChoicesMutation } from "../store/api/choicesApi";
+import { useAddChoicesMutation } from "../../../store/api/choicesApi";
 import { useParams } from "react-router-dom";
 
 function ChoiceForm() {

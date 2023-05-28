@@ -1,15 +1,15 @@
 import { List, Space, Input, Button } from "antd";
-import { ChoiceModel } from "../types/choiceType";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { DescriptionModel } from "../../../types/descriptionType";
 
-interface ChoiceProps {
-  data: ChoiceModel;
+interface DescriptionProps {
+  data: DescriptionModel;
   onEdit: (id: number, content: string) => void;
   onDelete: (id: number) => void;
 }
 
-function Choice({ data, onEdit, onDelete }: ChoiceProps) {
+function Description({ data, onEdit, onDelete }: DescriptionProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(data.content);
 
@@ -47,7 +47,7 @@ function Choice({ data, onEdit, onDelete }: ChoiceProps) {
       ]}
     >
       {isEditing ? (
-        <Input value={editContent} onChange={handleChange} />
+        <Input.TextArea rows={5} value={editContent} onChange={handleChange} />
       ) : (
         <div>{data.content}</div>
       )}
@@ -55,4 +55,4 @@ function Choice({ data, onEdit, onDelete }: ChoiceProps) {
   );
 }
 
-export default Choice;
+export default Description;

@@ -4,7 +4,7 @@ import {
   useDeleteDescriptionMutation,
   useGetDescriptionsQuery,
   useUpdateDescriptionMutation,
-} from "../store/api/descriptionApi";
+} from "../../../store/api/descriptionApi";
 import Description from "./Description";
 
 function DescriptionList() {

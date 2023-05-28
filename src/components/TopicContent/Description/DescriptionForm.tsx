@@ -1,7 +1,7 @@
 import { Button, Input, Space } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAddDescriptionMutation } from "../store/api/descriptionApi";
+import { useAddDescriptionMutation } from "../../../store/api/descriptionApi";
 
 function DescriptionForm() {
   const [content, setContent] = useState("");

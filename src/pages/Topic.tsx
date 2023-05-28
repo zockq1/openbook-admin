@@ -1,7 +1,7 @@
 import { Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
-import ChapterList from "../components/ChapterList";
-import TopicList from "../components/TopicList";
+import ChapterList from "../components/ChapterListSider/ChapterList";
+import TopicList from "../components/TopicListSider/TopicList";
 
 const InfosLayout = styled.div`
   display: flex;

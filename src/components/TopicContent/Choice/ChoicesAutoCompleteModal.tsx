@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAddChoicesMutation } from "../store/api/choicesApi";
+import { useAddChoicesMutation } from "../../../store/api/choicesApi";
 
 function ChoicesAutoCompleteModal() {
   const [form] = Form.useForm();

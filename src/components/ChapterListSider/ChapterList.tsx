@@ -2,10 +2,10 @@ import { Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setChapter } from "../store/slices/chapterSlice";
-import getItem from "../services/getItem";
+import { setChapter } from "../../store/slices/chapterSlice";
+import getItem from "../../services/getItem";
 import Title from "antd/es/typography/Title";
-import { useGetChaptersQuery } from "../store/api/chapterApi";
+import { useGetChaptersQuery } from "../../store/api/chapterApi";
 import CreateChapterModal from "./CreateChpterModal";
 import { useNavigate, useParams } from "react-router-dom";
 

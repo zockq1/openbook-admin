@@ -6,7 +6,7 @@ import {
   useUpdateTopicMutation,
 } from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
-import CategoryEditModal from "../components/CategoryEditModal";
+import CategoryEditModal from "../components/TopicContent/CategoryEditModal";
 const { Option } = Select;
 
 function TopicEdit() {
