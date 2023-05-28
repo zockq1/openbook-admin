@@ -1,4 +1,4 @@
-import { Button, Card, Modal } from "antd";
+import { Button, Card, Modal, Space } from "antd";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -11,12 +11,16 @@ import ChoicesAutoCompleteModal from "../components/ChoicesAutoCompleteModal";
 import DescriptionList from "../components/DescriptionList";
 import DescriptionForm from "../components/DescriptionForm";
 import DescriptionsAutoCompleteModal from "../components/DescriptionsAutoCompleteModal";
+import KeywordEditModal from "../components/KeywordEditModal";
+import { useGetKeywordListQuery } from "../store/api/KeywordApi";
+import { KeywordModel } from "../types/keywordType";
 
 function TopicInfo() {
   const navigate = useNavigate();
   const { title, chapter } = useParams();
   const { data: topic } = useGetTopicQuery(title ? title : "");
   const [deleteTopic] = useDeleteTopicMutation();
+  const { data: keywordList } = useGetKeywordListQuery();
 
   const handleDeleteClick = async () => {
     Modal.confirm({
@@ -56,8 +60,8 @@ function TopicInfo() {
     >
       <p>단원: {topic?.chapter}</p>
       <p>분류: {topic?.category}</p>
-      <p>시작 년도: {topic?.startDate[0]}</p>
-      <p>종료 년도: {topic?.endDate[0]}</p>
+      <p>시작 년도: {topic?.startDate}</p>
+      <p>종료 년도: {topic?.endDate}</p>
       <div
         style={{
           border: "1px solid rgba(5, 5, 5, 0.06)",
@@ -77,6 +81,30 @@ function TopicInfo() {
           topic?.detail.split("\n").map((line, index) => {
             return <p key={index}>{line}</p>;
           })}
+      </div>
+      <br />
+      <div
+        style={{
+          border: "1px solid rgba(5, 5, 5, 0.06)",
+          borderRadius: 12,
+          padding: 12,
+        }}
+      >
+        <div
+          style={{
+            borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+            paddingBottom: 12,
+          }}
+        >
+          키워드
+        </div>
+        <br />
+        <KeywordEditModal />
+        {keywordList?.map((keyword: KeywordModel) => (
+          <Space key={keyword.id}>
+            <span style={{ fontSize: 18 }}>{keyword.keyword}</span>
+          </Space>
+        ))}
       </div>
       <br />
       <div
