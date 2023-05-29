@@ -100,7 +100,7 @@ function KeywordEditModal() {
           layout="vertical"
         >
           <Form.Item
-            name="keyword-name"
+            name="keyword"
             label="키워드"
             rules={[
               {
