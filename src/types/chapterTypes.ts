@@ -3,7 +3,7 @@ export interface ChapterState {
   currentChapterNumber: number | null;
 }
 
-export interface ChapterListModel {
-  titleList: string[];
-  numberList: number[];
+export interface ChapterModel {
+  title: string;
+  number: number;
 }

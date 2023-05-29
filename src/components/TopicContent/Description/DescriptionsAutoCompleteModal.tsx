@@ -52,7 +52,7 @@ function DescriptionsAutoCompleteModal() {
       if (typeof title === "string") {
         await addDescriptions({
           contentList: [description],
-          topic: title,
+          topicTitle: title,
         });
       }
       form.resetFields();

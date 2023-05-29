@@ -26,15 +26,12 @@ function ChapterList() {
   const { data: chapterList } = useGetChaptersQuery();
 
   useEffect(() => {
-    const newItems = chapterList?.numberList.map((number) =>
-      getItem(number + "단원", number)
-    );
-    setItems(newItems);
-
     const newChapterMap = new Map();
-    chapterList?.numberList.forEach((number, index) => {
-      newChapterMap.set(number, chapterList?.titleList[index]);
+    const newItems = chapterList?.map((chapter) => {
+      newChapterMap.set(chapter.number, chapter.title);
+      return getItem(chapter.number + "단원", chapter.number);
     });
+    setItems(newItems);
     setChapterMap(newChapterMap);
   }, [chapterList]);
 

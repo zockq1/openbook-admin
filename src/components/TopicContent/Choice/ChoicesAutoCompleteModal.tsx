@@ -54,7 +54,7 @@ function ChoicesAutoCompleteModal() {
         });
       console.log(choiceArr);
       if (typeof title === "string") {
-        await addChoices({ choiceArr, topic: title });
+        await addChoices({ choiceArr, topicTitle: title });
       }
       form.resetFields();
     } catch (error) {

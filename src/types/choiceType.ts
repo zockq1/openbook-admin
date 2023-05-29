@@ -1,12 +1,12 @@
 export interface ChoiceModel {
-  topic: string;
+  topicTitle: string;
   content: string;
   id: number;
 }
 
 export interface addChoiceModel {
   choiceArr: string[];
-  topic: string;
+  topicTitle: string;
 }
 
 interface choice {
