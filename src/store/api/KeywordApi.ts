@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AddKeywordModel, KeywordModel } from "../../types/keywordType";
+import { AddKeywordModel } from "../../types/keywordType";
 
 export const keywordApi = createApi({
   reducerPath: "keywordApi",
@@ -9,27 +9,30 @@ export const keywordApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    getKeywordList: builder.query<KeywordModel[], void>({
-      query: (topicTitle) => `/admin/topics/${topicTitle}/keywords/`,
+    getKeywordList: builder.query<string[], void>({
+      query: (topicTitle) => `/topics/${topicTitle}/keywords`,
       providesTags: ["KeywordList"],
     }),
     addKeyword: builder.mutation({
       query: (addKeywordModel: AddKeywordModel) => {
         return {
-          url: `/admin/keywords`,
+          url: `/admin/topics/${addKeywordModel.topicTitle}/keywords`,
           method: "POST",
           body: {
-            name: addKeywordModel,
+            name: addKeywordModel.keyword,
           },
         };
       },
       invalidatesTags: ["KeywordList"],
     }),
     deleteKeyword: builder.mutation({
-      query: (keywordId: number) => {
+      query: (addKeywordModel: AddKeywordModel) => {
         return {
-          url: `/admin/keywords/${keywordId}`,
+          url: `/admin/topics/${addKeywordModel.topicTitle}/keywords`,
           method: "DELETE",
+          body: {
+            name: addKeywordModel.keyword,
+          },
         };
       },
       invalidatesTags: ["KeywordList"],

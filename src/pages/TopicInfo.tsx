@@ -13,7 +13,6 @@ import DescriptionForm from "../components/TopicContent/Description/DescriptionF
 import DescriptionsAutoCompleteModal from "../components/TopicContent/Description/DescriptionsAutoCompleteModal";
 import KeywordEditModal from "../components/TopicContent/Keyword/KeywordEditModal";
 import { useGetKeywordListQuery } from "../store/api/KeywordApi";
-import { KeywordModel } from "../types/keywordType";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -100,9 +99,9 @@ function TopicInfo() {
         </div>
         <br />
         <KeywordEditModal />
-        {keywordList?.map((keyword: KeywordModel) => (
-          <Space key={keyword.id}>
-            <span style={{ fontSize: 18 }}>{keyword.keyword}</span>
+        {keywordList?.map((keyword: string) => (
+          <Space key={keyword}>
+            <span style={{ fontSize: 18 }}>{keyword}</span>
           </Space>
         ))}
       </div>

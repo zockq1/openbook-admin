@@ -5,9 +5,10 @@ import {
   useDeleteKeywordMutation,
   useGetKeywordListQuery,
 } from "../../../store/api/KeywordApi";
-import { KeywordModel } from "../../../types/keywordType";
+import { useParams } from "react-router-dom";
 
 function KeywordEditModal() {
+  const { title } = useParams();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addKeyword] = useAddKeywordMutation();
@@ -40,7 +41,7 @@ function KeywordEditModal() {
   const onSubmit = async (values: any) => {
     try {
       const { keyword } = values;
-      await addKeyword(keyword);
+      await addKeyword({ keyword: String(keyword), topicTitle: String(title) });
       form.resetFields();
     } catch (error: any) {
       console.error(error);
@@ -53,7 +54,7 @@ function KeywordEditModal() {
     }
   };
 
-  const handleDelete = async (keywordId: number) => {
+  const handleDelete = async (keyword: string) => {
     Modal.confirm({
       title: "주의",
       content: "정말 이 항목을 삭제하시겠습니까?",
@@ -62,7 +63,10 @@ function KeywordEditModal() {
       cancelText: "아니오",
       onOk: async () => {
         try {
-          await deleteKeyword(keywordId).unwrap();
+          await deleteKeyword({
+            keyword: String(keyword),
+            topicTitle: String(title),
+          }).unwrap();
         } catch (error: any) {
           console.error(error);
           error.data.forEach((data: any) => {
@@ -112,10 +116,10 @@ function KeywordEditModal() {
             </Button>
           </Form.Item>
         </Form>
-        {keywordList?.map((keyword: KeywordModel) => (
-          <Space key={keyword.id}>
-            <span style={{ fontSize: 18 }}>{keyword.keyword}</span>
-            <Button onClick={() => handleDelete(keyword.id)} danger>
+        {keywordList?.map((keyword: string) => (
+          <Space key={keyword}>
+            <span style={{ fontSize: 18 }}>{keyword}</span>
+            <Button onClick={() => handleDelete(keyword)} danger>
               삭제
             </Button>
             <span> </span>
