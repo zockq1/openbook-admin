@@ -9,7 +9,7 @@ export const keywordApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    getKeywordList: builder.query<string[], void>({
+    getKeywordList: builder.query<string[], string>({
       query: (topicTitle) => `/topics/${topicTitle}/keywords`,
       providesTags: ["KeywordList"],
     }),

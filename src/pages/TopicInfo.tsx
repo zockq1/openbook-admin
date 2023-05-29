@@ -19,7 +19,7 @@ function TopicInfo() {
   const { title, chapter } = useParams();
   const { data: topic } = useGetTopicQuery(title ? title : "");
   const [deleteTopic] = useDeleteTopicMutation();
-  const { data: keywordList } = useGetKeywordListQuery();
+  const { data: keywordList } = useGetKeywordListQuery(title ? title : "");
 
   const handleDeleteClick = async () => {
     Modal.confirm({

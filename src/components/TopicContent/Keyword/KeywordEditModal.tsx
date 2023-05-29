@@ -13,15 +13,16 @@ function KeywordEditModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addKeyword] = useAddKeywordMutation();
   const [deleteKeyword] = useDeleteKeywordMutation();
-  const { data: keywordList, error: keywordListError } =
-    useGetKeywordListQuery();
+  const { data: keywordList, error: keywordListError } = useGetKeywordListQuery(
+    title ? title : ""
+  );
 
   useEffect(() => {
     if (keywordListError) {
       console.error(keywordListError);
       notification.error({
         message: "에러 발생",
-        description: "카테고리 목록을 불러오는 도중에 에러가 발생했습니다.",
+        description: "키워드 목록을 불러오는 도중에 에러가 발생했습니다.",
       });
     }
   }, [keywordListError]);
