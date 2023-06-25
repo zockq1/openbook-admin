@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAddDescriptionMutation } from "../../../store/api/descriptionApi";
+import { useAddDescriptionMutation } from "../../store/api/descriptionApi";
 
 function DescriptionsAutoCompleteModal() {
   const [form] = Form.useForm();

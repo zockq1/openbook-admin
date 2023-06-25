@@ -1,17 +1,17 @@
 import { Button, Input, Space } from "antd";
 import { useState } from "react";
-import { useAddChoicesMutation } from "../../../store/api/choicesApi";
 import { useParams } from "react-router-dom";
+import { useAddDescriptionMutation } from "../../store/api/descriptionApi";
 
-function ChoiceForm() {
+function DescriptionForm() {
   const [content, setContent] = useState("");
-  const [addChoices] = useAddChoicesMutation();
+  const [addDescription] = useAddDescriptionMutation();
   const { title } = useParams();
 
   const handleSubmit = async () => {
     if (typeof title === "string") {
       try {
-        await addChoices({ choiceArr: [content], topicTitle: title });
+        await addDescription({ contentList: [content], topicTitle: title });
         setContent("");
       } catch (error) {
         console.log(error);
@@ -24,7 +24,7 @@ function ChoiceForm() {
   };
   return (
     <Space.Compact style={{ width: "100%" }}>
-      <Input value={content} onChange={handleChange} />
+      <Input.TextArea rows={5} value={content} onChange={handleChange} />
       <Button type="primary" onClick={handleSubmit}>
         추가
       </Button>
@@ -32,4 +32,4 @@ function ChoiceForm() {
   );
 }
 
-export default ChoiceForm;
+export default DescriptionForm;

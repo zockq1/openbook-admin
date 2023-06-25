@@ -5,13 +5,13 @@ import {
   useDeleteTopicMutation,
   useGetTopicQuery,
 } from "../store/api/topicApi";
-import ChoiceForm from "../components/TopicContent/Choice/ChoiceForm";
-import ChoiceList from "../components/TopicContent/Choice/ChoiceList";
-import ChoicesAutoCompleteModal from "../components/TopicContent/Choice/ChoicesAutoCompleteModal";
-import DescriptionList from "../components/TopicContent/Description/DescriptionList";
-import DescriptionForm from "../components/TopicContent/Description/DescriptionForm";
-import DescriptionsAutoCompleteModal from "../components/TopicContent/Description/DescriptionsAutoCompleteModal";
-import KeywordEditModal from "../components/TopicContent/Keyword/KeywordEditModal";
+import ChoiceForm from "../components/Choice/ChoiceForm";
+import ChoiceList from "../components/Choice/ChoiceList";
+import ChoicesAutoCompleteModal from "../components/Choice/ChoicesAutoCompleteModal";
+import DescriptionList from "../components/Description/DescriptionList";
+import DescriptionForm from "../components/Description/DescriptionForm";
+import DescriptionsAutoCompleteModal from "../components/Description/DescriptionsAutoCompleteModal";
+import KeywordEditModal from "../components/Keyword/KeywordEditModal";
 import { useGetKeywordListQuery } from "../store/api/KeywordApi";
 
 function TopicInfo() {

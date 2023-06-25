@@ -1,5 +1,5 @@
 import { List, Space, Input, Button } from "antd";
-import { ChoiceModel } from "../../../types/choiceType";
+import { ChoiceModel } from "../../types/choiceType";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 

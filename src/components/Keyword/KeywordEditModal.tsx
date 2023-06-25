@@ -4,7 +4,7 @@ import {
   useAddKeywordMutation,
   useDeleteKeywordMutation,
   useGetKeywordListQuery,
-} from "../../../store/api/KeywordApi";
+} from "../../store/api/KeywordApi";
 import { useParams } from "react-router-dom";
 
 function KeywordEditModal() {
@@ -63,6 +63,7 @@ function KeywordEditModal() {
       okType: "danger",
       cancelText: "아니오",
       onOk: async () => {
+        console.log("키워드: " + keyword + "주제: " + title);
         try {
           await deleteKeyword({
             keyword: String(keyword),

@@ -3,7 +3,7 @@ import {
   useDeleteChoiceMutation,
   useGetChoicesQuery,
   useUpdateChoiceMutation,
-} from "../../../store/api/choicesApi";
+} from "../../store/api/choicesApi";
 import { List } from "antd";
 import Choice from "./Choice";
 
