@@ -1,20 +1,19 @@
 import { Typography } from "antd";
-import { RootState } from "../../store/store";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { useUpdateChapterMutation } from "../../store/api/chapterApi";
+import {
+  useGetChapterTitleQuery,
+  useUpdateChapterMutation,
+} from "../../store/api/chapterApi";
 import { useParams } from "react-router-dom";
-import { setChapter } from "../../store/slices/chapterSlice";
 
 function ChapterTitle() {
-  const dispatch = useDispatch();
-  const { currentChapterTitle } = useSelector(
-    (state: RootState) => state.chapter
+  const { chapter } = useParams();
+  const { data: currentChapterTitle } = useGetChapterTitleQuery(
+    Number(chapter)
   );
   const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
   const isFirstRender = useRef(true);
   const [updateChapter] = useUpdateChapterMutation();
-  const { chapter } = useParams();
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -28,19 +27,13 @@ function ChapterTitle() {
             number: Number(chapter),
             title: chapterTitle,
           });
-          dispatch(
-            setChapter({
-              title: chapterTitle || "",
-              number: Number(chapter),
-            })
-          );
         } catch (error) {
           console.log(error);
         }
       };
       fetchData();
     }
-  }, [chapterTitle]);
+  }, [chapterTitle, chapter, currentChapterTitle, updateChapter]);
 
   return (
     <Typography.Title

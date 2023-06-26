@@ -1,7 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import chapterReducer from "./slices/chapterSlice";
 import authReducer from "./slices/authSlice";
 import { chapterApi } from "./api/chapterApi";
 import { topicApi } from "./api/topicApi";
@@ -18,7 +17,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  chapter: chapterReducer,
   auth: authReducer,
   [chapterApi.reducerPath]: chapterApi.reducer,
   [topicApi.reducerPath]: topicApi.reducer,

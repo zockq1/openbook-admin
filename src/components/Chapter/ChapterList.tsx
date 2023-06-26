@@ -1,8 +1,6 @@
 import { Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setChapter } from "../../store/slices/chapterSlice";
 import getItem from "../../services/getItem";
 import Title from "antd/es/typography/Title";
 import { useGetChaptersQuery } from "../../store/api/chapterApi";
@@ -18,30 +16,19 @@ const ChpterContainer = styled.div`
 `;
 
 function ChapterList() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { chapter } = useParams();
   const [items, setItems] = useState<MenuProps["items"]>([]);
-  const [chapterMap, setChapterMap] = useState<Map<number, string>>(new Map());
   const { data: chapterList } = useGetChaptersQuery();
 
   useEffect(() => {
-    const newChapterMap = new Map();
     const newItems = chapterList?.map((chapter) => {
-      newChapterMap.set(chapter.number, chapter.title);
-      return getItem(chapter.number + "단원", chapter.number);
+      return getItem(chapter + "단원", chapter);
     });
     setItems(newItems);
-    setChapterMap(newChapterMap);
   }, [chapterList]);
 
   const onClick: MenuProps["onClick"] = (e) => {
-    dispatch(
-      setChapter({
-        title: chapterMap.get(Number(e.key)) || "",
-        number: Number(e.key),
-      })
-    );
     navigate(`/topic/${e.key}`);
   };
 

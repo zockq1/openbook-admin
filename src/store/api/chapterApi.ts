@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ChapterModel } from "../../types/chapterTypes";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
@@ -7,13 +6,17 @@ export const chapterApi = createApi({
     baseUrl: process.env.REACT_APP_API_URL,
     credentials: "include",
   }),
-  tagTypes: ["ChapterList"],
+  tagTypes: ["ChapterList", "ChapterTitle"],
   endpoints: (builder) => ({
-    getChapters: builder.query<ChapterModel[], void>({
+    getChapters: builder.query<number[], void>({
       query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
     }),
-
+    getChapterTitle: builder.query<string, number>({
+      query: (chapterNumber) =>
+        `/admin/chapters/chapter-title?num=${chapterNumber}`,
+      providesTags: ["ChapterTitle"],
+    }),
     addChapter: builder.mutation({
       query: ({ number, title }) => {
         return {
@@ -32,7 +35,7 @@ export const chapterApi = createApi({
           body: { number, title },
         };
       },
-      invalidatesTags: ["ChapterList"],
+      invalidatesTags: ["ChapterTitle"],
     }),
     deleteChapter: builder.mutation({
       query: ({ number }) => {
@@ -51,4 +54,5 @@ export const {
   useAddChapterMutation,
   useUpdateChapterMutation,
   useDeleteChapterMutation,
+  useGetChapterTitleQuery,
 } = chapterApi;

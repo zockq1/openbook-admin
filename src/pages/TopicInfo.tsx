@@ -99,9 +99,11 @@ function TopicInfo() {
         </div>
         <br />
         <KeywordEditModal />
-        {keywordList?.map((keyword: string) => (
+        {keywordList?.map((keyword: string, index: number) => (
           <Space key={keyword}>
-            <span style={{ fontSize: 18 }}>{keyword}</span>
+            {index !== 0 ? <div>&nbsp;&nbsp;/</div> : null}
+
+            <div style={{ fontSize: 18 }}>{keyword}</div>
           </Space>
         ))}
       </div>
