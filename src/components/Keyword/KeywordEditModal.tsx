@@ -6,6 +6,7 @@ import {
   useGetKeywordListQuery,
 } from "../../store/api/KeywordApi";
 import { useParams } from "react-router-dom";
+import { KeywordModel } from "../../types/keywordType";
 
 function KeywordEditModal() {
   const { title } = useParams();
@@ -118,10 +119,10 @@ function KeywordEditModal() {
             </Button>
           </Form.Item>
         </Form>
-        {keywordList?.map((keyword: string) => (
-          <Space key={keyword}>
-            <span style={{ fontSize: 18 }}>{keyword}</span>
-            <Button onClick={() => handleDelete(keyword)} danger>
+        {keywordList?.map((keyword: KeywordModel, index: number) => (
+          <Space key={index}>
+            <span style={{ fontSize: 18 }}>{keyword.name}</span>
+            <Button onClick={() => handleDelete(keyword.name)} danger>
               삭제
             </Button>
             <span> </span>

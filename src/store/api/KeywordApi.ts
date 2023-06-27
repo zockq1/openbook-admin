@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AddKeywordModel } from "../../types/keywordType";
+import { AddKeywordModel, KeywordModel } from "../../types/keywordType";
 
 export const keywordApi = createApi({
   reducerPath: "keywordApi",
@@ -9,7 +9,7 @@ export const keywordApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    getKeywordList: builder.query<string[], string>({
+    getKeywordList: builder.query<KeywordModel[], string>({
       query: (topicTitle) => `/topics/${topicTitle}/keywords`,
       providesTags: ["KeywordList"],
     }),

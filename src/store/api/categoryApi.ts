@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { CategoryModel } from "../../types/categoryType";
 
 export const categoryApi = createApi({
   reducerPath: "categoryApi",
@@ -8,7 +9,7 @@ export const categoryApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    getCategoryList: builder.query<string[], void>({
+    getCategoryList: builder.query<CategoryModel[], void>({
       query: () => `/admin/categories`,
       providesTags: ["CategoryList"],
     }),

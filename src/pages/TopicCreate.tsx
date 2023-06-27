@@ -5,6 +5,7 @@ import { useAddTopicMutation } from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCategoryListQuery } from "../store/api/categoryApi";
 import CategoryEditModal from "../components/Category/CategoryEditModal";
+import { CategoryModel } from "../types/categoryType";
 
 const { Option } = Select;
 
@@ -61,9 +62,9 @@ function TopicCreate() {
         rules={[{ required: true, message: "분류를 선택해 주세요!" }]}
       >
         <Select>
-          {categoryList?.map((category: string) => (
-            <Option value={category} key={category}>
-              {category}
+          {categoryList?.map((category: CategoryModel) => (
+            <Option value={category.name} key={category.name}>
+              {category.name}
             </Option>
           ))}
         </Select>
