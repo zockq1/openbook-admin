@@ -5,6 +5,7 @@ import {
   useDeleteCategoryMutation,
   useGetCategoryListQuery,
 } from "../../store/api/categoryApi";
+import { CategoryModel } from "../../types/categoryType";
 
 function CategoryEditModal() {
   const [form] = Form.useForm();
@@ -111,10 +112,10 @@ function CategoryEditModal() {
             </Button>
           </Form.Item>
         </Form>
-        {categoryList?.map((category: string) => (
-          <Space key={category}>
-            <span style={{ fontSize: 18 }}>{category}</span>
-            <Button onClick={() => handleDelete(category)} danger>
+        {categoryList?.map((category: CategoryModel) => (
+          <Space key={category.name}>
+            <span style={{ fontSize: 18 }}>{category.name}</span>
+            <Button onClick={() => handleDelete(category.name)} danger>
               삭제
             </Button>
             <span> </span>

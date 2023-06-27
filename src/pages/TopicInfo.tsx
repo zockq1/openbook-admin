@@ -13,6 +13,7 @@ import DescriptionForm from "../components/Description/DescriptionForm";
 import DescriptionsAutoCompleteModal from "../components/Description/DescriptionsAutoCompleteModal";
 import KeywordEditModal from "../components/Keyword/KeywordEditModal";
 import { useGetKeywordListQuery } from "../store/api/KeywordApi";
+import { KeywordModel } from "../types/keywordType";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -50,7 +51,6 @@ function TopicInfo() {
       extra={
         <div>
           <Button onClick={handleUpdateClick}>수정</Button>
-          <span> </span>
           <Button danger type="primary" onClick={handleDeleteClick}>
             삭제
           </Button>
@@ -99,11 +99,10 @@ function TopicInfo() {
         </div>
         <br />
         <KeywordEditModal />
-        {keywordList?.map((keyword: string, index: number) => (
-          <Space key={keyword}>
+        {keywordList?.map((keyword: KeywordModel, index: number) => (
+          <Space key={index}>
             {index !== 0 ? <div>&nbsp;&nbsp;/</div> : null}
-
-            <div style={{ fontSize: 18 }}>{keyword}</div>
+            <div style={{ fontSize: 18 }}>{keyword.name}</div>
           </Space>
         ))}
       </div>
