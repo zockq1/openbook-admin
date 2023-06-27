@@ -1,6 +1,5 @@
 export interface DescriptionModel {
   content: string;
-  topic: string;
   id: number;
 }
 

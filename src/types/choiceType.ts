@@ -1,5 +1,4 @@
 export interface ChoiceModel {
-  topicTitle: string;
   content: string;
   id: number;
 }
