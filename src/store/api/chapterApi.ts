@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ChapterModel, ChapterTitleModel } from "../../types/chapterTypes";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
@@ -8,11 +9,11 @@ export const chapterApi = createApi({
   }),
   tagTypes: ["ChapterList", "ChapterTitle"],
   endpoints: (builder) => ({
-    getChapters: builder.query<number[], void>({
+    getChapters: builder.query<ChapterModel[], void>({
       query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
     }),
-    getChapterTitle: builder.query<string, number>({
+    getChapterTitle: builder.query<ChapterTitleModel, number>({
       query: (chapterNumber) =>
         `/admin/chapters/chapter-title?num=${chapterNumber}`,
       providesTags: ["ChapterTitle"],

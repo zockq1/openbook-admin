@@ -31,8 +31,10 @@ function TopicList() {
   const offset = (page - 1) * limit;
 
   useEffect(() => {
-    const currentPageTopic = topicList?.topicList.slice(offset, offset + 10);
-    const newItems = currentPageTopic?.map((topic) => getItem(topic, topic));
+    const currentPageTopic = topicList?.slice(offset, offset + 10);
+    const newItems = currentPageTopic?.map((topic) =>
+      getItem(topic.title, topic.title)
+    );
     setItems(newItems);
   }, [page, topicList, offset]);
 
@@ -52,7 +54,7 @@ function TopicList() {
       okType: "danger",
       cancelText: "아니오",
       onOk: async () => {
-        if (topicList?.topicList.length === 0) {
+        if (topicList?.length === 0) {
           try {
             await deleteChapter({ number: Number(chapter) }).unwrap();
             navigate(`/topic`);
@@ -79,7 +81,7 @@ function TopicList() {
         simple
         defaultCurrent={1}
         pageSize={10}
-        total={topicList?.topicList.length}
+        total={topicList?.length}
         onChange={handleChange}
       />
       <br />

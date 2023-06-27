@@ -7,3 +7,7 @@ export interface ChapterModel {
   title: string;
   number: number;
 }
+
+export interface ChapterTitleModel {
+  title: string;
+}

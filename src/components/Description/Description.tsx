@@ -2,6 +2,7 @@ import { List, Space, Input, Button } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { DescriptionModel } from "../../types/descriptionType";
+import DescriptionModal from "./DescriptionModal";
 
 interface DescriptionProps {
   data: DescriptionModel;
@@ -49,7 +50,8 @@ function Description({ data, onEdit, onDelete }: DescriptionProps) {
       {isEditing ? (
         <Input.TextArea rows={5} value={editContent} onChange={handleChange} />
       ) : (
-        <div>{data.content}</div>
+        <DescriptionModal text={data.content} />
+        //<div>{data.content}</div>
       )}
     </List.Item>
   );

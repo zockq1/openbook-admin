@@ -13,5 +13,11 @@ export interface UpdateTopicModel {
 }
 
 export interface TopicListModel {
-  topicList: string[];
+  category: string;
+  title: string;
+  startDate: number;
+  endDate: number;
+  descriptionCount: number;
+  choiceCount: number;
+  keywordCount: number;
 }

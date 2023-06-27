@@ -11,7 +11,7 @@ function ChapterTitle() {
   const { data: currentChapterTitle } = useGetChapterTitleQuery(
     Number(chapter)
   );
-  const [chapterTitle, setChapterTitle] = useState(currentChapterTitle);
+  const [chapterTitle, setChapterTitle] = useState(currentChapterTitle?.title);
   const isFirstRender = useRef(true);
   const [updateChapter] = useUpdateChapterMutation();
 
@@ -20,7 +20,10 @@ function ChapterTitle() {
       isFirstRender.current = false;
       return;
     }
-    if (chapterTitle !== currentChapterTitle) {
+    if (
+      chapterTitle !== currentChapterTitle?.title &&
+      chapterTitle !== undefined
+    ) {
       const fetchData = async () => {
         try {
           await updateChapter({
@@ -42,7 +45,7 @@ function ChapterTitle() {
       }}
       level={5}
     >
-      {currentChapterTitle}
+      {currentChapterTitle?.title}
     </Typography.Title>
   );
 }

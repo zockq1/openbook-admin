@@ -23,7 +23,7 @@ function ChapterList() {
 
   useEffect(() => {
     const newItems = chapterList?.map((chapter) => {
-      return getItem(chapter + "단원", chapter);
+      return getItem(chapter.number + "단원", chapter.number);
     });
     setItems(newItems);
   }, [chapterList]);
