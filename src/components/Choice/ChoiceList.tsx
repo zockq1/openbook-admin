@@ -4,7 +4,7 @@ import {
   useGetChoicesQuery,
   useUpdateChoiceMutation,
 } from "../../store/api/choicesApi";
-import { List } from "antd";
+import { List, Modal } from "antd";
 import Choice from "./Choice";
 
 function ChoiceList() {
@@ -22,11 +22,20 @@ function ChoiceList() {
   };
 
   const handleDelete = async (id: number) => {
-    try {
-      await deleteChoice(id);
-    } catch (error) {
-      console.log(error);
-    }
+    Modal.confirm({
+      title: "주의",
+      content: "정말 이 선지를 삭제하시겠습니까?",
+      okText: "예",
+      okType: "danger",
+      cancelText: "아니오",
+      onOk: async () => {
+        try {
+          await deleteChoice(id);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    });
   };
 
   return (

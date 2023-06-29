@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { List } from "antd";
+import { List, Modal } from "antd";
 import {
   useDeleteDescriptionMutation,
   useGetDescriptionsQuery,
@@ -22,11 +22,20 @@ function DescriptionList() {
   };
 
   const handleDelete = async (id: number) => {
-    try {
-      await deleteDescription(id);
-    } catch (error) {
-      console.log(error);
-    }
+    Modal.confirm({
+      title: "주의",
+      content: "정말 이 보기를 삭제하시겠습니까?",
+      okText: "예",
+      okType: "danger",
+      cancelText: "아니오",
+      onOk: async () => {
+        try {
+          await deleteDescription(id);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    });
   };
 
   return (
