@@ -1,13 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   AddDescriptionModel,
+  AddDuplicationChoiceModel,
+  DeleteDuplicationChoiceModel,
   DescriptionModel,
+  DuplicationChoiceModel,
   UpdateDescriptionModel,
 } from "../../types/descriptionType";
 
 export const descriptionApi = createApi({
   reducerPath: "descriptionApi",
-  tagTypes: ["descriptionList"],
+  tagTypes: ["descriptionList", "duplicationList"],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL,
     credentials: "include",
@@ -16,6 +19,10 @@ export const descriptionApi = createApi({
     getDescriptions: builder.query<DescriptionModel[], string>({
       query: (topicTitle) => `/topics/${topicTitle}/descriptions/`,
       providesTags: ["descriptionList"],
+    }),
+    getDuplicationChoice: builder.query<DuplicationChoiceModel[], number>({
+      query: (descriptionId: number) => `/admin/dup-contents/${descriptionId}`,
+      providesTags: ["duplicationList"],
     }),
     addDescription: builder.mutation({
       query: (descriptions: AddDescriptionModel) => {
@@ -26,6 +33,17 @@ export const descriptionApi = createApi({
         };
       },
       invalidatesTags: ["descriptionList"],
+    }),
+    addDuplicationChoice: builder.mutation({
+      query: (data: AddDuplicationChoiceModel) => {
+        return {
+          url: `/admin/dup-contents/${data.descriptionId}`,
+          method: "POST",
+          body: {
+            choiceList: data.choiceList,
+          },
+        };
+      },
     }),
     updateDescription: builder.mutation({
       query: ({ content, descriptionId }: UpdateDescriptionModel) => {
@@ -46,12 +64,26 @@ export const descriptionApi = createApi({
       },
       invalidatesTags: ["descriptionList"],
     }),
+    deleteDuplicationChoice: builder.mutation({
+      query: (data: DeleteDuplicationChoiceModel) => {
+        return {
+          url: `/admin/dup-contents/${data.descriptionId}`,
+          method: "Delete",
+          body: {
+            choiceList: data.choiceId,
+          },
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useGetDescriptionsQuery,
+  useGetDuplicationChoiceQuery,
   useAddDescriptionMutation,
+  useAddDuplicationChoiceMutation,
   useUpdateDescriptionMutation,
   useDeleteDescriptionMutation,
+  useDeleteDuplicationChoiceMutation,
 } = descriptionApi;

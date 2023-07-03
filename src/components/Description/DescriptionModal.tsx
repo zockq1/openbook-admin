@@ -4,13 +4,21 @@ import { useGetChaptersQuery } from "../../store/api/chapterApi";
 import getItem from "../../services/getItem";
 import { useParams } from "react-router-dom";
 import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
-import { useGetDescriptionsQuery } from "../../store/api/descriptionApi";
+import { useGetChoicesQuery } from "../../store/api/choicesApi";
+import styled from "styled-components";
+import { useAddDuplicationChoiceMutation } from "../../store/api/descriptionApi";
+
+const Box = styled.div`
+  display: flex;
+`;
+const TopicListBox = styled.div``;
 
 interface DescriptionProps {
-  text: string;
+  descriptionId: number;
+  content: string;
 }
 
-function DescriptionModal({ text }: DescriptionProps) {
+function DescriptionModal({ content, descriptionId }: DescriptionProps) {
   const { title, chapter } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChapter, setSelectedChapter] = useState<number>(
@@ -27,7 +35,9 @@ function DescriptionModal({ text }: DescriptionProps) {
 
   const { data: chapterList } = useGetChaptersQuery();
   const { data: topicList } = useGetChapterTopicListQuery(selectedChapter);
-  const { data: descriptionList } = useGetDescriptionsQuery(selectedTopic);
+  const { data: choiceList } = useGetChoicesQuery(selectedTopic);
+
+  const [addDuplicationChoice] = useAddDuplicationChoiceMutation();
 
   useEffect(() => {
     const newItems = chapterList?.map((chapter) => {
@@ -56,6 +66,13 @@ function DescriptionModal({ text }: DescriptionProps) {
     setSelectedTopic(String(e.key));
   };
 
+  const onClickChoice = (choiceId: number) => {
+    addDuplicationChoice({
+      choiceList: [choiceId],
+      descriptionId,
+    });
+  };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -65,39 +82,46 @@ function DescriptionModal({ text }: DescriptionProps) {
   };
   return (
     <>
-      <div onClick={showModal}>{text}</div>
+      <div onClick={showModal}>{content}</div>
       <Modal
         title="보기와 내용이 겹치는 선지 선택"
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
-        style={{ display: "flex" }}
       >
-        <Menu
-          onClick={onClickChapter}
-          mode="inline"
-          items={chapters}
-          defaultSelectedKeys={[`${chapter}`]}
-          style={{ borderInlineEnd: "unset" }}
-        />
-        <Menu
-          onClick={onClickTopic}
-          mode="inline"
-          items={topics}
-          style={{ borderInlineEnd: "unset" }}
-        />
-        <Pagination
-          simple
-          defaultCurrent={1}
-          pageSize={10}
-          total={topicList?.length}
-          onChange={handleChange}
-        />
+        <Box>
+          <Menu
+            onClick={onClickChapter}
+            mode="inline"
+            items={chapters}
+            defaultSelectedKeys={[`${chapter}`]}
+            style={{ borderInlineEnd: "unset", width: 90 }}
+          />
+          <TopicListBox>
+            <Menu
+              onClick={onClickTopic}
+              mode="inline"
+              items={topics}
+              style={{ borderInlineEnd: "unset" }}
+            />
+            <Pagination
+              simple
+              defaultCurrent={1}
+              pageSize={10}
+              total={topicList?.length}
+              onChange={handleChange}
+            />
+          </TopicListBox>
 
-        <List
-          dataSource={descriptionList}
-          renderItem={(item) => <div>{item.content}</div>}
-        />
+          <List
+            dataSource={choiceList}
+            renderItem={(item) => (
+              <List.Item key={item.id} onClick={() => onClickChoice(item.id)}>
+                {item.content}
+              </List.Item>
+            )}
+          />
+        </Box>
       </Modal>
     </>
   );

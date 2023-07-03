@@ -50,8 +50,7 @@ function Description({ data, onEdit, onDelete }: DescriptionProps) {
       {isEditing ? (
         <Input.TextArea rows={5} value={editContent} onChange={handleChange} />
       ) : (
-        <DescriptionModal text={data.content} />
-        //<div>{data.content}</div>
+        <DescriptionModal content={data.content} descriptionId={data.id} />
       )}
     </List.Item>
   );
