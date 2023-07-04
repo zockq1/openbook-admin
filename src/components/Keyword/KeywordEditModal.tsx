@@ -7,6 +7,7 @@ import {
 } from "../../store/api/KeywordApi";
 import { useParams } from "react-router-dom";
 import { KeywordModel } from "../../types/keywordType";
+import errorMessage from "../../services/errorMessage";
 
 function KeywordEditModal() {
   const { title } = useParams();
@@ -43,16 +44,13 @@ function KeywordEditModal() {
   const onSubmit = async (values: any) => {
     try {
       const { keyword } = values;
-      await addKeyword({ keyword: String(keyword), topicTitle: String(title) });
+      await addKeyword({
+        keyword: String(keyword),
+        topicTitle: String(title),
+      }).unwrap();
       form.resetFields();
-    } catch (error: any) {
-      console.error(error);
-      error.data.forEach((data: any) => {
-        notification.error({
-          message: "Error",
-          description: data.message,
-        });
-      });
+    } catch (error) {
+      errorMessage(error);
     }
   };
 
@@ -70,14 +68,8 @@ function KeywordEditModal() {
             keyword: String(keyword),
             topicTitle: String(title),
           }).unwrap();
-        } catch (error: any) {
-          console.error(error);
-          error.data.forEach((data: any) => {
-            notification.error({
-              message: "Error",
-              description: data.message,
-            });
-          });
+        } catch (error) {
+          errorMessage(error);
         }
       },
     });

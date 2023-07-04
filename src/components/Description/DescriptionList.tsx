@@ -6,6 +6,7 @@ import {
   useUpdateDescriptionMutation,
 } from "../../store/api/descriptionApi";
 import Description from "./Description";
+import errorMessage from "../../services/errorMessage";
 
 function DescriptionList() {
   const { title } = useParams();
@@ -15,9 +16,9 @@ function DescriptionList() {
 
   const handleEdit = async (id: number, content: string) => {
     try {
-      await updateDescription({ descriptionId: id, content });
+      await updateDescription({ descriptionId: id, content }).unwrap();
     } catch (error) {
-      console.log(error);
+      errorMessage(error);
     }
   };
 
@@ -30,9 +31,9 @@ function DescriptionList() {
       cancelText: "아니오",
       onOk: async () => {
         try {
-          await deleteDescription(id);
+          await deleteDescription(id).unwrap();
         } catch (error) {
-          console.error(error);
+          errorMessage(error);
         }
       },
     });

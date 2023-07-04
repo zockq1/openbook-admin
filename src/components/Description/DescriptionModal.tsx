@@ -7,6 +7,7 @@ import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
 import { useGetChoicesQuery } from "../../store/api/choicesApi";
 import styled from "styled-components";
 import { useAddDuplicationChoiceMutation } from "../../store/api/descriptionApi";
+import errorMessage from "../../services/errorMessage";
 
 const Box = styled.div`
   display: flex;
@@ -66,11 +67,15 @@ function DescriptionModal({ content, descriptionId }: DescriptionProps) {
     setSelectedTopic(String(e.key));
   };
 
-  const onClickChoice = (choiceId: number) => {
-    addDuplicationChoice({
-      choiceList: [choiceId],
-      descriptionId,
-    });
+  const onClickChoice = async (choiceId: number) => {
+    try {
+      await addDuplicationChoice({
+        choiceList: [choiceId],
+        descriptionId,
+      }).unwrap();
+    } catch (error) {
+      errorMessage(error);
+    }
   };
 
   const showModal = () => {

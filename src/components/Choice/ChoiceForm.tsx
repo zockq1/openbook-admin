@@ -2,6 +2,7 @@ import { Button, Input, Space } from "antd";
 import { useState } from "react";
 import { useAddChoicesMutation } from "../../store/api/choicesApi";
 import { useParams } from "react-router-dom";
+import errorMessage from "../../services/errorMessage";
 
 function ChoiceForm() {
   const [content, setContent] = useState("");
@@ -11,10 +12,10 @@ function ChoiceForm() {
   const handleSubmit = async () => {
     if (typeof title === "string") {
       try {
-        await addChoices({ choiceArr: [content], topicTitle: title });
+        await addChoices({ choiceArr: [content], topicTitle: title }).unwrap();
         setContent("");
       } catch (error) {
-        console.log(error);
+        errorMessage(error);
       }
     }
   };

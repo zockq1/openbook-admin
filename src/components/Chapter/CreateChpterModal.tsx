@@ -1,6 +1,7 @@
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { useAddChapterMutation } from "../../store/api/chapterApi";
+import errorMessage from "../../services/errorMessage";
 
 function CreateChapterModal() {
   const [addChapter] = useAddChapterMutation();
@@ -17,16 +18,15 @@ function CreateChapterModal() {
   };
 
   const onSubmit = async (values: any) => {
-    console.log("Received values of form: ", values);
     try {
       const { chapterTitle, chapterNumber } = values;
       await addChapter({
         number: chapterNumber,
         title: chapterTitle,
-      });
+      }).unwrap();
       form.resetFields();
     } catch (error) {
-      console.error(error);
+      errorMessage(error);
     }
     setIsModalOpen(false);
   };

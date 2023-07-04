@@ -2,6 +2,7 @@ import { Button, Input, Space } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAddDescriptionMutation } from "../../store/api/descriptionApi";
+import errorMessage from "../../services/errorMessage";
 
 function DescriptionForm() {
   const [content, setContent] = useState("");
@@ -11,10 +12,13 @@ function DescriptionForm() {
   const handleSubmit = async () => {
     if (typeof title === "string") {
       try {
-        await addDescription({ contentList: [content], topicTitle: title });
+        await addDescription({
+          contentList: [content],
+          topicTitle: title,
+        }).unwrap();
         setContent("");
       } catch (error) {
-        console.log(error);
+        errorMessage(error);
       }
     }
   };

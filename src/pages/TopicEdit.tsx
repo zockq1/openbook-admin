@@ -7,6 +7,7 @@ import {
 } from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
 import CategoryEditModal from "../components/Category/CategoryEditModal";
+import errorMessage from "../services/errorMessage";
 const { Option } = Select;
 
 function TopicEdit() {
@@ -29,7 +30,7 @@ function TopicEdit() {
       await updateTopic({ updatedTopic, title }).unwrap();
       navigate(`/topic/${chapter}/${values.title}`);
     } catch (error) {
-      console.error(error);
+      errorMessage(error);
     }
   };
 

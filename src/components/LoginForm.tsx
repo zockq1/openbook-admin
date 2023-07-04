@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { login as loginAction } from "../store/slices/authSlice";
+import errorMessage from "../services/errorMessage";
 
 const LoginFormContainer = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ function LoginForm() {
       dispatch(loginAction());
       navigate(`/topic`);
     } catch (error: any) {
-      console.error(error);
+      errorMessage(error);
     }
   };
 

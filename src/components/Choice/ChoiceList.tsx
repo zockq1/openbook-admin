@@ -6,6 +6,7 @@ import {
 } from "../../store/api/choicesApi";
 import { List, Modal } from "antd";
 import Choice from "./Choice";
+import errorMessage from "../../services/errorMessage";
 
 function ChoiceList() {
   const { title } = useParams();
@@ -15,9 +16,9 @@ function ChoiceList() {
 
   const handleEdit = async (id: number, content: string) => {
     try {
-      await updateChoice({ id, content });
+      await updateChoice({ id, content }).unwrap();
     } catch (error) {
-      console.log(error);
+      errorMessage(error);
     }
   };
 
@@ -30,9 +31,9 @@ function ChoiceList() {
       cancelText: "아니오",
       onOk: async () => {
         try {
-          await deleteChoice(id);
+          await deleteChoice(id).unwrap();
         } catch (error) {
-          console.error(error);
+          errorMessage(error);
         }
       },
     });

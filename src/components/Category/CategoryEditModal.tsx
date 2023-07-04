@@ -6,6 +6,7 @@ import {
   useGetCategoryListQuery,
 } from "../../store/api/categoryApi";
 import { CategoryModel } from "../../types/categoryType";
+import errorMessage from "../../services/errorMessage";
 
 function CategoryEditModal() {
   const [form] = Form.useForm();
@@ -40,16 +41,10 @@ function CategoryEditModal() {
   const onSubmit = async (values: any) => {
     try {
       const { categoryName } = values;
-      await addCategory(categoryName);
+      await addCategory(categoryName).unwrap();
       form.resetFields();
-    } catch (error: any) {
-      console.error(error);
-      error.data.forEach((data: any) => {
-        notification.error({
-          message: "Error",
-          description: data.message,
-        });
-      });
+    } catch (error) {
+      errorMessage(error);
     }
   };
 
@@ -63,14 +58,8 @@ function CategoryEditModal() {
       onOk: async () => {
         try {
           await deleteCategory(category).unwrap();
-        } catch (error: any) {
-          console.error(error);
-          error.data.forEach((data: any) => {
-            notification.error({
-              message: "Error",
-              description: data.message,
-            });
-          });
+        } catch (error) {
+          errorMessage(error);
         }
       },
     });
