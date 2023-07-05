@@ -6,7 +6,7 @@ import {
   useGetCategoryListQuery,
 } from "../../store/api/categoryApi";
 import { CategoryModel } from "../../types/categoryType";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function CategoryEditModal() {
   const [form] = Form.useForm();
@@ -44,7 +44,7 @@ function CategoryEditModal() {
       await addCategory(categoryName).unwrap();
       form.resetFields();
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
   };
 
@@ -59,7 +59,7 @@ function CategoryEditModal() {
         try {
           await deleteCategory(category).unwrap();
         } catch (error) {
-          errorMessage(error);
+          mutationErrorNotification(error);
         }
       },
     });

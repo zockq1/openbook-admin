@@ -7,7 +7,7 @@ import {
 } from "../../store/api/KeywordApi";
 import { useParams } from "react-router-dom";
 import { KeywordModel } from "../../types/keywordType";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function KeywordEditModal() {
   const { title } = useParams();
@@ -50,7 +50,7 @@ function KeywordEditModal() {
       }).unwrap();
       form.resetFields();
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
   };
 
@@ -69,7 +69,7 @@ function KeywordEditModal() {
             topicTitle: String(title),
           }).unwrap();
         } catch (error) {
-          errorMessage(error);
+          mutationErrorNotification(error);
         }
       },
     });

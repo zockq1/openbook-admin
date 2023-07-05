@@ -7,7 +7,7 @@ import getItem from "../../services/getItem";
 import { useDeleteChapterMutation } from "../../store/api/chapterApi";
 import ChapterTitle from "../Chapter/ChapterTitle";
 import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 const TopicMenu = styled(Menu)`
   width: 300px;
@@ -60,7 +60,7 @@ function TopicList() {
             await deleteChapter({ number: Number(chapter) }).unwrap();
             navigate(`/topic`);
           } catch (error) {
-            errorMessage(error);
+            mutationErrorNotification(error);
           }
         } else {
           window.alert("해당 단원에 주제가 없을 때만 삭제 가능합니다.!");

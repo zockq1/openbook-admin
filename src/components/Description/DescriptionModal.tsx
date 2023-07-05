@@ -7,7 +7,7 @@ import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
 import { useGetChoicesQuery } from "../../store/api/choicesApi";
 import styled from "styled-components";
 import { useAddDuplicationChoiceMutation } from "../../store/api/descriptionApi";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 const Box = styled.div`
   display: flex;
@@ -74,7 +74,7 @@ function DescriptionModal({ content, descriptionId }: DescriptionProps) {
         descriptionId,
       }).unwrap();
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
   };
 

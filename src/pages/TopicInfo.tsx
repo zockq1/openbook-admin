@@ -14,7 +14,7 @@ import DescriptionsAutoCompleteModal from "../components/Description/Description
 import KeywordEditModal from "../components/Keyword/KeywordEditModal";
 import { useGetKeywordListQuery } from "../store/api/KeywordApi";
 import { KeywordModel } from "../types/keywordType";
-import errorMessage from "../services/errorMessage";
+import { mutationErrorNotification } from "../services/errorNotification";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function TopicInfo() {
           await deleteTopic({ title: title }).unwrap();
           navigate(`/topic/${chapter}`);
         } catch (error) {
-          errorMessage(error);
+          mutationErrorNotification(error);
         }
       },
     });

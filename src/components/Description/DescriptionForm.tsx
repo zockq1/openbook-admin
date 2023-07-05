@@ -2,7 +2,7 @@ import { Button, Input, Space } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAddDescriptionMutation } from "../../store/api/descriptionApi";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function DescriptionForm() {
   const [content, setContent] = useState("");
@@ -18,7 +18,7 @@ function DescriptionForm() {
         }).unwrap();
         setContent("");
       } catch (error) {
-        errorMessage(error);
+        mutationErrorNotification(error);
       }
     }
   };

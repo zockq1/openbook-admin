@@ -6,7 +6,7 @@ import {
 } from "../../store/api/choicesApi";
 import { List, Modal } from "antd";
 import Choice from "./Choice";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function ChoiceList() {
   const { title } = useParams();
@@ -18,7 +18,7 @@ function ChoiceList() {
     try {
       await updateChoice({ id, content }).unwrap();
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
   };
 
@@ -33,7 +33,7 @@ function ChoiceList() {
         try {
           await deleteChoice(id).unwrap();
         } catch (error) {
-          errorMessage(error);
+          mutationErrorNotification(error);
         }
       },
     });

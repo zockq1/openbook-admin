@@ -1,6 +1,6 @@
 import { notification } from "antd";
 
-export default function errorMessage(error: any) {
+export function mutationErrorNotification(error: any) {
   if (error.status && error.data.errorMessage) {
     notification.error({
       message: "에러 발생",

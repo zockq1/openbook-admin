@@ -2,7 +2,7 @@ import { Button, Input, Space } from "antd";
 import { useState } from "react";
 import { useAddChoicesMutation } from "../../store/api/choicesApi";
 import { useParams } from "react-router-dom";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function ChoiceForm() {
   const [content, setContent] = useState("");
@@ -15,7 +15,7 @@ function ChoiceForm() {
         await addChoices({ choiceArr: [content], topicTitle: title }).unwrap();
         setContent("");
       } catch (error) {
-        errorMessage(error);
+        mutationErrorNotification(error);
       }
     }
   };

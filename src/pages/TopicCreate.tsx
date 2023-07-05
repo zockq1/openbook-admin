@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetCategoryListQuery } from "../store/api/categoryApi";
 import CategoryEditModal from "../components/Category/CategoryEditModal";
 import { CategoryModel } from "../types/categoryType";
-import errorMessage from "../services/errorMessage";
+import { mutationErrorNotification } from "../services/errorNotification";
 
 const { Option } = Select;
 
@@ -30,7 +30,7 @@ function TopicCreate() {
       await addTopic(newTopic).unwrap();
       navigate(`/topic/${chapter}/${values.title}`);
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
   };
 

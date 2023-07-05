@@ -6,7 +6,7 @@ import {
   useUpdateDescriptionMutation,
 } from "../../store/api/descriptionApi";
 import Description from "./Description";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function DescriptionList() {
   const { title } = useParams();
@@ -18,7 +18,7 @@ function DescriptionList() {
     try {
       await updateDescription({ descriptionId: id, content }).unwrap();
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
   };
 
@@ -33,7 +33,7 @@ function DescriptionList() {
         try {
           await deleteDescription(id).unwrap();
         } catch (error) {
-          errorMessage(error);
+          mutationErrorNotification(error);
         }
       },
     });

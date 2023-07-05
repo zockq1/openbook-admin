@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { useAddChapterMutation } from "../../store/api/chapterApi";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function CreateChapterModal() {
   const [addChapter] = useAddChapterMutation();
@@ -26,7 +26,7 @@ function CreateChapterModal() {
       }).unwrap();
       form.resetFields();
     } catch (error) {
-      errorMessage(error);
+      mutationErrorNotification(error);
     }
     setIsModalOpen(false);
   };

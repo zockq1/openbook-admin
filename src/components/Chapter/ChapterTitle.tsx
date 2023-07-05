@@ -5,7 +5,7 @@ import {
   useUpdateChapterMutation,
 } from "../../store/api/chapterApi";
 import { useParams } from "react-router-dom";
-import errorMessage from "../../services/errorMessage";
+import { mutationErrorNotification } from "../../services/errorNotification";
 
 function ChapterTitle() {
   const { chapter } = useParams();
@@ -32,7 +32,7 @@ function ChapterTitle() {
             title: chapterTitle,
           }).unwrap();
         } catch (error) {
-          errorMessage(error);
+          mutationErrorNotification(error);
         }
       };
       fetchData();
