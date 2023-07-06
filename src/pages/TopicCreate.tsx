@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Select, Button } from "antd";
 import { TopicModel } from "../types/topicTypes";
 import { useAddTopicMutation } from "../store/api/topicApi";
@@ -6,7 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetCategoryListQuery } from "../store/api/categoryApi";
 import CategoryEditModal from "../components/Category/CategoryEditModal";
 import { CategoryModel } from "../types/categoryType";
-import { mutationErrorNotification } from "../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../services/errorNotification";
 
 const { Option } = Select;
 
@@ -14,7 +17,12 @@ function TopicCreate() {
   const navigate = useNavigate();
   const [addTopic] = useAddTopicMutation();
   const { chapter } = useParams();
-  const { data: categoryList } = useGetCategoryListQuery();
+  const { data: categoryList, error: categoryListError } =
+    useGetCategoryListQuery();
+
+  useEffect(() => {
+    queryErrorNotification(categoryListError, "분류 목록");
+  }, [categoryListError]);
 
   const onFinish = async (values: any) => {
     const newTopic: TopicModel = {

@@ -1,5 +1,5 @@
 import { Button, Card, Modal, Space } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteTopicMutation,
@@ -14,14 +14,27 @@ import DescriptionsAutoCompleteModal from "../components/Description/Description
 import KeywordEditModal from "../components/Keyword/KeywordEditModal";
 import { useGetKeywordListQuery } from "../store/api/KeywordApi";
 import { KeywordModel } from "../types/keywordType";
-import { mutationErrorNotification } from "../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../services/errorNotification";
 
 function TopicInfo() {
   const navigate = useNavigate();
   const { title, chapter } = useParams();
-  const { data: topic } = useGetTopicQuery(title ? title : "");
+  const { data: topic, error: topicError } = useGetTopicQuery(String(title));
+  const { data: keywordList, error: keywordListError } = useGetKeywordListQuery(
+    String(title)
+  );
   const [deleteTopic] = useDeleteTopicMutation();
-  const { data: keywordList } = useGetKeywordListQuery(title ? title : "");
+
+  useEffect(() => {
+    queryErrorNotification(topicError, "주제 정보");
+  }, [topicError]);
+
+  useEffect(() => {
+    queryErrorNotification(keywordListError, "키워드 목록");
+  }, [keywordListError]);
 
   const handleDeleteClick = async () => {
     Modal.confirm({

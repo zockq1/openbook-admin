@@ -7,7 +7,10 @@ import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
 import { useGetChoicesQuery } from "../../store/api/choicesApi";
 import styled from "styled-components";
 import { useAddDuplicationChoiceMutation } from "../../store/api/descriptionApi";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
 
 const Box = styled.div`
   display: flex;
@@ -34,11 +37,25 @@ function DescriptionModal({ content, descriptionId }: DescriptionProps) {
   const limit = 10;
   const offset = (page - 1) * limit;
 
-  const { data: chapterList } = useGetChaptersQuery();
-  const { data: topicList } = useGetChapterTopicListQuery(selectedChapter);
-  const { data: choiceList } = useGetChoicesQuery(selectedTopic);
+  const { data: chapterList, error: chapterListError } = useGetChaptersQuery();
+  const { data: topicList, error: topicListError } =
+    useGetChapterTopicListQuery(selectedChapter);
+  const { data: choiceList, error: choiceListError } =
+    useGetChoicesQuery(selectedTopic);
 
   const [addDuplicationChoice] = useAddDuplicationChoiceMutation();
+
+  useEffect(() => {
+    queryErrorNotification(chapterListError, "단원 목록");
+  }, [chapterListError]);
+
+  useEffect(() => {
+    queryErrorNotification(topicListError, "주제 목록");
+  }, [topicListError]);
+
+  useEffect(() => {
+    queryErrorNotification(choiceListError, "선지 목록");
+  }, [choiceListError]);
 
   useEffect(() => {
     const newItems = chapterList?.map((chapter) => {

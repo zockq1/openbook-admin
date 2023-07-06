@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Space, notification } from "antd";
+import { Button, Form, Input, Modal, Space } from "antd";
 import { useEffect, useState } from "react";
 import {
   useAddKeywordMutation,
@@ -7,7 +7,10 @@ import {
 } from "../../store/api/KeywordApi";
 import { useParams } from "react-router-dom";
 import { KeywordModel } from "../../types/keywordType";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
 
 function KeywordEditModal() {
   const { title } = useParams();
@@ -16,17 +19,11 @@ function KeywordEditModal() {
   const [addKeyword] = useAddKeywordMutation();
   const [deleteKeyword] = useDeleteKeywordMutation();
   const { data: keywordList, error: keywordListError } = useGetKeywordListQuery(
-    title ? title : ""
+    String(title)
   );
 
   useEffect(() => {
-    if (keywordListError) {
-      console.error(keywordListError);
-      notification.error({
-        message: "에러 발생",
-        description: "키워드 목록을 불러오는 도중에 에러가 발생했습니다.",
-      });
-    }
+    queryErrorNotification(keywordListError, "키워드 목록");
   }, [keywordListError]);
 
   const showModal = () => {

@@ -7,7 +7,10 @@ import getItem from "../../services/getItem";
 import { useDeleteChapterMutation } from "../../store/api/chapterApi";
 import ChapterTitle from "../Chapter/ChapterTitle";
 import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
 
 const TopicMenu = styled(Menu)`
   width: 300px;
@@ -26,10 +29,15 @@ function TopicList() {
   const { chapter } = useParams();
   const [deleteChapter] = useDeleteChapterMutation();
   const [items, setItems] = useState<MenuProps["items"]>([]);
-  const { data: topicList } = useGetChapterTopicListQuery(Number(chapter));
+  const { data: topicList, error: topicListError } =
+    useGetChapterTopicListQuery(Number(chapter));
   const [page, setPage] = useState(1);
   const limit = 10;
   const offset = (page - 1) * limit;
+
+  useEffect(() => {
+    queryErrorNotification(topicListError, "주제 목록");
+  }, [topicListError]);
 
   useEffect(() => {
     const currentPageTopic = topicList?.slice(offset, offset + 10);

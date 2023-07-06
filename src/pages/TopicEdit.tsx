@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Select, Button } from "antd";
 import { TopicModel } from "../types/topicTypes";
 import {
@@ -7,14 +7,21 @@ import {
 } from "../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
 import CategoryEditModal from "../components/Category/CategoryEditModal";
-import { mutationErrorNotification } from "../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../services/errorNotification";
 const { Option } = Select;
 
 function TopicEdit() {
   const navigate = useNavigate();
   const { title, chapter } = useParams();
-  const { data: topic } = useGetTopicQuery(title ? title : "");
+  const { data: topic, error: topicError } = useGetTopicQuery(String(title));
   const [updateTopic] = useUpdateTopicMutation();
+
+  useEffect(() => {
+    queryErrorNotification(topicError, "주제 정보");
+  }, [topicError]);
 
   const onFinish = async (values: any) => {
     const updatedTopic: TopicModel = {

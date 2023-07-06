@@ -6,13 +6,23 @@ import {
 } from "../../store/api/choicesApi";
 import { List, Modal } from "antd";
 import Choice from "./Choice";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
+import { useEffect } from "react";
 
 function ChoiceList() {
   const { title } = useParams();
-  const { data } = useGetChoicesQuery(title || "");
+  const { data: choiceList, error: choiceListError } = useGetChoicesQuery(
+    String(title)
+  );
   const [updateChoice] = useUpdateChoiceMutation();
   const [deleteChoice] = useDeleteChoiceMutation();
+
+  useEffect(() => {
+    queryErrorNotification(choiceListError, "선지 목록");
+  }, [choiceListError]);
 
   const handleEdit = async (id: number, content: string) => {
     try {
@@ -41,7 +51,7 @@ function ChoiceList() {
 
   return (
     <List
-      dataSource={data}
+      dataSource={choiceList}
       renderItem={(item) => (
         <Choice data={item} onEdit={handleEdit} onDelete={handleDelete} />
       )}

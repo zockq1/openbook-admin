@@ -6,6 +6,7 @@ import Title from "antd/es/typography/Title";
 import { useGetChaptersQuery } from "../../store/api/chapterApi";
 import CreateChapterModal from "./CreateChpterModal";
 import { useNavigate, useParams } from "react-router-dom";
+import { queryErrorNotification } from "../../services/errorNotification";
 
 const ChpterContainer = styled.div`
   width: 90px;
@@ -19,7 +20,11 @@ function ChapterList() {
   const navigate = useNavigate();
   const { chapter } = useParams();
   const [items, setItems] = useState<MenuProps["items"]>([]);
-  const { data: chapterList } = useGetChaptersQuery();
+  const { data: chapterList, error: chapterError } = useGetChaptersQuery();
+
+  useEffect(() => {
+    queryErrorNotification(chapterError, "단원 목록");
+  }, [chapterError]);
 
   useEffect(() => {
     const newItems = chapterList?.map((chapter) => {

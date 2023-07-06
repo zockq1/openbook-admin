@@ -5,16 +5,22 @@ import {
   useUpdateChapterMutation,
 } from "../../store/api/chapterApi";
 import { useParams } from "react-router-dom";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
 
 function ChapterTitle() {
   const { chapter } = useParams();
-  const { data: currentChapterTitle } = useGetChapterTitleQuery(
-    Number(chapter)
-  );
+  const { data: currentChapterTitle, error: chapterTitleError } =
+    useGetChapterTitleQuery(Number(chapter));
   const [chapterTitle, setChapterTitle] = useState(currentChapterTitle?.title);
   const isFirstRender = useRef(true);
   const [updateChapter] = useUpdateChapterMutation();
+
+  useEffect(() => {
+    queryErrorNotification(chapterTitleError, "단원 이름");
+  }, [chapterTitleError]);
 
   useEffect(() => {
     if (isFirstRender.current) {

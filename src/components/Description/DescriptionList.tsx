@@ -6,13 +6,22 @@ import {
   useUpdateDescriptionMutation,
 } from "../../store/api/descriptionApi";
 import Description from "./Description";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
+import { useEffect } from "react";
 
 function DescriptionList() {
   const { title } = useParams();
-  const { data } = useGetDescriptionsQuery(title || "");
+  const { data: descriptionList, error: descriptionListError } =
+    useGetDescriptionsQuery(String(title));
   const [updateDescription] = useUpdateDescriptionMutation();
   const [deleteDescription] = useDeleteDescriptionMutation();
+
+  useEffect(() => {
+    queryErrorNotification(descriptionListError, "보기 목록");
+  }, [descriptionListError]);
 
   const handleEdit = async (id: number, content: string) => {
     try {
@@ -41,7 +50,7 @@ function DescriptionList() {
 
   return (
     <List
-      dataSource={data}
+      dataSource={descriptionList}
       renderItem={(item) => (
         <Description data={item} onEdit={handleEdit} onDelete={handleDelete} />
       )}

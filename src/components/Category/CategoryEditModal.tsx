@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Space, notification } from "antd";
+import { Button, Form, Input, Modal, Space } from "antd";
 import { useEffect, useState } from "react";
 import {
   useAddCategoryMutation,
@@ -6,7 +6,10 @@ import {
   useGetCategoryListQuery,
 } from "../../store/api/categoryApi";
 import { CategoryModel } from "../../types/categoryType";
-import { mutationErrorNotification } from "../../services/errorNotification";
+import {
+  mutationErrorNotification,
+  queryErrorNotification,
+} from "../../services/errorNotification";
 
 function CategoryEditModal() {
   const [form] = Form.useForm();
@@ -17,13 +20,7 @@ function CategoryEditModal() {
     useGetCategoryListQuery();
 
   useEffect(() => {
-    if (categoryListError) {
-      console.error(categoryListError);
-      notification.error({
-        message: "에러 발생",
-        description: "카테고리 목록을 불러오는 도중에 에러가 발생했습니다.",
-      });
-    }
+    queryErrorNotification(categoryListError, "분류 목록");
   }, [categoryListError]);
 
   const showModal = () => {
