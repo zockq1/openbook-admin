@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import TopicInfo from "./pages/TopicInfo";
+import TopicInfo from "./components/Topic/TopicInfo";
 import Topic from "./pages/Topic";
-import TopicCreate from "./pages/TopicCreate";
-import TopicEdit from "./pages/TopicEdit";
 import Question from "./pages/Question";
+import CreateTopic from "./components/Topic/CreateTopic";
+import EditTopic from "./components/Topic/EditTopic";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
           },
           {
             path: "create",
-            element: <TopicCreate />,
+            element: <CreateTopic />,
           },
           {
             path: "question",
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":title/edit",
-            element: <TopicEdit />,
+            element: <EditTopic />,
           },
         ],
       },

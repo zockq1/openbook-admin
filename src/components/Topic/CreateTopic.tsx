@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { Form, Input, Select, Button } from "antd";
-import { TopicModel } from "../types/topicTypes";
-import { useAddTopicMutation } from "../store/api/topicApi";
+import { TopicModel } from "../../types/topicTypes";
+import { useAddTopicMutation } from "../../store/api/topicApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetCategoryListQuery } from "../store/api/categoryApi";
-import CategoryEditModal from "../components/Category/CategoryEditModal";
-import { CategoryModel } from "../types/categoryType";
+import { useGetCategoryListQuery } from "../../store/api/categoryApi";
+import CategoryEditModal from "../Category/CategoryEditModal";
+import { CategoryModel } from "../../types/categoryType";
 import {
   mutationErrorNotification,
   queryErrorNotification,
-} from "../services/errorNotification";
+} from "../../services/errorNotification";
 
 const { Option } = Select;
 
-function TopicCreate() {
+function CreateTopic() {
   const navigate = useNavigate();
   const [addTopic] = useAddTopicMutation();
   const { chapter } = useParams();
@@ -116,4 +116,4 @@ function TopicCreate() {
   );
 }
 
-export default TopicCreate;
+export default CreateTopic;

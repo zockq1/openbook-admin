@@ -1,23 +1,18 @@
-import { Button, Card, Modal, Space } from "antd";
+import { Button, Card, Space } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useDeleteTopicMutation,
-  useGetTopicQuery,
-} from "../store/api/topicApi";
-import ChoiceForm from "../components/Choice/ChoiceForm";
-import ChoiceList from "../components/Choice/ChoiceList";
-import ChoicesAutoCompleteModal from "../components/Choice/ChoicesAutoCompleteModal";
-import DescriptionList from "../components/Description/DescriptionList";
-import DescriptionForm from "../components/Description/DescriptionForm";
-import DescriptionsAutoCompleteModal from "../components/Description/DescriptionsAutoCompleteModal";
-import KeywordEditModal from "../components/Keyword/KeywordEditModal";
-import { useGetKeywordListQuery } from "../store/api/KeywordApi";
-import { KeywordModel } from "../types/keywordType";
-import {
-  mutationErrorNotification,
-  queryErrorNotification,
-} from "../services/errorNotification";
+import { useGetTopicQuery } from "../../store/api/topicApi";
+import ChoiceForm from "../Choice/ChoiceForm";
+import ChoiceList from "../Choice/ChoiceList";
+import ChoicesAutoCompleteModal from "../Choice/ChoicesAutoCompleteModal";
+import DescriptionList from "../Description/DescriptionList";
+import DescriptionForm from "../Description/DescriptionForm";
+import DescriptionsAutoCompleteModal from "../Description/DescriptionsAutoCompleteModal";
+import KeywordEditModal from "../Keyword/KeywordEditModal";
+import { useGetKeywordListQuery } from "../../store/api/KeywordApi";
+import { KeywordModel } from "../../types/keywordType";
+import { queryErrorNotification } from "../../services/errorNotification";
+import DeleteTopic from "./DeleteTopic";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -26,7 +21,6 @@ function TopicInfo() {
   const { data: keywordList, error: keywordListError } = useGetKeywordListQuery(
     String(title)
   );
-  const [deleteTopic] = useDeleteTopicMutation();
 
   useEffect(() => {
     queryErrorNotification(topicError, "주제 정보");
@@ -35,24 +29,6 @@ function TopicInfo() {
   useEffect(() => {
     queryErrorNotification(keywordListError, "키워드 목록");
   }, [keywordListError]);
-
-  const handleDeleteClick = async () => {
-    Modal.confirm({
-      title: "주의",
-      content: "정말 이 항목을 삭제하시겠습니까?",
-      okText: "예",
-      okType: "danger",
-      cancelText: "아니오",
-      onOk: async () => {
-        try {
-          await deleteTopic({ title: title }).unwrap();
-          navigate(`/topic/${chapter}`);
-        } catch (error) {
-          mutationErrorNotification(error);
-        }
-      },
-    });
-  };
 
   const handleUpdateClick = () => {
     navigate(`/topic/${chapter}/${title}/edit`);
@@ -65,9 +41,7 @@ function TopicInfo() {
       extra={
         <div>
           <Button onClick={handleUpdateClick}>수정</Button>
-          <Button danger type="primary" onClick={handleDeleteClick}>
-            삭제
-          </Button>
+          <DeleteTopic />
         </div>
       }
     >
