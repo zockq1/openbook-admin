@@ -12,7 +12,7 @@ import KeywordEditModal from "../Keyword/KeywordEditModal";
 import { useGetKeywordListQuery } from "../../store/api/KeywordApi";
 import { KeywordModel } from "../../types/keywordType";
 import { queryErrorNotification } from "../../services/errorNotification";
-import DeleteTopic from "./DeleteTopic";
+import DeleteTopicButton from "./DeleteTopicButton";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ function TopicInfo() {
       extra={
         <div>
           <Button onClick={handleUpdateClick}>수정</Button>
-          <DeleteTopic />
+          <DeleteTopicButton />
         </div>
       }
     >
