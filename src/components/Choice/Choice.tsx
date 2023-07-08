@@ -1,19 +1,29 @@
 import { List, Space, Input, Button } from "antd";
 import { ChoiceModel } from "../../types/choiceType";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useUpdateChoiceMutation } from "../../store/api/choicesApi";
+import { mutationErrorNotification } from "../../services/errorNotification";
+import DeleteChoiceButton from "./DeleteChoiceButton";
 
 interface ChoiceProps {
   data: ChoiceModel;
-  onEdit: (id: number, content: string) => void;
-  onDelete: (id: number) => void;
 }
 
-function Choice({ data, onEdit, onDelete }: ChoiceProps) {
+function Choice({ data }: ChoiceProps) {
+  const [updateChoice] = useUpdateChoiceMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(data.content);
 
-  const handleEdit = () => {
+  const handleEdit = async (id: number, content: string) => {
+    try {
+      await updateChoice({ id, content }).unwrap();
+    } catch (error) {
+      mutationErrorNotification(error);
+    }
+  };
+
+  const onEdit = () => {
     setEditContent(data.content);
     setIsEditing(true);
   };
@@ -23,7 +33,7 @@ function Choice({ data, onEdit, onDelete }: ChoiceProps) {
   };
 
   const handleSave = () => {
-    onEdit(data.id, editContent);
+    handleEdit(data.id, editContent);
     setIsEditing(false);
   };
 
@@ -35,14 +45,14 @@ function Choice({ data, onEdit, onDelete }: ChoiceProps) {
     <List.Item
       actions={[
         <Space>
-          {!isEditing && <EditOutlined onClick={handleEdit} />}
+          {!isEditing && <EditOutlined onClick={onEdit} />}
           {isEditing && (
             <>
               <Button onClick={handleSave}>저장</Button>
               <Button onClick={handleCancel}>취소</Button>
             </>
           )}
-          <DeleteOutlined onClick={() => onDelete(data.id)} />
+          <DeleteChoiceButton choiceId={data.id} />
         </Space>,
       ]}
     >
