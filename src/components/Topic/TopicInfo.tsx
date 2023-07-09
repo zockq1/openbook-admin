@@ -37,7 +37,7 @@ function TopicInfo() {
   return (
     <Card
       title={topic?.title}
-      style={{ width: 1000, margin: "0 auto" }}
+      style={{ width: "50vw", margin: "0 auto" }}
       extra={
         <div>
           <Button onClick={handleUpdateClick}>수정</Button>

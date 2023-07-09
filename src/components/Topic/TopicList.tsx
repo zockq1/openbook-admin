@@ -1,20 +1,58 @@
-import { Button, Menu, MenuProps, Pagination } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button } from "antd";
+import React, { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import getItem from "../../services/getItem";
 
 import ChapterTitle from "../Chapter/ChapterTitle";
 import { useGetChapterTopicListQuery } from "../../store/api/topicApi";
 import { queryErrorNotification } from "../../services/errorNotification";
 import DeleteChapterButton from "../Chapter/DeleteChapterButton";
+import { TopicListModel } from "../../types/topicTypes";
+import Table, { ColumnsType } from "antd/es/table";
 
-const TopicMenu = styled(Menu)`
-  width: 300px;
-`;
+const columns: ColumnsType<TopicListModel> = [
+  {
+    title: "주제 이름",
+    dataIndex: "title",
+    width: 170,
+    key: "title",
+  },
+  {
+    title: "분류",
+    dataIndex: "category",
+    width: 80,
+    key: "category",
+  },
+  {
+    title: "시작일",
+    dataIndex: "startDate",
+    key: "startDate",
+  },
+  {
+    title: "종료일",
+    dataIndex: "endDate",
+    key: "endDate",
+  },
+  {
+    title: "보기 수",
+    dataIndex: "descriptionCount",
+    key: "descriptionCount",
+  },
+  {
+    title: "선지 수",
+    dataIndex: "choiceCount",
+    key: "choiceCount",
+  },
+  {
+    title: "키워드 수",
+    dataIndex: "keywordCount",
+    key: "keywordCount",
+  },
+];
 
 const TopicContainer = styled.div`
   height: 100vh;
+  width: calc(50vw - 45px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,48 +62,30 @@ const TopicContainer = styled.div`
 function TopicList() {
   const navigate = useNavigate();
   const { chapter } = useParams();
-  const [items, setItems] = useState<MenuProps["items"]>([]);
   const { data: topicList, error: topicListError } =
     useGetChapterTopicListQuery(Number(chapter));
-  const [page, setPage] = useState(1);
-  const limit = 10;
-  const offset = (page - 1) * limit;
 
   useEffect(() => {
     queryErrorNotification(topicListError, "주제 목록");
   }, [topicListError]);
 
-  useEffect(() => {
-    const currentPageTopic = topicList?.slice(offset, offset + 10);
-    const newItems = currentPageTopic?.map((topic) =>
-      getItem(topic.title, topic.title)
-    );
-    setItems(newItems);
-  }, [page, topicList, offset]);
-
-  const onClick: MenuProps["onClick"] = (e) => {
-    navigate(`/topic/${chapter}/${e.key}`);
-  };
-
-  function handleChange(pageNumber: number) {
-    setPage(pageNumber);
-  }
-
   return (
     <TopicContainer>
       <ChapterTitle />
-      <TopicMenu
-        onClick={onClick}
-        mode="inline"
-        items={items}
-        style={{ borderInlineEnd: "unset" }}
-      />
-      <Pagination
-        simple
-        defaultCurrent={1}
-        pageSize={10}
-        total={topicList?.length}
-        onChange={handleChange}
+      <Table
+        columns={columns}
+        dataSource={topicList}
+        pagination={{ pageSize: 10 }}
+        size="small"
+        rowKey="title"
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              navigate(`/topic/${chapter}/${record.title}`);
+            }, // click row
+          };
+        }}
+        style={{ margin: "10px" }}
       />
       <br />
       <Link to={`/topic/${chapter}/create`} style={{ width: "90%" }}>
