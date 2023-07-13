@@ -9,6 +9,7 @@ import { categoryApi } from "./api/categoryApi";
 import { choicesApi } from "./api/choicesApi";
 import { descriptionApi } from "./api/descriptionApi";
 import { keywordApi } from "./api/KeywordApi";
+import { sentenceApi } from "./api/sentenceApi";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   [choicesApi.reducerPath]: choicesApi.reducer,
   [descriptionApi.reducerPath]: descriptionApi.reducer,
   [keywordApi.reducerPath]: keywordApi.reducer,
+  [sentenceApi.reducerPath]: sentenceApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -43,7 +45,8 @@ export const store = configureStore({
       categoryApi.middleware,
       choicesApi.middleware,
       descriptionApi.middleware,
-      keywordApi.middleware
+      keywordApi.middleware,
+      sentenceApi.middleware
     ),
 });
 

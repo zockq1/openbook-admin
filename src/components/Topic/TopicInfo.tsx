@@ -1,4 +1,4 @@
-import { Button, Card, Space } from "antd";
+import { Button, Card } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetTopicQuery } from "../../store/api/topicApi";
@@ -8,27 +8,19 @@ import ChoicesAutoCompleteModal from "../Choice/ChoicesAutoCompleteModal";
 import DescriptionList from "../Description/DescriptionList";
 import DescriptionForm from "../Description/DescriptionForm";
 import DescriptionsAutoCompleteModal from "../Description/DescriptionsAutoCompleteModal";
-import KeywordEditModal from "../Keyword/KeywordEditModal";
-import { useGetKeywordListQuery } from "../../store/api/KeywordApi";
-import { KeywordModel } from "../../types/keywordType";
 import { queryErrorNotification } from "../../services/errorNotification";
 import DeleteTopicButton from "./DeleteTopicButton";
+import SentenceForm from "../Sentence/SentenceForm";
+import SentenceList from "../Sentence/SentenceList";
 
 function TopicInfo() {
   const navigate = useNavigate();
   const { title, chapter } = useParams();
   const { data: topic, error: topicError } = useGetTopicQuery(String(title));
-  const { data: keywordList, error: keywordListError } = useGetKeywordListQuery(
-    String(title)
-  );
 
   useEffect(() => {
     queryErrorNotification(topicError, "주제 정보");
   }, [topicError]);
-
-  useEffect(() => {
-    queryErrorNotification(keywordListError, "키워드 목록");
-  }, [keywordListError]);
 
   const handleUpdateClick = () => {
     navigate(`/topic/${chapter}/${title}/edit`);
@@ -83,16 +75,11 @@ function TopicInfo() {
             paddingBottom: 12,
           }}
         >
-          키워드
+          문장
         </div>
         <br />
-        <KeywordEditModal />
-        {keywordList?.map((keyword: KeywordModel, index: number) => (
-          <Space key={index}>
-            {index !== 0 ? <div>&nbsp;&nbsp;/</div> : null}
-            <div style={{ fontSize: 18 }}>{keyword.name}</div>
-          </Space>
-        ))}
+        <SentenceForm />
+        <SentenceList />
       </div>
       <br />
       <div
