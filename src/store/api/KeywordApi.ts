@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AddKeywordModel, KeywordModel } from "../../types/keywordType";
+import {
+  AddKeywordModel,
+  KeywordModel,
+  UpdateKeywordModel,
+} from "../../types/keywordType";
 
 export const keywordApi = createApi({
   reducerPath: "keywordApi",
@@ -16,23 +20,34 @@ export const keywordApi = createApi({
     addKeyword: builder.mutation({
       query: (addKeywordModel: AddKeywordModel) => {
         return {
-          url: `/admin/topics/${addKeywordModel.topicTitle}/keywords`,
+          url: `/admin/keywords`,
           method: "POST",
           body: {
-            name: addKeywordModel.keyword,
+            name: addKeywordModel,
+          },
+        };
+      },
+      invalidatesTags: ["KeywordList"],
+    }),
+    updateKeyword: builder.mutation({
+      query: (updateKeywordModel: UpdateKeywordModel) => {
+        return {
+          url: `/admin/keywords/${updateKeywordModel.id}`,
+          method: "PATCH",
+          body: {
+            name: updateKeywordModel.name,
+            comment: updateKeywordModel.comment,
+            file: updateKeywordModel.file,
           },
         };
       },
       invalidatesTags: ["KeywordList"],
     }),
     deleteKeyword: builder.mutation({
-      query: (addKeywordModel: AddKeywordModel) => {
+      query: (id) => {
         return {
-          url: `/admin/topics/${addKeywordModel.topicTitle}/keywords`,
+          url: `/admin/keywords/${id}`,
           method: "DELETE",
-          body: {
-            name: addKeywordModel.keyword,
-          },
         };
       },
       invalidatesTags: ["KeywordList"],
