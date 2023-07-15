@@ -12,6 +12,7 @@ import { queryErrorNotification } from "../../services/errorNotification";
 import DeleteTopicButton from "./DeleteTopicButton";
 import SentenceForm from "../Sentence/SentenceForm";
 import SentenceList from "../Sentence/SentenceList";
+import KeywordForm from "../Keyword/KeywordFrom";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -60,6 +61,25 @@ function TopicInfo() {
           topic?.detail.split("\n").map((line, index) => {
             return <p key={index}>{line}</p>;
           })}
+      </div>
+      <br />
+      <div
+        style={{
+          border: "1px solid rgba(5, 5, 5, 0.06)",
+          borderRadius: 12,
+          padding: 12,
+        }}
+      >
+        <div
+          style={{
+            borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+            paddingBottom: 12,
+          }}
+        >
+          키워드
+        </div>
+        <br />
+        <KeywordForm />
       </div>
       <br />
       <div

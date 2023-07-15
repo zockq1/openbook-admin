@@ -8,8 +8,8 @@ import { authApi } from "./api/authApi";
 import { categoryApi } from "./api/categoryApi";
 import { choicesApi } from "./api/choicesApi";
 import { descriptionApi } from "./api/descriptionApi";
-import { keywordApi } from "./api/KeywordApi";
 import { sentenceApi } from "./api/sentenceApi";
+import { keywordApi } from "./api/keywordApi";
 
 const persistConfig = {
   key: "root",
