@@ -63,7 +63,7 @@ function KeywordForm() {
           name,
           comment,
           topic: title,
-          file: imgFile ? imgRef : null,
+          file: imgFile,
         });
         setName("");
         setComment("");
