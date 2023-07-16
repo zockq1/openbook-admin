@@ -24,7 +24,7 @@ export const choicesApi = createApi({
       invalidatesTags: ["ChoiceList"],
     }),
     updateChoice: builder.mutation({
-      query: ({ id, content }) => {
+      query: ({ id, content }: ChoiceModel) => {
         return {
           url: `/admin/choices/${id}`,
           method: "PATCH",

@@ -15,25 +15,25 @@ function Choice({ data }: ChoiceProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(data.content);
 
-  const handleEdit = async (id: number, content: string) => {
+  const handleEdit = async () => {
     try {
-      await updateChoice({ id, content }).unwrap();
+      await updateChoice({ id: data.id, content: editContent }).unwrap();
     } catch (error) {
       mutationErrorNotification(error);
     }
   };
 
   const onEdit = () => {
-    setEditContent(data.content);
     setIsEditing(true);
   };
 
   const handleCancel = () => {
+    setEditContent(data.content);
     setIsEditing(false);
   };
 
   const handleSave = () => {
-    handleEdit(data.id, editContent);
+    handleEdit();
     setIsEditing(false);
   };
 

@@ -5,7 +5,6 @@ import {
   DeleteDuplicationChoiceModel,
   DescriptionModel,
   DuplicationChoiceModel,
-  UpdateDescriptionModel,
 } from "../../types/descriptionType";
 
 export const descriptionApi = createApi({
@@ -46,9 +45,9 @@ export const descriptionApi = createApi({
       },
     }),
     updateDescription: builder.mutation({
-      query: ({ content, descriptionId }: UpdateDescriptionModel) => {
+      query: ({ content, id }: DescriptionModel) => {
         return {
-          url: `/admin/descriptions/${descriptionId}`,
+          url: `/admin/descriptions/${id}`,
           method: "PATCH",
           body: { content },
         };
@@ -56,9 +55,9 @@ export const descriptionApi = createApi({
       invalidatesTags: ["descriptionList"],
     }),
     deleteDescription: builder.mutation({
-      query: (descriptionId: number) => {
+      query: (id: number) => {
         return {
-          url: `/admin/descriptions/${descriptionId}`,
+          url: `/admin/descriptions/${id}`,
           method: "DELETE",
         };
       },
