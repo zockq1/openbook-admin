@@ -13,6 +13,7 @@ import DeleteTopicButton from "./DeleteTopicButton";
 import SentenceForm from "../Sentence/SentenceForm";
 import SentenceList from "../Sentence/SentenceList";
 import KeywordForm from "../Keyword/KeywordFrom";
+import KeywordList from "../Keyword/KeywordList";
 
 function TopicInfo() {
   const navigate = useNavigate();
@@ -80,6 +81,7 @@ function TopicInfo() {
         </div>
         <br />
         <KeywordForm />
+        <KeywordList />
       </div>
       <br />
       <div

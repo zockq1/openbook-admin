@@ -59,4 +59,5 @@ export const {
   useGetKeywordListQuery,
   useAddKeywordMutation,
   useDeleteKeywordMutation,
+  useUpdateKeywordMutation,
 } = keywordApi;
