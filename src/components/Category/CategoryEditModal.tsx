@@ -63,7 +63,7 @@ function CategoryEditModal() {
   };
 
   return (
-    <div style={{ float: "right" }}>
+    <div style={{ display: "inline", marginLeft: "20px" }}>
       <Button type="primary" onClick={showModal}>
         분류 설정
       </Button>
