@@ -22,9 +22,7 @@ export const keywordApi = createApi({
         return {
           url: `/admin/keywords`,
           method: "POST",
-          body: {
-            name: addKeywordModel,
-          },
+          body: addKeywordModel,
         };
       },
       invalidatesTags: ["KeywordList"],
