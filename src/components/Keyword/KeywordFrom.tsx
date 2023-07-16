@@ -5,7 +5,7 @@ import { useAddKeywordMutation } from "../../store/api/keywordApi";
 import { mutationErrorNotification } from "../../services/errorNotification";
 import styled from "styled-components";
 
-const GridContainer = styled.div`
+const KeywordFormGridContainer = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: 100px 1fr 56.23px;
@@ -83,19 +83,18 @@ function KeywordForm() {
   };
   return (
     <Space.Compact style={{ width: "100%" }}>
-      <GridContainer>
-        <Input.TextArea value={name} onChange={handleNameChange} />
+      <KeywordFormGridContainer>
         <Input.TextArea
-          value={comment}
-          onChange={handleCommentChange}
+          value={name}
+          onChange={handleNameChange}
           style={{
-            gridRow: "1/3",
-            gridColumn: "2/3",
+            gridColumn: "1/3",
           }}
         />
         <Button type="primary" onClick={handleSubmit}>
           추가
         </Button>
+
         <div>
           {imgFile ? (
             <ImageFileUploadLabel htmlFor="imgFileUpload">
@@ -117,7 +116,8 @@ function KeywordForm() {
             ref={imgRef}
           />
         </div>
-      </GridContainer>
+        <Input.TextArea value={comment} onChange={handleCommentChange} />
+      </KeywordFormGridContainer>
     </Space.Compact>
   );
 }
