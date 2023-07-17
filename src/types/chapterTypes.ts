@@ -11,3 +11,7 @@ export interface ChapterModel {
 export interface ChapterTitleModel {
   title: string;
 }
+
+export interface ChapterInfoModel {
+  content: string;
+}

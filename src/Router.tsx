@@ -5,6 +5,8 @@ import Topic from "./pages/Topic";
 import Question from "./pages/Question";
 import CreateTopic from "./components/Topic/CreateTopic";
 import EditTopic from "./components/Topic/EditTopic";
+import ChapterInfo from "./components/Chapter/ChapterInfo";
+import EditChapterInfo from "./components/Chapter/EditChpaterInfo";
 
 const router = createBrowserRouter([
   {
@@ -24,8 +26,16 @@ const router = createBrowserRouter([
             element: <TopicInfo />,
           },
           {
-            path: "create",
+            path: "create-topic",
             element: <CreateTopic />,
+          },
+          {
+            path: "edit-chapter",
+            element: <EditChapterInfo />,
+          },
+          {
+            path: "chapter-info",
+            element: <ChapterInfo />,
           },
           {
             path: "question",

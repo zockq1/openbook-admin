@@ -34,7 +34,7 @@ function ChapterList() {
   }, [chapterList]);
 
   const onClick: MenuProps["onClick"] = (e) => {
-    navigate(`/topic/${e.key}`);
+    navigate(`/topic/${e.key}/chapter-info`);
   };
 
   return (

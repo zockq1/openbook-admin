@@ -31,7 +31,7 @@ function TopicInfo() {
   return (
     <Card
       title={topic?.title}
-      style={{ width: "50vw", margin: "0 auto" }}
+      style={{ width: "700px", margin: "0 auto" }}
       extra={
         <div>
           <Button onClick={handleUpdateClick}>수정</Button>
@@ -43,6 +43,14 @@ function TopicInfo() {
       <p>분류: {topic?.category}</p>
       <p>시작 년도: {topic?.startDate}</p>
       <p>종료 년도: {topic?.endDate}</p>
+      {topic?.extraDateList &&
+        topic?.extraDateList.map((item) => {
+          return (
+            <div>
+              추가 년도: {item.extraDate} / {item.extraDateComment}
+            </div>
+          );
+        })}
       <div
         style={{
           border: "1px solid rgba(5, 5, 5, 0.06)",

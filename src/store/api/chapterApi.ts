@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ChapterModel, ChapterTitleModel } from "../../types/chapterTypes";
+import {
+  ChapterInfoModel,
+  ChapterModel,
+  ChapterTitleModel,
+} from "../../types/chapterTypes";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
@@ -7,7 +11,7 @@ export const chapterApi = createApi({
     baseUrl: process.env.REACT_APP_API_URL,
     credentials: "include",
   }),
-  tagTypes: ["ChapterList", "ChapterTitle"],
+  tagTypes: ["ChapterList", "ChapterTitle", "ChapterInfo"],
   endpoints: (builder) => ({
     getChapters: builder.query<ChapterModel[], void>({
       query: () => "/admin/chapters",
@@ -18,6 +22,10 @@ export const chapterApi = createApi({
         `/admin/chapters/chapter-title?num=${chapterNumber}`,
       providesTags: ["ChapterTitle"],
     }),
+    getChapterInfo: builder.query<ChapterInfoModel, number>({
+      query: (chapterNumber) => `/admin/chapters/${chapterNumber}/info`,
+      providesTags: ["ChapterInfo"],
+    }),
     addChapter: builder.mutation({
       query: ({ number, title }) => {
         return {
@@ -27,6 +35,16 @@ export const chapterApi = createApi({
         };
       },
       invalidatesTags: ["ChapterList"],
+    }),
+    updateChapterInfo: builder.mutation({
+      query: ({ chapterNumber, content }) => {
+        return {
+          url: `/admin/chapters/${chapterNumber}/info`,
+          method: "PATCH",
+          body: { content: content },
+        };
+      },
+      invalidatesTags: ["ChapterInfo"],
     }),
     updateChapter: builder.mutation({
       query: ({ number, title }) => {
@@ -56,4 +74,6 @@ export const {
   useUpdateChapterMutation,
   useDeleteChapterMutation,
   useGetChapterTitleQuery,
+  useGetChapterInfoQuery,
+  useUpdateChapterInfoMutation,
 } = chapterApi;

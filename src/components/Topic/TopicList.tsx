@@ -52,7 +52,7 @@ const columns: ColumnsType<TopicListModel> = [
 
 const TopicContainer = styled.div`
   height: 100vh;
-  width: calc(50vw - 45px);
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,7 +88,7 @@ function TopicList() {
         style={{ margin: "10px" }}
       />
       <br />
-      <Link to={`/topic/${chapter}/create`} style={{ width: "90%" }}>
+      <Link to={`/topic/${chapter}/create-topic`} style={{ width: "90%" }}>
         <Button style={{ width: "100%" }}>+</Button>
       </Link>
       <br />
