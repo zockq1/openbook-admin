@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  AddKeywordModel,
-  KeywordModel,
-  UpdateKeywordModel,
-} from "../../types/keywordType";
+import { AddKeywordModel, KeywordModel } from "../../types/keywordType";
 
 export const keywordApi = createApi({
   reducerPath: "keywordApi",
@@ -28,7 +24,7 @@ export const keywordApi = createApi({
       invalidatesTags: ["KeywordList"],
     }),
     updateKeyword: builder.mutation({
-      query: (updateKeywordModel: UpdateKeywordModel) => {
+      query: (updateKeywordModel: KeywordModel) => {
         return {
           url: `/admin/keywords/${updateKeywordModel.id}`,
           method: "PATCH",
