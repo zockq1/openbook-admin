@@ -44,9 +44,9 @@ function TopicInfo() {
       <p>시작 년도: {topic?.startDate}</p>
       <p>종료 년도: {topic?.endDate}</p>
       {topic?.extraDateList &&
-        topic?.extraDateList.map((item) => {
+        topic?.extraDateList.map((item, index) => {
           return (
-            <div>
+            <div key={index}>
               추가 년도: {item.extraDate} / {item.extraDateComment}
             </div>
           );
