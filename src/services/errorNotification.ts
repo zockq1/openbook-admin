@@ -6,6 +6,7 @@ export function mutationErrorNotification(error: any) {
       message: "에러 발생",
       description: error.status + " : " + error.data[0].error,
     });
+    console.error(error);
   } else {
     notification.error({
       message: "에러 발생",
@@ -17,11 +18,11 @@ export function mutationErrorNotification(error: any) {
 
 export function queryErrorNotification(error: any, text: string) {
   if (error && error.status && error.data) {
-    console.error(error);
     notification.error({
       message: text + "을(를) 불러오는 도중에 에러가 발생했습니다.",
       description: error.status + " : " + error.data[0].error,
     });
+    console.error(error);
   } else if (error) {
     notification.error({
       message: text + "을(를) 불러오는 도중에 에러가 발생했습니다.",
