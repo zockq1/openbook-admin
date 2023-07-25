@@ -43,7 +43,7 @@ function ChapterTitle() {
       };
       fetchData();
     }
-  }, [chapterTitle, chapter, currentChapterTitle, updateChapter]);
+  }, [chapterTitle, updateChapter]);
 
   return (
     <Typography.Title
