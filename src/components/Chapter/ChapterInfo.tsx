@@ -7,6 +7,20 @@ import {
 import { queryErrorNotification } from "../../services/errorNotification";
 import { useNavigate, useParams } from "react-router-dom";
 import parse from "html-react-parser";
+import styled from "styled-components";
+
+const Info = styled.div`
+  table {
+    border: solid 1px black;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: solid 1px black;
+    padding: 4px;
+  }
+`;
 
 function ChapterInfo() {
   const navigate = useNavigate();
@@ -39,7 +53,7 @@ function ChapterInfo() {
         </div>
       }
     >
-      {parse(String(chapterInfo?.content))}
+      <Info>{parse(String(chapterInfo?.content))}</Info>
     </Card>
   );
 }
