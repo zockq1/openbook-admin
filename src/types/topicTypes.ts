@@ -5,6 +5,7 @@ export interface ExtraDate {
 }
 
 export interface TopicModel {
+  number?: number;
   chapter: number;
   title: string;
   category: string;
@@ -22,6 +23,7 @@ export interface UpdateTopicModel {
 }
 
 export interface TopicListModel {
+  number: number;
   category: string;
   title: string;
   startDate: number;
