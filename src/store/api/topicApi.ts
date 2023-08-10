@@ -14,7 +14,7 @@ export const topicApi = createApi({
   }),
   endpoints: (builder) => ({
     getTopic: builder.query<TopicModel, string>({
-      query: (title) => `/topics/${title}`,
+      query: (title) => `/admin/topics/${title}`,
       providesTags: ["TopicInfo"],
     }),
     getChapterTopicList: builder.query<TopicListModel[], number>({
