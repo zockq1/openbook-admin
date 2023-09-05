@@ -6,6 +6,13 @@ export interface ChapterState {
 export interface ChapterModel {
   title: string;
   number: number;
+  startDate: number | null;
+  endDate: number | null;
+}
+
+export interface UpdateChapterModel {
+  editedChapter: ChapterModel;
+  currentChapterNumber: number;
 }
 
 export interface ChapterTitleModel {

@@ -1,5 +1,5 @@
-import { Typography } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Button, Form, Input, Modal } from "antd";
+import { useEffect, useState } from "react";
 import {
   useGetChapterTitleQuery,
   useUpdateChapterMutation,
@@ -9,51 +9,115 @@ import {
   mutationErrorNotification,
   queryErrorNotification,
 } from "../../services/errorNotification";
+import Title from "antd/es/typography/Title";
 
 function ChapterTitle() {
   const { chapter } = useParams();
   const { data: currentChapterTitle, error: chapterTitleError } =
     useGetChapterTitleQuery(Number(chapter));
-  const [chapterTitle, setChapterTitle] = useState(currentChapterTitle?.title);
-  const isFirstRender = useRef(true);
   const [updateChapter] = useUpdateChapterMutation();
+  const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     queryErrorNotification(chapterTitleError, "단원 이름");
   }, [chapterTitleError]);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const onSubmit = async (values: any) => {
+    try {
+      const { chapterTitle, chapterNumber, startDate, endDate } = values;
+      await updateChapter({
+        editedChapter: {
+          number: chapterNumber,
+          title: chapterTitle,
+          startDate: startDate ? startDate : null,
+          endDate: endDate ? endDate : null,
+        },
+        currentChapterNumber: Number(chapter),
+      }).unwrap();
+    } catch (error) {
+      mutationErrorNotification(error);
     }
-    if (
-      chapterTitle !== currentChapterTitle?.title &&
-      chapterTitle !== undefined
-    ) {
-      const fetchData = async () => {
-        try {
-          await updateChapter({
-            number: Number(chapter),
-            title: chapterTitle,
-          }).unwrap();
-        } catch (error) {
-          mutationErrorNotification(error);
-        }
-      };
-      fetchData();
-    }
-  }, [chapterTitle, updateChapter]);
+    setIsModalOpen(false);
+  };
 
   return (
-    <Typography.Title
-      editable={{
-        onChange: setChapterTitle,
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
       }}
-      level={5}
     >
-      {currentChapterTitle?.title}
-    </Typography.Title>
+      <Title
+        level={5}
+        style={{
+          margin: "5px",
+        }}
+      >
+        {currentChapterTitle?.title}
+      </Title>
+      <Button onClick={showModal}>수정</Button>
+      <Modal
+        title="단원 수정"
+        open={isModalOpen}
+        onOk={onSubmit}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <Form
+          name="chapter-form"
+          form={form}
+          onFinish={onSubmit}
+          layout="vertical"
+        >
+          <Form.Item
+            name="chapterTitle"
+            label="단원명"
+            rules={[
+              {
+                required: true,
+                message: "단원명을 입력해주세요.",
+              },
+            ]}
+            initialValue={currentChapterTitle?.title}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="chapterNumber"
+            label="단원 순서"
+            rules={[
+              {
+                required: true,
+                message: "단원 순서를 입력해주세요.",
+              },
+            ]}
+            initialValue={Number(chapter)}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item name="startDate" label="시작 년도">
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item name="endDate" label="종료 년도">
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+              저장
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
   );
 }
 export default ChapterTitle;

@@ -19,10 +19,12 @@ function CreateChapterModal() {
 
   const onSubmit = async (values: any) => {
     try {
-      const { chapterTitle, chapterNumber } = values;
+      const { chapterTitle, chapterNumber, startDate, endDate } = values;
       await addChapter({
         number: chapterNumber,
         title: chapterTitle,
+        startDate: startDate ? startDate : null,
+        endDate: endDate ? endDate : null,
       }).unwrap();
       form.resetFields();
     } catch (error) {
@@ -71,6 +73,12 @@ function CreateChapterModal() {
               },
             ]}
           >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item name="startDate" label="시작 년도">
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item name="endDate" label="종료 년도">
             <Input type="number" />
           </Form.Item>
           <Form.Item>

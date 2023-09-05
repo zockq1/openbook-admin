@@ -3,6 +3,7 @@ import {
   ChapterInfoModel,
   ChapterModel,
   ChapterTitleModel,
+  UpdateChapterModel,
 } from "../../types/chapterTypes";
 
 export const chapterApi = createApi({
@@ -26,12 +27,12 @@ export const chapterApi = createApi({
       query: (chapterNumber) => `/admin/chapters/${chapterNumber}/info`,
       providesTags: ["ChapterInfo"],
     }),
-    addChapter: builder.mutation({
-      query: ({ number, title }) => {
+    addChapter: builder.mutation<any, ChapterModel>({
+      query: (newChapter: ChapterModel) => {
         return {
           url: `/admin/chapters`,
           method: "POST",
-          body: { number, title },
+          body: newChapter,
         };
       },
       invalidatesTags: ["ChapterList"],
@@ -46,12 +47,12 @@ export const chapterApi = createApi({
       },
       invalidatesTags: ["ChapterInfo"],
     }),
-    updateChapter: builder.mutation({
-      query: ({ number, title }) => {
+    updateChapter: builder.mutation<any, UpdateChapterModel>({
+      query: ({ editedChapter, currentChapterNumber }: UpdateChapterModel) => {
         return {
-          url: `/admin/chapters/${number}`,
+          url: `/admin/chapters/${currentChapterNumber}`,
           method: "PATCH",
-          body: { number, title },
+          body: editedChapter,
         };
       },
       invalidatesTags: ["ChapterTitle"],
