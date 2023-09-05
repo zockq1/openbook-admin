@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   TopicListModel,
   TopicModel,
+  TopicOrderModel,
   UpdateTopicModel,
 } from "../../types/topicTypes";
 
@@ -41,6 +42,16 @@ export const topicApi = createApi({
       },
       invalidatesTags: ["TopicList", "TopicInfo"],
     }),
+    updateTopicOrder: builder.mutation<any, TopicOrderModel[]>({
+      query: (topicList) => {
+        return {
+          url: `/admin/topic-numbers`,
+          method: "PATCH",
+          body: topicList,
+        };
+      },
+      invalidatesTags: ["TopicList"],
+    }),
     deleteTopic: builder.mutation({
       query: ({ title }) => {
         return {
@@ -58,5 +69,6 @@ export const {
   useGetChapterTopicListQuery,
   useAddTopicMutation,
   useUpdateTopicMutation,
+  useUpdateTopicOrderMutation,
   useDeleteTopicMutation,
 } = topicApi;

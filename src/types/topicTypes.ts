@@ -22,6 +22,11 @@ export interface UpdateTopicModel {
   title: string;
 }
 
+export interface TopicOrderModel {
+  number: number;
+  title: string;
+}
+
 export interface TopicListModel {
   number: number;
   category: string;

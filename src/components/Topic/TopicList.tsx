@@ -9,8 +9,14 @@ import { queryErrorNotification } from "../../services/errorNotification";
 import DeleteChapterButton from "../Chapter/DeleteChapterButton";
 import { TopicListModel } from "../../types/topicTypes";
 import Table, { ColumnsType } from "antd/es/table";
+import EditTopicOrder from "./EditTopicOrder";
 
 const columns: ColumnsType<TopicListModel> = [
+  {
+    title: "순서",
+    dataIndex: "number",
+    key: "number",
+  },
   {
     title: "주제 이름",
     dataIndex: "title",
@@ -94,9 +100,15 @@ function TopicList() {
       <br />
       <DeleteChapterButton topicListLength={topicList?.length} />
       <br />
-      <Link to={`/topic/${chapter}/question`} style={{ width: "90%" }}>
-        <Button style={{ width: "100%" }}>문제</Button>
-      </Link>
+      {topicList ? (
+        <EditTopicOrder topicList={topicList} />
+      ) : (
+        <div>주제 목록 로딩중</div>
+      )}
+
+      {/* {<Link to={`/topic/${chapter}/question`} style={{ width: "90%" }}>
+      <Button style={{ width: "100%" }}>문제</Button>
+    </Link>} */}
     </TopicContainer>
   );
 }
