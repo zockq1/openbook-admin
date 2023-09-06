@@ -19,12 +19,11 @@ export const chapterApi = createApi({
       providesTags: ["ChapterList"],
     }),
     getChapterTitle: builder.query<ChapterTitleModel, number>({
-      query: (chapterNumber) =>
-        `/admin/chapters/chapter-title?num=${chapterNumber}`,
+      query: (chapterNumber) => `/chapters/chapter-title?num=${chapterNumber}`,
       providesTags: ["ChapterTitle"],
     }),
     getChapterInfo: builder.query<ChapterInfoModel, number>({
-      query: (chapterNumber) => `/admin/chapters/${chapterNumber}/info`,
+      query: (chapterNumber) => `/chapters/${chapterNumber}/info`,
       providesTags: ["ChapterInfo"],
     }),
     addChapter: builder.mutation<any, ChapterModel>({
