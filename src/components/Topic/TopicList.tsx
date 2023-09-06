@@ -78,21 +78,25 @@ function TopicList() {
   return (
     <TopicContainer>
       <ChapterTitle />
-      <Table
-        columns={columns}
-        dataSource={topicList}
-        pagination={{ pageSize: 10 }}
-        size="small"
-        rowKey="title"
-        onRow={(record) => {
-          return {
-            onClick: () => {
-              navigate(`/topic/${chapter}/${record.title}`);
-            }, // click row
-          };
-        }}
-        style={{ margin: "10px" }}
-      />
+
+      {topicList && (
+        <Table
+          columns={columns}
+          dataSource={[...topicList].sort((a, b) => a.number - b.number)}
+          pagination={{ pageSize: 10 }}
+          size="small"
+          rowKey="title"
+          onRow={(record) => {
+            return {
+              onClick: () => {
+                navigate(`/topic/${chapter}/${record.title}`);
+              }, // click row
+            };
+          }}
+          style={{ margin: "10px" }}
+        />
+      )}
+
       <br />
       <Link to={`/topic/${chapter}/create-topic`} style={{ width: "90%" }}>
         <Button style={{ width: "100%" }}>+</Button>
@@ -100,15 +104,12 @@ function TopicList() {
       <br />
       <DeleteChapterButton topicListLength={topicList?.length} />
       <br />
-      {topicList ? (
-        <EditTopicOrder topicList={topicList} />
-      ) : (
-        <div>주제 목록 로딩중</div>
-      )}
 
-      {/* {<Link to={`/topic/${chapter}/question`} style={{ width: "90%" }}>
-      <Button style={{ width: "100%" }}>문제</Button>
-    </Link>} */}
+      {topicList && (
+        <EditTopicOrder
+          topicList={[...topicList].sort((a, b) => a.number - b.number)}
+        />
+      )}
     </TopicContainer>
   );
 }

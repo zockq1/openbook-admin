@@ -16,12 +16,14 @@ interface EditTopicOrderProps {
 function EditTopicOrder({ topicList }: EditTopicOrderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [editedTopicList, setEditedTopicList] = useState([...topicList]);
+  const [editedTopicList, setEditedTopicList] = useState<TopicListModel[]>([]);
   const [updateTopicOrder, { isLoading }] = useUpdateTopicOrderMutation();
+  console.log(editedTopicList, topicList);
 
   useEffect(() => {
     setIsMounted(true);
-  }, [setIsMounted]);
+    setEditedTopicList([...topicList]);
+  }, [setIsMounted, topicList]);
 
   const showModal = () => {
     setIsModalOpen(true);
