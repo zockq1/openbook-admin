@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
+  ChapterDateModel,
   ChapterInfoModel,
   ChapterModel,
   ChapterTitleModel,
@@ -25,6 +26,10 @@ export const chapterApi = createApi({
     getChapterInfo: builder.query<ChapterInfoModel, number>({
       query: (chapterNumber) => `/chapters/${chapterNumber}/info`,
       providesTags: ["ChapterInfo"],
+    }),
+    getChapterDate: builder.query<ChapterDateModel, number>({
+      query: (chapterNumber) => `/chapters/${chapterNumber}/date`,
+      providesTags: ["ChapterTitle"],
     }),
     addChapter: builder.mutation<any, ChapterModel>({
       query: (newChapter: ChapterModel) => {
@@ -74,6 +79,7 @@ export const {
   useUpdateChapterMutation,
   useDeleteChapterMutation,
   useGetChapterTitleQuery,
+  useGetChapterDateQuery,
   useGetChapterInfoQuery,
   useUpdateChapterInfoMutation,
 } = chapterApi;

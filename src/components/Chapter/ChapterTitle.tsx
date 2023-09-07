@@ -1,6 +1,7 @@
 import { Button, Form, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import {
+  useGetChapterDateQuery,
   useGetChapterTitleQuery,
   useUpdateChapterMutation,
 } from "../../store/api/chapterApi";
@@ -15,13 +16,16 @@ function ChapterTitle() {
   const { chapter } = useParams();
   const { data: currentChapterTitle, error: chapterTitleError } =
     useGetChapterTitleQuery(Number(chapter));
+  const { data: currentChapterDate, error: chapterDateError } =
+    useGetChapterDateQuery(Number(chapter));
   const [updateChapter] = useUpdateChapterMutation();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     queryErrorNotification(chapterTitleError, "단원 이름");
-  }, [chapterTitleError]);
+    queryErrorNotification(chapterDateError, "단원 년도");
+  }, [chapterTitleError, chapterDateError]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -104,10 +108,18 @@ function ChapterTitle() {
           >
             <Input type="number" />
           </Form.Item>
-          <Form.Item name="startDate" label="시작 년도">
+          <Form.Item
+            name="startDate"
+            label="시작 년도"
+            initialValue={currentChapterDate?.startDate}
+          >
             <Input type="number" />
           </Form.Item>
-          <Form.Item name="endDate" label="종료 년도">
+          <Form.Item
+            name="endDate"
+            label="종료 년도"
+            initialValue={currentChapterDate?.endDate}
+          >
             <Input type="number" />
           </Form.Item>
           <Form.Item>

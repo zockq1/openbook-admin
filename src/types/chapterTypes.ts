@@ -19,6 +19,11 @@ export interface ChapterTitleModel {
   title: string;
 }
 
+export interface ChapterDateModel {
+  startDate: number;
+  endDate: number;
+}
+
 export interface ChapterInfoModel {
   content: string;
 }

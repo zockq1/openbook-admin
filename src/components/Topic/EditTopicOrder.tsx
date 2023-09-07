@@ -18,7 +18,6 @@ function EditTopicOrder({ topicList }: EditTopicOrderProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [editedTopicList, setEditedTopicList] = useState<TopicListModel[]>([]);
   const [updateTopicOrder, { isLoading }] = useUpdateTopicOrderMutation();
-  console.log(editedTopicList, topicList);
 
   useEffect(() => {
     setIsMounted(true);

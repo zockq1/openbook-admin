@@ -7,11 +7,39 @@ import CreateTopic from "./components/Topic/CreateTopic";
 import EditTopic from "./components/Topic/EditTopic";
 import ChapterInfo from "./components/Chapter/ChapterInfo";
 import EditChapterInfo from "./components/Chapter/EditChpaterInfo";
+import CreateQuestion from "./components/Question/CreateQuestion";
+import QuestionInfo from "./components/Question/QuestionInfo";
+import EditQuestion from "./components/Question/EditQuestion";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/question",
+    element: <Question />,
+    children: [
+      {
+        path: ":round",
+        element: null,
+        children: [
+          {
+            path: ":question",
+            element: <QuestionInfo />,
+          },
+
+          {
+            path: ":question/edit",
+            element: <EditQuestion />,
+          },
+          {
+            path: "create-question",
+            element: <CreateQuestion />,
+          },
+        ],
+      },
+    ],
   },
   {
     path: "/topic",
@@ -37,10 +65,7 @@ const router = createBrowserRouter([
             path: "chapter-info",
             element: <ChapterInfo />,
           },
-          {
-            path: "question",
-            element: <Question />,
-          },
+
           {
             path: ":title/edit",
             element: <EditTopic />,
