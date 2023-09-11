@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import TopicInfo from "./components/Topic/TopicInfo";
-import Topic from "./pages/Topic";
-import Question from "./pages/Question";
+import Topic from "./components/pages/Topic";
+import Question from "./components/pages/Question";
 import CreateTopic from "./components/Topic/CreateTopic";
 import EditTopic from "./components/Topic/EditTopic";
 import ChapterInfo from "./components/Chapter/ChapterInfo";

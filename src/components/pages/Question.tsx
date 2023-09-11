@@ -1,7 +1,7 @@
 import { Outlet, useParams } from "react-router-dom";
 import styled from "styled-components";
-import RoundList from "../components/Round/RoundList";
-import QuestionList from "../components/Question/QuestionList";
+import RoundList from "../Round/RoundList";
+import QuestionList from "../Question/QuestionList";
 
 const InfosLayout = styled.div`
   display: flex;

@@ -45,4 +45,21 @@ button {
   margin: 16px;
   background: rgba(255, 255, 255, 0.3);
 }
+
+body {
+  padding: 0 0 30px 0;
+  background-color: #fafafa;
+  letter-spacing: -0.3px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Giants-Inline';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 `;
