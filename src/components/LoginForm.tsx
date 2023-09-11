@@ -5,7 +5,11 @@ import { LoginModel } from "../types/authType";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { login as loginAction } from "../store/slices/authSlice";
+import {
+  login as loginAction,
+  setAccessToken,
+  setRefreshToken,
+} from "../store/slices/authSlice";
 import { mutationErrorNotification } from "../services/errorNotification";
 
 const LoginFormContainer = styled.div`
@@ -23,7 +27,10 @@ function LoginForm() {
 
   const handleFinish = async (input: LoginModel) => {
     try {
-      await login(input).unwrap();
+      const response = await login(input).unwrap();
+      console.log(response);
+      dispatch(setAccessToken(response.accessToken));
+      dispatch(setRefreshToken(response.refreshToken));
       dispatch(loginAction());
       navigate(`/topic`);
     } catch (error: any) {

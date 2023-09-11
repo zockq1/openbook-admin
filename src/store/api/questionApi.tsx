@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   AddQuestionModel,
   DeleteQuestionModel,
@@ -6,14 +6,12 @@ import {
   QuestionModel,
   UpdateQuestionModel,
 } from "../../types/questionTypes";
+import baseQueryWithReauth from "./baseApi";
 
 export const questionApi = createApi({
   reducerPath: "questionApi",
   tagTypes: ["QuestionList", "QuestionInfo"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getQuestion: builder.query<QuestionModel, GetQuestionModel>({
       query: ({ roundNumber, questionNumber }) =>

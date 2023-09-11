@@ -1,16 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   RoundDateModel,
   RoundModel,
   UpdateRoundModel,
 } from "../../types/roundTypes";
+import baseQueryWithReauth from "./baseApi";
 
 export const roundApi = createApi({
   reducerPath: "roundApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["RoundList"],
   endpoints: (builder) => ({
     getRounds: builder.query<RoundModel[], void>({

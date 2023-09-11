@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { CategoryModel } from "../../types/categoryType";
+import baseQueryWithReauth from "./baseApi";
 
 export const categoryApi = createApi({
   reducerPath: "categoryApi",
   tagTypes: ["CategoryList"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getCategoryList: builder.query<CategoryModel[], void>({
       query: () => `/admin/categories`,

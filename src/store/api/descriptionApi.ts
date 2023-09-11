@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   AddDescriptionModel,
   AddDuplicationChoiceModel,
@@ -6,14 +6,12 @@ import {
   DescriptionModel,
   DuplicationChoiceModel,
 } from "../../types/descriptionType";
+import baseQueryWithReauth from "./baseApi";
 
 export const descriptionApi = createApi({
   reducerPath: "descriptionApi",
   tagTypes: ["descriptionList", "duplicationList"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getDescriptions: builder.query<DescriptionModel[], string>({
       query: (topicTitle) => `/topics/${topicTitle}/descriptions/`,

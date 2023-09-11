@@ -1,18 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   TopicListModel,
   TopicModel,
   TopicOrderModel,
   UpdateTopicModel,
 } from "../../types/topicTypes";
+import baseQueryWithReauth from "./baseApi";
 
 export const topicApi = createApi({
   reducerPath: "topicApi",
   tagTypes: ["TopicList", "TopicInfo"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getTopic: builder.query<TopicModel, string>({
       query: (title) => `/admin/topics/${title}`,

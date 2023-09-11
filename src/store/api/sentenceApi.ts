@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { SentenceModel, addSentenceModel } from "../../types/sentenceType";
+import baseQueryWithReauth from "./baseApi";
 
 export const sentenceApi = createApi({
   reducerPath: "sentenceApi",
   tagTypes: ["SentenceList"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getSentences: builder.query<SentenceModel[], string>({
       query: (topicTitle) => `/topics/${topicTitle}/sentences/`,

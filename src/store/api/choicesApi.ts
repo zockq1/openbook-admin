@@ -1,13 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { ChoiceModel, addChoiceModel } from "../../types/choiceType";
+import baseQueryWithReauth from "./baseApi";
 
 export const choicesApi = createApi({
   reducerPath: "choicesApi",
   tagTypes: ["ChoiceList"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getChoices: builder.query<ChoiceModel[], string>({
       query: (topicTitle) => `/admin/topics/${topicTitle}/choices/`,

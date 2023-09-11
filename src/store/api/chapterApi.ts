@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   ChapterDateModel,
   ChapterInfoModel,
@@ -6,13 +6,11 @@ import {
   ChapterTitleModel,
   UpdateChapterModel,
 } from "../../types/chapterTypes";
+import baseQueryWithReauth from "./baseApi";
 
 export const chapterApi = createApi({
   reducerPath: "chapterApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
-    credentials: "include",
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["ChapterList", "ChapterTitle", "ChapterInfo"],
   endpoints: (builder) => ({
     getChapters: builder.query<ChapterModel[], void>({
