@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { queryErrorNotification } from "../../services/errorNotification";
 import { useGetQuestionQuery } from "../../store/api/questionApi";
 import DeleteQuestionButton from "./DeleteQuestionButton";
+import { ImageChoiceForm, StringChoiceForm } from "./ChoiceFrom";
 
 function QuestionInfo() {
   const navigate = useNavigate();
@@ -36,15 +37,25 @@ function QuestionInfo() {
       <p>보기 해설: {questionInfo?.descriptionComment}</p>
       <p>정답 주제: {questionInfo?.answer}</p>
       <p>배점: {questionInfo?.score}</p>
-      {questionInfo?.choiceList &&
-        questionInfo?.choiceList.map((item, index) => {
-          return (
-            <Card key={index} title={item.key}>
-              <p>선지: {item.choice}</p>
-              <p>해설: {item.comment}</p>
-            </Card>
-          );
-        })}
+      <div
+        style={{
+          border: "1px solid rgba(5, 5, 5, 0.06)",
+          borderRadius: 12,
+          padding: 12,
+        }}
+      >
+        <div
+          style={{
+            borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+            paddingBottom: 12,
+          }}
+        >
+          선지
+        </div>
+        <br />
+        {questionInfo && <ImageChoiceForm questionInfo={questionInfo} />}
+        {questionInfo && <StringChoiceForm questionInfo={questionInfo} />}
+      </div>
     </Card>
   );
 }

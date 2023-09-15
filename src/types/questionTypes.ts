@@ -4,12 +4,14 @@ export interface ChoiceModel {
   key: string;
   id?: number | null;
 }
+export type ChoiceType = "String" | "Image";
 
 export interface QuestionModel {
   number: number;
   description: string;
   descriptionComment: string;
   answer: string;
+  choiceType: ChoiceType;
   choiceList: ChoiceModel[];
   score: number;
 }

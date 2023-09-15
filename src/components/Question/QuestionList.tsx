@@ -46,9 +46,12 @@ function QuestionList() {
         <EditRoundModal />
       </div>
       {questionList &&
-        questionList.map((item) => {
+        questionList.map((item, index) => {
           return (
-            <div onClick={() => navigate(`/question/${round}/${item}`)}>
+            <div
+              key={index}
+              onClick={() => navigate(`/question/${round}/${item}`)}
+            >
               {item}
             </div>
           );

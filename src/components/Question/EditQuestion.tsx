@@ -1,16 +1,24 @@
-import React, { useEffect } from "react";
-import { Form, Input, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  RadioChangeEvent,
+  Radio,
+  Upload,
+  UploadFile,
+  UploadProps,
+} from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   mutationErrorNotification,
   queryErrorNotification,
 } from "../../services/errorNotification";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   useGetQuestionQuery,
   useUpdateQuestionMutation,
 } from "../../store/api/questionApi";
-import { ChoiceModel, QuestionModel } from "../../types/questionTypes";
+import { ChoiceType, QuestionModel } from "../../types/questionTypes";
 
 function EditQuestion() {
   const navigate = useNavigate();
@@ -19,44 +27,50 @@ function EditQuestion() {
     roundNumber: Number(round),
     questionNumber: Number(question),
   });
-  const [updateTopic] = useUpdateQuestionMutation();
+  const [updateQuestion] = useUpdateQuestionMutation();
+  const [choiceType, setChoiceType] = useState<ChoiceType>("String");
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onChangeChoiceType = ({ target: { value } }: RadioChangeEvent) => {
+    setChoiceType(value);
+  };
 
   useEffect(() => {
     queryErrorNotification(questionError, "주제 정보");
   }, [questionError]);
 
-  const onFinish = async (values: QuestionModel) => {
-    const {
-      number,
-      description,
-      descriptionComment,
-      answer,
-      score,
-      choiceList,
-    } = values;
+  useEffect(() => {
+    if (questionInfo) {
+      setChoiceType(questionInfo.choiceType);
+      setFileList([
+        {
+          uid: "1",
+          name: "image.png",
+          status: "done",
+          url: questionInfo.description,
+        },
+      ]);
+    }
+  }, [questionInfo]);
+
+  const onFinish = async (values: any) => {
+    const { number, description, descriptionComment, answer, score } = values;
     let newQuestion: QuestionModel = {
       number,
-      description,
+      description: description.fileList[0].thumbUrl,
       descriptionComment,
       answer,
       score,
-      choiceList: [],
+      choiceList: questionInfo?.choiceList || [],
+      choiceType,
     };
-    if (choiceList) {
-      choiceList.forEach((item, index) => {
-        const newExtraDate: ChoiceModel = {
-          choice: item.choice,
-          comment: item.comment,
-          key: item.key,
-          id: questionInfo?.choiceList[index]
-            ? questionInfo?.choiceList[index].id
-            : null,
-        };
-        newQuestion.choiceList.push(newExtraDate);
-      });
-    }
+
     try {
-      await updateTopic({
+      await updateQuestion({
         updatedQuestion: newQuestion,
         currentQuestionNumber: Number(question),
         roundNumber: Number(round),
@@ -68,128 +82,88 @@ function EditQuestion() {
   };
 
   return (
-    <Form
-      onFinish={onFinish}
-      style={{ width: 600, margin: "auto auto" }}
-      labelCol={{ span: 4 }}
-    >
-      <Form.Item label="문제 번호" style={{ marginBottom: 0 }}>
+    <>
+      <Form
+        onFinish={onFinish}
+        style={{ width: 600, margin: "auto auto" }}
+        labelCol={{ span: 4 }}
+      >
+        <Form.Item label="선지 유형">
+          <Radio.Group
+            options={[
+              { label: "문자", value: "String" },
+              { label: "이미지", value: "Image" },
+            ]}
+            onChange={onChangeChoiceType}
+            value={choiceType}
+            optionType="button"
+            buttonStyle="solid"
+          />
+        </Form.Item>
+        <Form.Item label="문제 번호" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="number"
+            rules={[{ required: true, message: "문제 번호를 입력해주세요!" }]}
+            initialValue={questionInfo?.number}
+          >
+            <Input type="number" />
+          </Form.Item>
+        </Form.Item>
+
+        <Form.Item label="보기" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="description"
+            rules={[{ required: true, message: "보기를 입력해주세요!" }]}
+            initialValue={questionInfo?.description}
+          >
+            <Upload
+              listType="picture-card"
+              maxCount={1}
+              fileList={fileList}
+              onChange={onChange}
+              beforeUpload={() => false}
+            >
+              Upload
+            </Upload>
+          </Form.Item>
+        </Form.Item>
+
+        <Form.Item label="보기 해설" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="descriptionComment"
+            rules={[{ required: true, message: "보기 해설을 입력해주세요!" }]}
+            initialValue={questionInfo?.descriptionComment}
+          >
+            <Input />
+          </Form.Item>
+        </Form.Item>
+
+        <Form.Item label="정답 주제" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="answer"
+            rules={[{ required: true, message: "보기 해설을 입력해주세요!" }]}
+            initialValue={questionInfo?.answer}
+          >
+            <Input />
+          </Form.Item>
+        </Form.Item>
+
         <Form.Item
-          name="number"
-          rules={[{ required: true, message: "문제 번호를 입력해주세요!" }]}
-          initialValue={questionInfo?.number}
+          name="score"
+          label="배점"
+          rules={[{ required: false, message: "배점을 입력해 주세요!" }]}
+          initialValue={questionInfo?.score}
         >
           <Input type="number" />
         </Form.Item>
-      </Form.Item>
 
-      <Form.Item label="보기" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="description"
-          rules={[{ required: true, message: "보기를 입력해주세요!" }]}
-          initialValue={questionInfo?.description}
-        >
-          <Input />
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+            저장
+          </Button>
         </Form.Item>
-      </Form.Item>
-
-      <Form.Item label="보기 해설" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="descriptionComment"
-          rules={[{ required: true, message: "보기 해설을 입력해주세요!" }]}
-          initialValue={questionInfo?.descriptionComment}
-        >
-          <Input />
-        </Form.Item>
-      </Form.Item>
-
-      <Form.Item label="정답 주제" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="answer"
-          rules={[{ required: true, message: "보기 해설을 입력해주세요!" }]}
-          initialValue={questionInfo?.answer}
-        >
-          <Input />
-        </Form.Item>
-      </Form.Item>
-
-      <Form.Item
-        name="score"
-        label="배점"
-        rules={[{ required: false, message: "배점을 입력해 주세요!" }]}
-        initialValue={questionInfo?.score}
-      >
-        <Input type="number" />
-      </Form.Item>
-
-      <Form.Item label="선지 목록">
-        <Form.List name="choiceList" initialValue={questionInfo?.choiceList}>
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <>
-                  <Form.Item
-                    {...restField}
-                    label="주제"
-                    name={[name, "key"]}
-                    rules={[
-                      { required: true, message: "선지를 입력해 주세요!" },
-                    ]}
-                    style={{
-                      marginRight: "10px",
-                      display: "inline-block",
-                    }}
-                  >
-                    <Input type="text" />
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                  <Form.Item
-                    {...restField}
-                    label="선지"
-                    name={[name, "choice"]}
-                    rules={[
-                      { required: true, message: "선지를 입력해 주세요!" },
-                    ]}
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <Input width="100%" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    label="해설"
-                    name={[name, "comment"]}
-                    style={{
-                      width: "100%",
-                      display: "inline-block",
-                    }}
-                  >
-                    <Input type="text" width="100%" />
-                  </Form.Item>
-                </>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Add field
-                </Button>
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-          저장
-        </Button>
-      </Form.Item>
-    </Form>
+      </Form>
+    </>
   );
 }
 

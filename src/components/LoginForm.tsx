@@ -28,7 +28,6 @@ function LoginForm() {
   const handleFinish = async (input: LoginModel) => {
     try {
       const response = await login(input).unwrap();
-      console.log(response);
       dispatch(setAccessToken(response.accessToken));
       dispatch(setRefreshToken(response.refreshToken));
       dispatch(loginAction());
