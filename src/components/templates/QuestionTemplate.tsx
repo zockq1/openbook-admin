@@ -154,6 +154,7 @@ function QuestionTemplate({
       >
         {renderMainContent()}
       </ContentBox>
+      <ContentBox title="선지"></ContentBox>
     </BaseLayout>
   );
 }

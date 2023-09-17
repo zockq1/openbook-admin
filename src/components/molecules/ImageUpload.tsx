@@ -22,9 +22,10 @@ const ImagePreview = styled.img`
 interface ImageUploadProps {
   setImgFile: (imgFile: string) => void;
   imgFile: string;
+  htmlFor: string;
 }
 
-function ImageUpload({ setImgFile, imgFile }: ImageUploadProps) {
+function ImageUpload({ setImgFile, imgFile, htmlFor }: ImageUploadProps) {
   const imgRef = useRef<HTMLInputElement>(null);
 
   const saveImgFile = () => {
@@ -47,11 +48,11 @@ function ImageUpload({ setImgFile, imgFile }: ImageUploadProps) {
   return (
     <div>
       {imgFile ? (
-        <ImageFileUploadLabel htmlFor="imgFileUpload">
+        <ImageFileUploadLabel htmlFor={htmlFor}>
           <ImagePreview src={imgFile} alt="img" />
         </ImageFileUploadLabel>
       ) : (
-        <ImageFileUploadLabel htmlFor="imgFileUpload">
+        <ImageFileUploadLabel htmlFor={htmlFor}>
           <div>+</div>
           <div>이미지 추가</div>
         </ImageFileUploadLabel>
@@ -60,7 +61,7 @@ function ImageUpload({ setImgFile, imgFile }: ImageUploadProps) {
       <input
         type="file"
         accept="image/*"
-        id="imgFileUpload"
+        id={htmlFor}
         style={{ visibility: "hidden" }}
         onChange={saveImgFile}
         ref={imgRef}

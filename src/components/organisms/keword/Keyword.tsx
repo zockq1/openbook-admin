@@ -1,25 +1,17 @@
 import { List, Space, Input, Button, Image } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { KeywordModel } from "../../../types/keywordType";
 import { useUpdateKeywordMutation } from "../../../store/api/keywordApi";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import styled from "styled-components";
 import DeleteKeywordButton from "./DeleteKeywordButton";
+import ImageUpload from "../../molecules/ImageUpload";
 const KeywordGridContainer = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: 100px 1fr;
   grid-template-rows: 32px 100px;
-`;
-
-const ImagePreview = styled.img`
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  border: 1px solid rgba(5, 5, 5, 0.12);
-  border-radius: 8px;
 `;
 
 const KeywordNameBox = styled.div`
@@ -39,17 +31,6 @@ const KeywordCommentBox = styled.div`
   overflow: auto;
 `;
 
-const ImageFileUploadLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid rgba(5, 5, 5, 0.12);
-  border-radius: 8px;
-`;
-
 interface KeywordProps {
   data: KeywordModel;
 }
@@ -60,25 +41,6 @@ function Keyword({ data }: KeywordProps) {
   const [editName, setEditName] = useState(data.name);
   const [editComment, setEditComment] = useState(data.comment);
   const [editFile, setEditFile] = useState(data.file);
-
-  const imgRef = useRef<HTMLInputElement>(null);
-
-  const saveImgFile = () => {
-    if (
-      imgRef.current &&
-      imgRef.current.files &&
-      imgRef.current.files.length === 1
-    ) {
-      const file = imgRef.current.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (reader.result) {
-          setEditFile(reader.result.toString());
-        }
-      };
-    }
-  };
 
   const handleEdit = async () => {
     try {
@@ -138,27 +100,11 @@ function Keyword({ data }: KeywordProps) {
             onChange={handleNameChange}
             style={{ gridColumn: "1/3" }}
           />
-          <div>
-            {editFile ? (
-              <ImageFileUploadLabel htmlFor={`${data.id}`}>
-                <ImagePreview src={editFile} alt="img" />
-              </ImageFileUploadLabel>
-            ) : (
-              <ImageFileUploadLabel htmlFor={`${data.id}`}>
-                <div>+</div>
-                <div>이미지 추가</div>
-              </ImageFileUploadLabel>
-            )}
-
-            <input
-              type="file"
-              accept="image/*"
-              id={`${data.id}`}
-              style={{ visibility: "hidden" }}
-              onChange={saveImgFile}
-              ref={imgRef}
-            />
-          </div>
+          <ImageUpload
+            setImgFile={setEditFile}
+            imgFile={editFile}
+            htmlFor={data.name}
+          />
           <Input.TextArea value={editComment} onChange={handleCommentChange} />
         </KeywordGridContainer>
       ) : (

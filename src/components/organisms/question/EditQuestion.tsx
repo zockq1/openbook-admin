@@ -82,7 +82,11 @@ function EditQuestion({
         </Form.Item>
 
         <Form.Item label="보기" style={{ marginBottom: 0 }}>
-          <ImageUpload setImgFile={setImgFile} imgFile={imgFile} />
+          <ImageUpload
+            setImgFile={setImgFile}
+            imgFile={imgFile}
+            htmlFor="edit-question"
+          />
         </Form.Item>
 
         <Form.Item label="보기 해설" style={{ marginBottom: 0 }}>
