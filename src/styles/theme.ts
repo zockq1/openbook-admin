@@ -27,7 +27,7 @@ const colors = {
   lightGrey: "#BEC5D2",
   grey: "#818BA0",
 
-  blue: "#0F67FE",
+  blue: "#1890ff",
   semiLightBlue: "#A6CBFF",
   lightBlue: "#EDF5FF",
 
@@ -41,11 +41,12 @@ const colors = {
   purple: "#8A3FFC",
   lightPurple: "#A56EFF",
 
-  bg: "#f2f5f9",
+  bg: "#fafafa",
 };
 
 const shadow = {
-  defaultShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.1)",
+  defaultShadow: "0 20px 27px rgb(0 0 0/5%)",
+  small: "0 4px 6px rgb(0 0 0/12%)",
 };
 
 const margin = {

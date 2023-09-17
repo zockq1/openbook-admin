@@ -1,76 +1,43 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import TopicInfo from "./components/Topic/TopicInfo";
-import Topic from "./components/pages/Topic";
-import Question from "./components/pages/Question";
-import CreateTopic from "./components/Topic/CreateTopic";
-import EditTopic from "./components/Topic/EditTopic";
-import ChapterInfo from "./components/Chapter/ChapterInfo";
-import EditChapterInfo from "./components/Chapter/EditChpaterInfo";
-import CreateQuestion from "./components/Question/CreateQuestion";
-import QuestionInfo from "./components/Question/QuestionInfo";
-import EditQuestion from "./components/Question/EditQuestion";
+import TopicPage from "./components/pages/TopicPage";
+import QuestionPage from "./components/pages/QuestionPage";
+import LoginPage from "./components/pages/LoginPage";
+import UserPage from "./components/pages/UserPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/question",
-    element: <Question />,
     children: [
       {
-        path: ":round",
-        element: null,
+        path: "/question",
+        element: <QuestionPage />,
         children: [
-          {
-            path: ":question",
-            element: <QuestionInfo />,
-          },
-
-          {
-            path: ":question/edit",
-            element: <EditQuestion />,
-          },
-          {
-            path: "create-question",
-            element: <CreateQuestion />,
-          },
+          { path: "/question/:round/question-list", element: null },
+          { path: "/question/:round/create-question", element: null },
+          { path: "/question/:round/:question/question-info", element: null },
+          { path: "/question/:round/:question/edit-question", element: null },
         ],
       },
-    ],
-  },
-  {
-    path: "/topic",
-    element: <Topic />,
-    children: [
       {
-        path: ":chapter",
-        element: null,
+        path: "/topic",
+        element: <TopicPage />,
         children: [
-          {
-            path: ":title",
-            element: <TopicInfo />,
-          },
-          {
-            path: "create-topic",
-            element: <CreateTopic />,
-          },
-          {
-            path: "edit-chapter",
-            element: <EditChapterInfo />,
-          },
-          {
-            path: "chapter-info",
-            element: <ChapterInfo />,
-          },
-
-          {
-            path: ":title/edit",
-            element: <EditTopic />,
-          },
+          { path: "/topic/:chapter/chapter-info", element: null },
+          { path: "/topic/:chapter/edit-chapter", element: null },
+          { path: "/topic/:chapter/create-topic", element: null },
+          { path: "/topic/:chapter/:topic/topic-info", element: null },
+          { path: "/topic/:chapter/:topic/edit-topic", element: null },
         ],
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/user",
+        element: <UserPage />,
       },
     ],
   },

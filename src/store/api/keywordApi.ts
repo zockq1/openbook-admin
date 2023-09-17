@@ -49,6 +49,7 @@ export const keywordApi = createApi({
 
 export const {
   useGetKeywordListQuery,
+  useLazyGetKeywordListQuery,
   useAddKeywordMutation,
   useDeleteKeywordMutation,
   useUpdateKeywordMutation,

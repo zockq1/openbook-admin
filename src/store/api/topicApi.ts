@@ -64,7 +64,9 @@ export const topicApi = createApi({
 
 export const {
   useGetTopicQuery,
+  useLazyGetTopicQuery,
   useGetChapterTopicListQuery,
+  useLazyGetChapterTopicListQuery,
   useAddTopicMutation,
   useUpdateTopicMutation,
   useUpdateTopicOrderMutation,

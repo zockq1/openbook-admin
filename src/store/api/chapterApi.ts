@@ -77,7 +77,10 @@ export const {
   useUpdateChapterMutation,
   useDeleteChapterMutation,
   useGetChapterTitleQuery,
+  useLazyGetChapterTitleQuery,
   useGetChapterDateQuery,
+  useLazyGetChapterDateQuery,
   useGetChapterInfoQuery,
+  useLazyGetChapterInfoQuery,
   useUpdateChapterInfoMutation,
 } = chapterApi;

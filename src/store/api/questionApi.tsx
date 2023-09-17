@@ -60,7 +60,9 @@ export const questionApi = createApi({
 
 export const {
   useGetQuestionQuery,
+  useLazyGetQuestionQuery,
   useGetRoundQuestionListQuery,
+  useLazyGetRoundQuestionListQuery,
   useUpdateQuestionMutation,
   useAddQuestionMutation,
   useDeleteQuestionMutation,

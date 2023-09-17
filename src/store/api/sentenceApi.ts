@@ -45,6 +45,7 @@ export const sentenceApi = createApi({
 
 export const {
   useGetSentencesQuery,
+  useLazyGetSentencesQuery,
   useAddSentenceMutation,
   useUpdateSentenceMutation,
   useDeleteSentenceMutation,

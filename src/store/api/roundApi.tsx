@@ -54,6 +54,7 @@ export const roundApi = createApi({
 export const {
   useGetRoundsQuery,
   useGetRoundDateQuery,
+  useLazyGetRoundDateQuery,
   useAddRoundMutation,
   useUpdateRoundMutation,
   useDeleteRoundMutation,
