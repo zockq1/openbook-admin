@@ -36,7 +36,6 @@ function EditQuestion({
       descriptionComment,
       answer,
       score,
-      choiceList: questionInfo.choiceList,
       choiceType,
     };
 

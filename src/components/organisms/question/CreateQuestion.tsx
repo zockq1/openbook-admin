@@ -25,7 +25,6 @@ function CreateQuestion() {
       descriptionComment,
       answer,
       score,
-      choiceList: [],
       choiceType,
     };
 

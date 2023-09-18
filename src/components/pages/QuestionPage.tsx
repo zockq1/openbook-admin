@@ -10,6 +10,7 @@ import {
   useLazyGetQuestionQuery,
   useLazyGetRoundQuestionListQuery,
 } from "../../store/api/questionApi";
+import { useLazyGetChoicesQuery } from "../../store/api/choicesApi";
 
 function QuestionPage() {
   const { round, question } = useParams();
@@ -22,6 +23,8 @@ function QuestionPage() {
     getQuestionListTrigger,
     { data: questionList, error: questionListError },
   ] = useLazyGetRoundQuestionListQuery();
+  const [getChoiceListTrigger, { data: choiceList, error: choiceListError }] =
+    useLazyGetChoicesQuery();
 
   useEffect(() => {
     if (round) {
@@ -36,8 +39,12 @@ function QuestionPage() {
         roundNumber: Number(round),
         questionNumber: Number(question),
       });
+      getChoiceListTrigger({
+        roundNumber: Number(round),
+        questionNumber: Number(question),
+      });
     }
-  }, [question, round, getQuestionTrigger]);
+  }, [question, round, getQuestionTrigger, getChoiceListTrigger]);
 
   useEffect(() => {
     if (roundError) {
@@ -63,6 +70,12 @@ function QuestionPage() {
     }
   }, [questionListError]);
 
+  useEffect(() => {
+    if (choiceListError) {
+      queryErrorNotification(choiceListError, "선지 목록");
+    }
+  }, [choiceListError]);
+
   return (
     <QuestionTemplate
       roundList={roundList}
@@ -71,6 +84,7 @@ function QuestionPage() {
         questionList ? [...questionList].sort((a, b) => a - b) : undefined
       }
       questionInfo={questionInfo}
+      choiceList={choiceList?.choiceList}
     />
   );
 }

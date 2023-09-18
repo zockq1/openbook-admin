@@ -1,18 +1,31 @@
+import { ChoiceType } from "./questionTypes";
+
 export interface ChoiceModel {
-  content: string;
+  choice: string;
+  comment: string;
+  key: string;
+  choiceType: ChoiceType;
+}
+
+export interface ChoiceListModel {
+  choice: string;
+  comment: string;
+  key: string;
   id: number;
 }
 
-export interface addChoiceModel {
-  choiceArr: string[];
-  topicTitle: string;
+export interface GetChoiceModel {
+  roundNumber: number;
+  questionNumber: number;
 }
 
-interface choice {
-  content: string;
-  id: number;
+export interface AddChoiceModel {
+  choice: ChoiceModel;
+  roundNumber: number;
+  questionNumber: number;
 }
 
-export interface updateChoiceModel {
-  choiceList: choice[];
+export interface UpdateChoiceModel {
+  choice: ChoiceModel;
+  choiceId: number;
 }

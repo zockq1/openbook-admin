@@ -12,7 +12,6 @@ export interface QuestionModel {
   descriptionComment: string;
   answer: string;
   choiceType: ChoiceType;
-  choiceList: ChoiceModel[];
   score: number;
 }
 

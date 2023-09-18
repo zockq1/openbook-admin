@@ -15,12 +15,16 @@ import EditQuestion from "../organisms/question/EditQuestion";
 import DeleteRoundButton from "../organisms/round/DeleteRoundButton";
 import EditRoundModal from "../organisms/round/EditRoundModal";
 import DeleteQuestionButton from "../organisms/question/DeleteQuestionButton";
+import ChoiceForm from "../organisms/question/ChoiceForm";
+import { ChoiceListModel } from "../../types/choiceType";
+import ChoiceList from "../organisms/question/ChoiceLsit";
 
 interface QuestionTemplateProps {
   roundList: RoundModel[] | undefined;
   roundDate: RoundDateModel | undefined;
   questionList: number[] | undefined;
   questionInfo: QuestionModel | undefined;
+  choiceList: ChoiceListModel[] | undefined;
 }
 
 function QuestionTemplate({
@@ -28,6 +32,7 @@ function QuestionTemplate({
   roundList,
   questionInfo,
   questionList,
+  choiceList,
 }: QuestionTemplateProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -154,7 +159,21 @@ function QuestionTemplate({
       >
         {renderMainContent()}
       </ContentBox>
-      <ContentBox title="선지"></ContentBox>
+      <ContentBox title="선지">
+        {questionState === "QuestionInfo" && questionInfo && (
+          <ChoiceForm
+            choiceType={questionInfo.choiceType}
+            roundNumber={Number(round)}
+            questionNumber={Number(question)}
+          />
+        )}{" "}
+        {questionInfo && choiceList && (
+          <ChoiceList
+            choiceList={choiceList}
+            choiceType={questionInfo.choiceType}
+          />
+        )}
+      </ContentBox>
     </BaseLayout>
   );
 }

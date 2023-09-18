@@ -1,40 +1,49 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { ChoiceModel, addChoiceModel } from "../../types/choiceType";
 import baseQueryWithReauth from "./baseApi";
+import {
+  AddChoiceModel,
+  ChoiceListModel,
+  GetChoiceModel,
+  UpdateChoiceModel,
+} from "../../types/choiceType";
 
 export const choicesApi = createApi({
   reducerPath: "choicesApi",
   tagTypes: ["ChoiceList"],
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getChoices: builder.query<ChoiceModel[], string>({
-      query: (topicTitle) => `/admin/topics/${topicTitle}/choices/`,
+    getChoices: builder.query<
+      { choiceList: ChoiceListModel[] },
+      GetChoiceModel
+    >({
+      query: ({ roundNumber, questionNumber }) =>
+        `/admin/rounds/${roundNumber}/questions/${questionNumber}/choices/`,
       providesTags: ["ChoiceList"],
     }),
-    addChoices: builder.mutation({
-      query: (choices: addChoiceModel) => {
+    addChoices: builder.mutation<void, AddChoiceModel>({
+      query: ({ choice, roundNumber, questionNumber }) => {
         return {
-          url: `/admin/choices/`,
+          url: `/admin/rounds/${roundNumber}/questions/${questionNumber}/choices/`,
           method: "POST",
-          body: choices,
+          body: choice,
         };
       },
       invalidatesTags: ["ChoiceList"],
     }),
-    updateChoice: builder.mutation({
-      query: ({ id, content }: ChoiceModel) => {
+    updateChoice: builder.mutation<void, UpdateChoiceModel>({
+      query: ({ choice, choiceId }) => {
         return {
-          url: `/admin/choices/${id}`,
+          url: `/admin/choices/${choiceId}`,
           method: "PATCH",
-          body: { content },
+          body: choice,
         };
       },
       invalidatesTags: ["ChoiceList"],
     }),
-    deleteChoice: builder.mutation({
-      query: (id: number) => {
+    deleteChoice: builder.mutation<void, number>({
+      query: (choiceId) => {
         return {
-          url: `/admin/choices/${id}`,
+          url: `/admin/choices/${choiceId}`,
           method: "DELETE",
         };
       },
@@ -45,6 +54,7 @@ export const choicesApi = createApi({
 
 export const {
   useGetChoicesQuery,
+  useLazyGetChoicesQuery,
   useAddChoicesMutation,
   useUpdateChoiceMutation,
   useDeleteChoiceMutation,

@@ -25,8 +25,9 @@ interface ImageUploadProps {
   htmlFor: string;
 }
 
-function ImageUpload({ setImgFile, imgFile, htmlFor }: ImageUploadProps) {
+function ImageUpload({ setImgFile, imgFile }: ImageUploadProps) {
   const imgRef = useRef<HTMLInputElement>(null);
+  const htmlFor = `imgFileUpload_${Math.random()}`;
 
   const saveImgFile = () => {
     if (

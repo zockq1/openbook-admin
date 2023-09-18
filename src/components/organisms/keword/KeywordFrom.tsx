@@ -28,7 +28,7 @@ function KeywordForm({ topicTitle }: KeywordFormProps) {
         name,
         comment,
         topic: topicTitle,
-        file: imgFile, // 이미지 파일 추가
+        file: imgFile,
       });
       setName("");
       setComment("");
@@ -54,19 +54,23 @@ function KeywordForm({ topicTitle }: KeywordFormProps) {
         style={{
           gridColumn: "1/3",
         }}
+        placeholder="키워드"
       />
       <Button type="primary" onClick={handleSubmit}>
         추가
       </Button>
 
-      {/* 이미지 업로드 컴포넌트를 사용 */}
       <ImageUpload
-        setImgFile={(imgFile) => setImgFile(imgFile)}
+        setImgFile={setImgFile}
         imgFile={imgFile}
         htmlFor="keyword-form"
       />
 
-      <Input.TextArea value={comment} onChange={handleCommentChange} />
+      <Input.TextArea
+        value={comment}
+        onChange={handleCommentChange}
+        placeholder="설명"
+      />
     </KeywordFormGridContainer>
   );
 }

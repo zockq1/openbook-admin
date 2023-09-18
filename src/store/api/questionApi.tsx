@@ -15,11 +15,11 @@ export const questionApi = createApi({
   endpoints: (builder) => ({
     getQuestion: builder.query<QuestionModel, GetQuestionModel>({
       query: ({ roundNumber, questionNumber }) =>
-        `/rounds/${roundNumber}/questions/${questionNumber}`,
+        `/rounds/${roundNumber}/questions/${questionNumber}/info`,
       providesTags: ["QuestionInfo"],
     }),
     getRoundQuestionList: builder.query<number[], number>({
-      query: (roundNumber) => `/rounds/${roundNumber}/questions`,
+      query: (roundNumber) => `/admin/rounds/${roundNumber}/questions`,
       providesTags: ["QuestionList"],
     }),
     addQuestion: builder.mutation<any, AddQuestionModel>({
@@ -39,7 +39,7 @@ export const questionApi = createApi({
         roundNumber,
       }: UpdateQuestionModel) => {
         return {
-          url: `/admin/rounds/${roundNumber}/questions/${currentQuestionNumber}`,
+          url: `/admin/rounds/${roundNumber}/questions/${currentQuestionNumber}/info`,
           method: "PATCH",
           body: updatedQuestion,
         };

@@ -56,7 +56,6 @@ function Keyword({ data }: KeywordProps) {
   };
 
   const onEdit = () => {
-    setEditName(data.name);
     setIsEditing(true);
   };
 
@@ -99,13 +98,18 @@ function Keyword({ data }: KeywordProps) {
             value={editName}
             onChange={handleNameChange}
             style={{ gridColumn: "1/3" }}
+            placeholder="키워드"
           />
           <ImageUpload
             setImgFile={setEditFile}
             imgFile={editFile}
             htmlFor={data.name}
           />
-          <Input.TextArea value={editComment} onChange={handleCommentChange} />
+          <Input.TextArea
+            value={editComment}
+            onChange={handleCommentChange}
+            placeholder="설명"
+          />
         </KeywordGridContainer>
       ) : (
         <KeywordGridContainer>
