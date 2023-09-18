@@ -117,7 +117,6 @@ function Choice({ data, choiceType }: ChoiceProps) {
           <Input.TextArea
             value={editKey}
             onChange={handleNameChange}
-            style={{ gridColumn: "1/3" }}
             placeholder="키워드"
           />
           {choiceType === "Image" ? (
@@ -131,9 +130,6 @@ function Choice({ data, choiceType }: ChoiceProps) {
               value={editChoice}
               onChange={handleChoiceChange}
               placeholder="선지"
-              style={{
-                gridColumn: "1/3",
-              }}
             />
           )}
           {choiceType === "Image" ? (
@@ -147,9 +143,6 @@ function Choice({ data, choiceType }: ChoiceProps) {
               value={editComment}
               onChange={handleCommentChange}
               placeholder="해설"
-              style={{
-                gridColumn: "1/3",
-              }}
             />
           )}
         </ChoiceGridContainer>
