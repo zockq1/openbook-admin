@@ -123,13 +123,15 @@ function TopicTemplate({
         {chapterList && chapterList.length !== 0 ? (
           <SmallItemList
             currentItemKey={String(chapter)}
-            itemList={chapterList.map((item) => {
-              return {
-                name: item.number + "단원",
-                key: item.number.toString(),
-                onClick: () => navigate(`/topic/${item.number}/chapter-info`),
-              };
-            })}
+            itemList={[...chapterList]
+              .sort((a, b) => a.number - b.number)
+              .map((item) => {
+                return {
+                  name: item.number + `단원(${item.title})`,
+                  key: item.number.toString(),
+                  onClick: () => navigate(`/topic/${item.number}/chapter-info`),
+                };
+              })}
           />
         ) : (
           <Empty />
@@ -185,7 +187,7 @@ function TopicTemplate({
           <ContentBox
             title={
               topicState === "ChapterInfo" || topicState === "ChapterEdit"
-                ? "단원 정보"
+                ? chapterTitle?.title
                 : topicState === "TopicInfo" ||
                   topicState === "TopicEdit" ||
                   topicState === "TopicCreate"
