@@ -32,9 +32,9 @@ function EditChapterModal({
     try {
       const {
         chapterTitle: newChapterTitle,
-        newChapterNumber,
-        newStartDate,
-        newEndDate,
+        chapterNumber: newChapterNumber,
+        startDate: newStartDate,
+        endDate: newEndDate,
       } = values;
       await updateChapter({
         editedChapter: {
