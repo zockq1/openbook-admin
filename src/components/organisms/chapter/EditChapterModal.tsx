@@ -1,6 +1,6 @@
 import { Button, Form, Input, Modal } from "antd";
 import { useUpdateChapterMutation } from "../../../store/api/chapterApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 
 interface EditChapterModalProps {
@@ -19,6 +19,14 @@ function EditChapterModal({
   const [updateChapter] = useUpdateChapterMutation();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  useEffect(() => {
+    form.setFieldsValue({
+      chapterTitle: title,
+      chapterNumber: chapterNumber,
+      startDate: startDate,
+      endDate: endDate,
+    });
+  }, [form, title, chapterNumber, startDate, endDate]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -65,6 +73,7 @@ function EditChapterModal({
         onOk={onSubmit}
         onCancel={handleCancel}
         footer={null}
+        forceRender
       >
         <Form
           name="chapter-form"
