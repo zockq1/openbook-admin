@@ -2,6 +2,7 @@ import { Button, Form, Input, Modal } from "antd";
 import { useUpdateChapterMutation } from "../../../store/api/chapterApi";
 import { useEffect, useState } from "react";
 import { mutationErrorNotification } from "../../../services/errorNotification";
+import { useNavigate } from "react-router-dom";
 
 interface EditChapterModalProps {
   chapterNumber: number;
@@ -16,6 +17,7 @@ function EditChapterModal({
   startDate,
   endDate,
 }: EditChapterModalProps) {
+  const navigate = useNavigate();
   const [updateChapter] = useUpdateChapterMutation();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,6 +55,7 @@ function EditChapterModal({
         },
         currentChapterNumber: chapterNumber,
       }).unwrap();
+      navigate(`/topic/${newChapterNumber}/chapter-info`);
     } catch (error) {
       mutationErrorNotification(error);
     }

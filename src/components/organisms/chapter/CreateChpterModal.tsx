@@ -2,8 +2,10 @@ import { Button, Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { useAddChapterMutation } from "../../../store/api/chapterApi";
 import { mutationErrorNotification } from "../../../services/errorNotification";
+import { useNavigate } from "react-router-dom";
 
 function CreateChapterModal() {
+  const navigate = useNavigate();
   const [addChapter] = useAddChapterMutation();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +29,7 @@ function CreateChapterModal() {
         endDate: endDate ? endDate : null,
       }).unwrap();
       form.resetFields();
+      navigate(`/topic/${chapterNumber}/chapter-info`);
     } catch (error) {
       mutationErrorNotification(error);
     }
