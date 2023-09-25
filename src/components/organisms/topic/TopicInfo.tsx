@@ -10,6 +10,7 @@ function TopicInfo({ topicInfo }: TopicInfoProps) {
       <Descriptions.Item label="주제">{topicInfo.title}</Descriptions.Item>
       <Descriptions.Item label="분류">{topicInfo.category}</Descriptions.Item>
       <Descriptions.Item label="단원">{topicInfo.chapter}</Descriptions.Item>
+      <Descriptions.Item label="시대">{topicInfo.era}</Descriptions.Item>
       <Descriptions.Item label="시작 년도">
         <Badge
           status={topicInfo.startDateCheck ? "processing" : "default"}
@@ -35,7 +36,7 @@ function TopicInfo({ topicInfo }: TopicInfoProps) {
           );
         })}
       </Descriptions.Item>
-      <Descriptions.Item span={3} label="상세설명">
+      <Descriptions.Item span={2} label="상세설명">
         {topicInfo.detail}
       </Descriptions.Item>
     </Descriptions>

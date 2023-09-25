@@ -31,6 +31,7 @@ import SentenceList from "../organisms/sentence/SentenceList";
 import EditTopicOrder from "../organisms/topic/EditTopicOrder";
 import ChapterInfo from "../organisms/chapter/ChpaterInfo";
 import EditChapterInfo from "../organisms/chapter/EditChpaterInfo";
+import { EraModel } from "../../types/eraType";
 
 interface TopicTemplateProps {
   chapterList: ChapterModel[] | undefined;
@@ -42,6 +43,7 @@ interface TopicTemplateProps {
   categoryList: CategoryModel[] | undefined;
   keywordList: KeywordModel[] | undefined;
   sentenceLsit: SentenceModel[] | undefined;
+  eraList: EraModel[] | undefined;
 }
 
 function TopicTemplate({
@@ -54,6 +56,7 @@ function TopicTemplate({
   categoryList,
   keywordList,
   sentenceLsit,
+  eraList,
 }: TopicTemplateProps) {
   const navigate = useNavigate();
   const { chapter, topic } = useParams();
@@ -86,16 +89,23 @@ function TopicTemplate({
   const renderMainContent = (): ReactNode => {
     if (topicState === "TopicInfo" && topicInfo) {
       return <TopicInfo topicInfo={topicInfo} />;
-    } else if (topicState === "TopicCreate" && categoryList) {
+    } else if (topicState === "TopicCreate" && categoryList && eraList) {
       return (
         <CreateTopic
+          eraList={eraList}
           categoryList={categoryList}
           chapterNumber={Number(chapter)}
         />
       );
-    } else if (topicState === "TopicEdit" && topicInfo && categoryList) {
+    } else if (
+      topicState === "TopicEdit" &&
+      topicInfo &&
+      categoryList &&
+      eraList
+    ) {
       return (
         <EditTopic
+          eraList={eraList}
           topicInfo={topicInfo}
           categoryList={categoryList}
           chapterNumber={Number(chapter)}

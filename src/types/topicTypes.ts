@@ -9,6 +9,7 @@ export interface TopicModel {
   chapter: number;
   title: string;
   category: string;
+  era: string;
   startDate: number | null;
   startDateCheck: boolean;
   endDate: number | null;

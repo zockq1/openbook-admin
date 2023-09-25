@@ -12,6 +12,7 @@ import { sentenceApi } from "./api/sentenceApi";
 import { keywordApi } from "./api/keywordApi";
 import { roundApi } from "./api/roundApi";
 import { questionApi } from "./api/questionApi";
+import { eraApi } from "./api/eraApi";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   [sentenceApi.reducerPath]: sentenceApi.reducer,
   [roundApi.reducerPath]: roundApi.reducer,
   [questionApi.reducerPath]: questionApi.reducer,
+  [eraApi.reducerPath]: eraApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -52,7 +54,8 @@ export const store = configureStore({
       keywordApi.middleware,
       sentenceApi.middleware,
       roundApi.middleware,
-      questionApi.middleware
+      questionApi.middleware,
+      eraApi.middleware
     ),
 });
 

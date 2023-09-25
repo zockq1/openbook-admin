@@ -15,11 +15,13 @@ import {
 import { useGetCategoryListQuery } from "../../store/api/categoryApi";
 import { useLazyGetKeywordListQuery } from "../../store/api/keywordApi";
 import { useLazyGetSentencesQuery } from "../../store/api/sentenceApi";
+import { useGetEraListQuery } from "../../store/api/eraApi";
 
 function TopicPage() {
   const { chapter, topic } = useParams();
   const { data: categoryList, error: categoryListError } =
     useGetCategoryListQuery();
+  const { data: eraList, error: eraListError } = useGetEraListQuery();
   const { data: chapterList, error: chapterError } = useGetChaptersQuery();
   const [
     getChapterTitleTrigger,
@@ -121,6 +123,12 @@ function TopicPage() {
     }
   }, [chapterError]);
 
+  useEffect(() => {
+    if (eraListError) {
+      queryErrorNotification(eraListError, "시대 목록");
+    }
+  }, [eraListError]);
+
   return (
     <TopicTemplate
       chapterList={chapterList}
@@ -134,6 +142,7 @@ function TopicPage() {
       chapterDate={chapterDate}
       chapterInfo={chapterInfo}
       categoryList={categoryList}
+      eraList={eraList}
       keywordList={keywordList}
       sentenceLsit={sentenceList}
     />

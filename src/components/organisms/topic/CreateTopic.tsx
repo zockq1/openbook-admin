@@ -6,13 +6,20 @@ import { Button, Form, Input, Select, Space, Switch } from "antd";
 import { CategoryModel } from "../../../types/categoryType";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import CategoryEditModal from "../category/CategoryEditModal";
+import { EraModel } from "../../../types/eraType";
+import EraEditModal from "../era/CreateEraModal";
 
 interface CreateTopicProps {
   categoryList: CategoryModel[];
+  eraList: EraModel[];
   chapterNumber: number;
 }
 
-function CreateTopic({ categoryList, chapterNumber }: CreateTopicProps) {
+function CreateTopic({
+  categoryList,
+  eraList,
+  chapterNumber,
+}: CreateTopicProps) {
   const navigate = useNavigate();
   const [addTopic] = useAddTopicMutation();
 
@@ -21,6 +28,7 @@ function CreateTopic({ categoryList, chapterNumber }: CreateTopicProps) {
       chapter: Number(values.chapter),
       title: values.title,
       category: values.category,
+      era: values.era,
       startDate: values.startDate ? Number(values.startDate) : null,
       startDateCheck: Boolean(values.startDateCheck),
       endDate: values.endDate ? Number(values.endDate) : null,
@@ -90,6 +98,26 @@ function CreateTopic({ categoryList, chapterNumber }: CreateTopicProps) {
         </Form.Item>
 
         <CategoryEditModal categoryList={categoryList} />
+      </Form.Item>
+
+      <Form.Item label="시대" style={{ marginBottom: 0 }}>
+        <Form.Item
+          name="era"
+          rules={[{ required: true, message: "시대를 선택해 주세요!" }]}
+          style={{
+            display: "inline-block",
+          }}
+        >
+          <Select style={{ width: "100px" }}>
+            {eraList?.map((era: EraModel) => (
+              <Select.Option value={era.name} key={era.name}>
+                {era.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <EraEditModal eraList={eraList} />
       </Form.Item>
 
       <Form.Item label="시작 년도" style={{ marginBottom: 0 }}>
