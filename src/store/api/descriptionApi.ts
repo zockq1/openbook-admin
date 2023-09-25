@@ -1,86 +1,60 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import baseQueryWithReauth from "./baseApi";
+import { GetQuestionModel } from "../../types/questionTypes";
 import {
   AddDescriptionModel,
-  AddDuplicationChoiceModel,
-  DeleteDuplicationChoiceModel,
-  DescriptionModel,
-  DuplicationChoiceModel,
+  DeleteDescriptionModel,
+  GetDescriptionModel,
+  UpdateDescriptionModel,
 } from "../../types/descriptionType";
-import baseQueryWithReauth from "./baseApi";
 
 export const descriptionApi = createApi({
   reducerPath: "descriptionApi",
-  tagTypes: ["descriptionList", "duplicationList"],
+  tagTypes: ["Description"],
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getDescriptions: builder.query<DescriptionModel[], string>({
-      query: (topicTitle) => `/topics/${topicTitle}/descriptions/`,
-      providesTags: ["descriptionList"],
+    getDescription: builder.query<GetDescriptionModel, GetQuestionModel>({
+      query: ({ questionNumber, roundNumber }) =>
+        `/rounds/${roundNumber}/questions/${questionNumber}/descriptions/`,
+      providesTags: ["Description"],
     }),
-    getDuplicationChoice: builder.query<DuplicationChoiceModel[], number>({
-      query: (descriptionId: number) => `/admin/dup-contents/${descriptionId}`,
-      providesTags: ["duplicationList"],
-    }),
-    addDescription: builder.mutation({
-      query: (descriptions: AddDescriptionModel) => {
+    updateDescription: builder.mutation<void, UpdateDescriptionModel>({
+      query: ({ descriptionId, description }) => {
         return {
-          url: `/admin/descriptions/`,
-          method: "POST",
-          body: descriptions,
-        };
-      },
-      invalidatesTags: ["descriptionList"],
-    }),
-    addDuplicationChoice: builder.mutation({
-      query: (data: AddDuplicationChoiceModel) => {
-        return {
-          url: `/admin/dup-contents/${data.descriptionId}`,
-          method: "POST",
-          body: {
-            choiceList: data.choiceList,
-          },
-        };
-      },
-    }),
-    updateDescription: builder.mutation({
-      query: ({ content, id }: DescriptionModel) => {
-        return {
-          url: `/admin/descriptions/${id}`,
+          url: `/descriptions/${descriptionId}/`,
           method: "PATCH",
-          body: { content },
+          body: { description },
         };
       },
-      invalidatesTags: ["descriptionList"],
+      invalidatesTags: ["Description"],
     }),
-    deleteDescription: builder.mutation({
-      query: (id: number) => {
+    addDescription: builder.mutation<void, AddDescriptionModel>({
+      query: ({ descriptionId, comment }) => {
         return {
-          url: `/admin/descriptions/${id}`,
+          url: `/descriptions/${descriptionId}/`,
+          method: "POST",
+          body: comment,
+        };
+      },
+      invalidatesTags: ["Description"],
+    }),
+    deleteDescription: builder.mutation<void, DeleteDescriptionModel>({
+      query: ({ descriptionId, comment }) => {
+        return {
+          url: `/descriptions/${descriptionId}/`,
           method: "DELETE",
+          body: comment,
         };
       },
-      invalidatesTags: ["descriptionList"],
-    }),
-    deleteDuplicationChoice: builder.mutation({
-      query: (data: DeleteDuplicationChoiceModel) => {
-        return {
-          url: `/admin/dup-contents/${data.descriptionId}`,
-          method: "Delete",
-          body: {
-            choiceList: data.choiceId,
-          },
-        };
-      },
+      invalidatesTags: ["Description"],
     }),
   }),
 });
 
 export const {
-  useGetDescriptionsQuery,
-  useGetDuplicationChoiceQuery,
+  useGetDescriptionQuery,
+  useLazyGetDescriptionQuery,
   useAddDescriptionMutation,
-  useAddDuplicationChoiceMutation,
   useUpdateDescriptionMutation,
   useDeleteDescriptionMutation,
-  useDeleteDuplicationChoiceMutation,
 } = descriptionApi;

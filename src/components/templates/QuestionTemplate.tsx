@@ -16,8 +16,13 @@ import DeleteRoundButton from "../organisms/round/DeleteRoundButton";
 import EditRoundModal from "../organisms/round/EditRoundModal";
 import DeleteQuestionButton from "../organisms/question/DeleteQuestionButton";
 import ChoiceForm from "../organisms/question/ChoiceForm";
-import { ChoiceListModel } from "../../types/choiceType";
 import ChoiceList from "../organisms/question/ChoiceLsit";
+import Description from "../organisms/description/Description";
+import CommentForm from "../organisms/description/CommentForm";
+import { GetDescriptionModel } from "../../types/descriptionType";
+import { ColumnFlex } from "../atoms/FlexLayout";
+import CommentList from "../organisms/description/CommentList";
+import { ChoiceListModel } from "../../types/choiceType";
 
 interface QuestionTemplateProps {
   roundList: RoundModel[] | undefined;
@@ -25,6 +30,7 @@ interface QuestionTemplateProps {
   questionList: number[] | undefined;
   questionInfo: QuestionModel | undefined;
   choiceList: ChoiceListModel[] | undefined;
+  description: GetDescriptionModel | undefined;
 }
 
 function QuestionTemplate({
@@ -33,6 +39,7 @@ function QuestionTemplate({
   questionInfo,
   questionList,
   choiceList,
+  description,
 }: QuestionTemplateProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -137,43 +144,63 @@ function QuestionTemplate({
           <Empty />
         )}
       </ContentBox>
-      <ContentBox
-        title="문제 정보"
-        option={
-          questionState === "QuestionInfo" && (
+      <ColumnFlex>
+        {" "}
+        <ContentBox
+          title="문제 정보"
+          option={
+            questionState === "QuestionInfo" && (
+              <>
+                <Button
+                  onClick={() =>
+                    navigate(`/question/${round}/${question}/edit-question`)
+                  }
+                >
+                  수정
+                </Button>
+                <DeleteQuestionButton
+                  questionNumber={Number(question)}
+                  roundNumber={Number(round)}
+                />
+              </>
+            )
+          }
+        >
+          {renderMainContent()}
+        </ContentBox>
+        {questionState === "QuestionInfo" && (
+          <ContentBox title="보기">
             <>
-              <Button
-                onClick={() =>
-                  navigate(`/question/${round}/${question}/edit-question`)
-                }
-              >
-                수정
-              </Button>
-              <DeleteQuestionButton
-                questionNumber={Number(question)}
-                roundNumber={Number(round)}
+              <Description
+                descriptionId={description?.descriptionId || 0}
+                description={description?.description || ""}
+              />
+              <CommentForm descriptionId={description?.descriptionId || 0} />
+              <CommentList
+                descriptionId={description?.descriptionId || 0}
+                commentList={description?.commentList || []}
               />
             </>
-          )
-        }
-      >
-        {renderMainContent()}
-      </ContentBox>
-      <ContentBox title="선지">
-        {questionState === "QuestionInfo" && questionInfo && (
-          <ChoiceForm
-            choiceType={questionInfo.choiceType}
-            roundNumber={Number(round)}
-            questionNumber={Number(question)}
-          />
-        )}{" "}
-        {questionInfo && choiceList && (
-          <ChoiceList
-            choiceList={choiceList}
-            choiceType={questionInfo.choiceType}
-          />
+          </ContentBox>
         )}
-      </ContentBox>
+      </ColumnFlex>
+      {questionState === "QuestionInfo" && (
+        <ContentBox title="선지">
+          {questionInfo && (
+            <ChoiceForm
+              choiceType={questionInfo.choiceType}
+              roundNumber={Number(round)}
+              questionNumber={Number(question)}
+            />
+          )}{" "}
+          {questionInfo && choiceList && (
+            <ChoiceList
+              choiceList={choiceList}
+              choiceType={questionInfo.choiceType}
+            />
+          )}
+        </ContentBox>
+      )}
     </BaseLayout>
   );
 }

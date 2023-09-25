@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import { useUpdateQuestionMutation } from "../../../store/api/questionApi";
 import { ChoiceType, QuestionModel } from "../../../types/questionTypes";
-import ImageUpload from "../../molecules/ImageUpload";
 
 interface EditQuestionProps {
   questionInfo: QuestionModel;
@@ -22,18 +21,15 @@ function EditQuestion({
   const [choiceType, setChoiceType] = useState<ChoiceType>(
     questionInfo.choiceType
   );
-  const [imgFile, setImgFile] = useState(questionInfo.description);
 
   const onChangeChoiceType = ({ target: { value } }: RadioChangeEvent) => {
     setChoiceType(value);
   };
 
   const onFinish = async (values: any) => {
-    const { number, descriptionComment, answer, score } = values;
+    const { number, answer, score } = values;
     let newQuestion: QuestionModel = {
       number,
-      description: imgFile,
-      descriptionComment,
       answer,
       score,
       choiceType,
@@ -80,31 +76,13 @@ function EditQuestion({
           </Form.Item>
         </Form.Item>
 
-        <Form.Item label="보기" style={{ marginBottom: 0 }}>
-          <ImageUpload
-            setImgFile={setImgFile}
-            imgFile={imgFile}
-            htmlFor="edit-question"
-          />
-        </Form.Item>
-
-        <Form.Item label="보기 해설" style={{ marginBottom: 0 }}>
-          <Form.Item
-            name="descriptionComment"
-            rules={[{ required: true, message: "보기 해설을 입력해주세요!" }]}
-            initialValue={questionInfo.descriptionComment}
-          >
-            <Input />
-          </Form.Item>
-        </Form.Item>
-
-        <Form.Item label="정답 주제" style={{ marginBottom: 0 }}>
+        <Form.Item label="정답" style={{ marginBottom: 0 }}>
           <Form.Item
             name="answer"
-            rules={[{ required: true, message: "보기 해설을 입력해주세요!" }]}
+            rules={[{ required: true, message: "정답을 입력해주세요!" }]}
             initialValue={questionInfo.answer}
           >
-            <Input />
+            <Input type="number" />
           </Form.Item>
         </Form.Item>
 

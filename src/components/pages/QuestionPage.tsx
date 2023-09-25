@@ -11,6 +11,7 @@ import {
   useLazyGetRoundQuestionListQuery,
 } from "../../store/api/questionApi";
 import { useLazyGetChoicesQuery } from "../../store/api/choicesApi";
+import { useLazyGetDescriptionQuery } from "../../store/api/descriptionApi";
 
 function QuestionPage() {
   const { round, question } = useParams();
@@ -25,6 +26,10 @@ function QuestionPage() {
   ] = useLazyGetRoundQuestionListQuery();
   const [getChoiceListTrigger, { data: choiceList, error: choiceListError }] =
     useLazyGetChoicesQuery();
+  const [
+    getDescriptionTrigger,
+    { data: description, error: descriptionError },
+  ] = useLazyGetDescriptionQuery();
 
   useEffect(() => {
     if (round) {
@@ -43,8 +48,18 @@ function QuestionPage() {
         roundNumber: Number(round),
         questionNumber: Number(question),
       });
+      getDescriptionTrigger({
+        roundNumber: Number(round),
+        questionNumber: Number(question),
+      });
     }
-  }, [question, round, getQuestionTrigger, getChoiceListTrigger]);
+  }, [
+    question,
+    round,
+    getQuestionTrigger,
+    getChoiceListTrigger,
+    getDescriptionTrigger,
+  ]);
 
   useEffect(() => {
     if (roundError) {
@@ -76,6 +91,12 @@ function QuestionPage() {
     }
   }, [choiceListError]);
 
+  useEffect(() => {
+    if (descriptionError) {
+      queryErrorNotification(descriptionError, "보기");
+    }
+  }, [descriptionError]);
+
   return (
     <QuestionTemplate
       roundList={roundList}
@@ -85,6 +106,7 @@ function QuestionPage() {
       }
       questionInfo={questionInfo}
       choiceList={choiceList?.choiceList}
+      description={description}
     />
   );
 }

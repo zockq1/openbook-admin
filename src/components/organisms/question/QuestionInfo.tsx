@@ -1,4 +1,4 @@
-import { Descriptions, Image } from "antd";
+import { Descriptions } from "antd";
 import { QuestionModel } from "../../../types/questionTypes";
 
 interface QuestionInfoProps {
@@ -17,12 +17,6 @@ function QuestionInfo({ questionInfo }: QuestionInfoProps) {
       <Descriptions.Item label="배점">{questionInfo.score}</Descriptions.Item>
       <Descriptions.Item label="선지 유형">
         {questionInfo.choiceType}
-      </Descriptions.Item>
-      <Descriptions.Item label="보기" span={4}>
-        <Image width={200} src={questionInfo.description} />
-      </Descriptions.Item>
-      <Descriptions.Item label="보기 해설" span={4}>
-        {questionInfo.descriptionComment}
       </Descriptions.Item>
     </Descriptions>
   );

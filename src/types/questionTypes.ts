@@ -8,9 +8,7 @@ export type ChoiceType = "String" | "Image";
 
 export interface QuestionModel {
   number: number;
-  description: string;
-  descriptionComment: string;
-  answer: string;
+  answer: number;
   choiceType: ChoiceType;
   score: number;
 }
