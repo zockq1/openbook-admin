@@ -16,20 +16,20 @@ import DeleteRoundButton from "../organisms/round/DeleteRoundButton";
 import EditRoundModal from "../organisms/round/EditRoundModal";
 import DeleteQuestionButton from "../organisms/question/DeleteQuestionButton";
 import ChoiceForm from "../organisms/question/ChoiceForm";
-import ChoiceList from "../organisms/question/ChoiceLsit";
+import ChoiceList from "../organisms/question/ChoiceList";
 import Description from "../organisms/description/Description";
 import CommentForm from "../organisms/description/CommentForm";
 import { GetDescriptionModel } from "../../types/descriptionType";
 import { ColumnFlex } from "../atoms/FlexLayout";
 import CommentList from "../organisms/description/CommentList";
-import { ChoiceListModel } from "../../types/choiceType";
+import { GetChoiceModel } from "../../types/choiceType";
 
 interface QuestionTemplateProps {
   roundList: RoundModel[] | undefined;
   roundDate: RoundDateModel | undefined;
   questionList: number[] | undefined;
   questionInfo: QuestionModel | undefined;
-  choiceList: ChoiceListModel[] | undefined;
+  choiceList: GetChoiceModel[] | undefined;
   description: GetDescriptionModel | undefined;
 }
 
@@ -51,7 +51,6 @@ function QuestionTemplate({
     | "QuestionList"
     | "Empty"
   >();
-
   useEffect(() => {
     if (location.pathname.endsWith("question-list")) {
       setQuestionState("QuestionList");
@@ -170,29 +169,32 @@ function QuestionTemplate({
         </ContentBox>
         {questionState === "QuestionInfo" && (
           <ContentBox title="보기">
-            <>
-              <Description
-                descriptionId={description?.descriptionId || 0}
-                description={description?.description || ""}
-              />
-              <CommentForm descriptionId={description?.descriptionId || 0} />
-              <CommentList
-                descriptionId={description?.descriptionId || 0}
-                commentList={description?.commentList || []}
-              />
-            </>
+            {description && (
+              <>
+                <Description
+                  descriptionId={description.descriptionId}
+                  description={description.description}
+                />
+                <CommentForm descriptionId={description.descriptionId} />
+                <CommentList
+                  descriptionId={description.descriptionId}
+                  commentList={description.commentList}
+                />
+              </>
+            )}
           </ContentBox>
         )}
       </ColumnFlex>
       {questionState === "QuestionInfo" && (
         <ContentBox title="선지">
-          {questionInfo && (
+          {questionInfo && choiceList && (
             <ChoiceForm
+              choiceCount={choiceList.length}
               choiceType={questionInfo.choiceType}
               roundNumber={Number(round)}
               questionNumber={Number(question)}
             />
-          )}{" "}
+          )}
           {questionInfo && choiceList && (
             <ChoiceList
               choiceList={choiceList}

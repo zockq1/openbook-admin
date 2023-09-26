@@ -1,10 +1,10 @@
 import { List } from "antd";
 import Choice from "./Choice";
-import { ChoiceListModel } from "../../../types/choiceType";
 import { ChoiceType } from "../../../types/questionTypes";
+import { GetChoiceModel } from "../../../types/choiceType";
 
 interface ChoiceListProps {
-  choiceList: ChoiceListModel[];
+  choiceList: GetChoiceModel[];
   choiceType: ChoiceType;
 }
 

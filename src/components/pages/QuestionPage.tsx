@@ -105,7 +105,7 @@ function QuestionPage() {
         questionList ? [...questionList].sort((a, b) => a - b) : undefined
       }
       questionInfo={questionInfo}
-      choiceList={choiceList?.choiceList}
+      choiceList={choiceList}
       description={description}
     />
   );
