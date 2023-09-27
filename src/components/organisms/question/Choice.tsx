@@ -9,6 +9,7 @@ import { useUpdateChoiceMutation } from "../../../store/api/choicesApi";
 import { GetChoiceModel } from "../../../types/choiceType";
 import ChoiceCommentForm from "./ChoiceCommentForm";
 import ChoiceCommentList from "./ChoiceCommentList";
+import ContentBox from "../../molecules/ContentBox";
 interface ChoiceFormGridContainerProps {
   choiceType: ChoiceType;
 }
@@ -38,6 +39,7 @@ function Choice({ data, choiceType }: ChoiceProps) {
 
   const handleEdit = async () => {
     try {
+      console.log("수정");
       await updateChoice({
         choiceId: data.choiceId,
         choice: {
@@ -69,7 +71,7 @@ function Choice({ data, choiceType }: ChoiceProps) {
   };
 
   return (
-    <>
+    <ContentBox title={data.choiceNumber + "번 선지"}>
       <List.Item
         actions={[
           <Space>
@@ -102,6 +104,7 @@ function Choice({ data, choiceType }: ChoiceProps) {
           </ChoiceGridContainer>
         ) : (
           <ChoiceGridContainer choiceType={choiceType}>
+            {}
             {choiceType === "Image" ? (
               <Image src={data.choice} />
             ) : (
@@ -115,7 +118,7 @@ function Choice({ data, choiceType }: ChoiceProps) {
         choiceId={data.choiceId}
         commentList={data.commentList}
       />
-    </>
+    </ContentBox>
   );
 }
 

@@ -9,6 +9,15 @@ import { KeywordModel } from "../../../types/keywordType";
 import { SentenceModel } from "../../../types/sentenceType";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import { useAddChoiceCommentMutation } from "../../../store/api/choicesApi";
+import styled from "styled-components";
+
+const StyledChoiceForm = styled.div`
+  & > h1 {
+    padding: 10px;
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    font-size: ${({ theme }) => theme.fontSizes.base};
+  }
+`;
 
 interface CommentFormProps {
   choiceId: number;
@@ -89,77 +98,80 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
   };
 
   return (
-    <>
-      <Select
-        onChange={handleChapterChange}
-        value={chapterNumber}
-        style={{ width: "20%" }}
-      >
-        {chapterList &&
-          chapterList?.map((chapter) => (
-            <Select.Option value={chapter.number} key={chapter.number}>
-              {chapter.number + "단원"}
-            </Select.Option>
-          ))}
-      </Select>
-      <Select
-        onChange={handleTocpiChange}
-        value={topicTitle}
-        style={{ width: "20%" }}
-      >
-        {topicList &&
-          topicList?.map((topic) => (
-            <Select.Option value={topic.title} key={topic.title}>
-              {topic.title}
-            </Select.Option>
-          ))}
-      </Select>
-      <Select
-        defaultValue={commentType}
-        value={commentType}
-        onChange={handleCommentTypeChange}
-        style={{ width: "20%" }}
-      >
-        <Select.Option value={"Keyword"} key={"Keyword"}>
-          키워드
-        </Select.Option>
-        <Select.Option value={"Sentence"} key={"Sentence"}>
-          문장
-        </Select.Option>
-      </Select>
-      {commentType === "Keyword" && (
+    <StyledChoiceForm>
+      <h1>선지 해설 추가</h1>
+      <div>
         <Select
-          onChange={(value) => setComment(value)}
-          value={comment}
+          onChange={handleChapterChange}
+          value={chapterNumber}
           style={{ width: "20%" }}
         >
-          {currentKeywordList.map((keyword) => (
-            <Select.Option value={keyword.id} key={keyword.name}>
-              {keyword.name}
-            </Select.Option>
-          ))}
+          {chapterList &&
+            chapterList?.map((chapter) => (
+              <Select.Option value={chapter.number} key={chapter.number}>
+                {chapter.number + "단원"}
+              </Select.Option>
+            ))}
         </Select>
-      )}
-
-      <Button onClick={handleSubmit} style={{ float: "right" }}>
-        추가
-      </Button>
-      {commentType === "Sentence" && (
         <Select
-          onChange={(value) => {
-            setComment(value);
-          }}
-          value={comment}
-          style={{ width: "80%" }}
+          onChange={handleTocpiChange}
+          value={topicTitle}
+          style={{ width: "20%" }}
         >
-          {currentSentenceList.map((sentence) => (
-            <Select.Option value={sentence.id} key={sentence.name}>
-              {sentence.name}
-            </Select.Option>
-          ))}
+          {topicList &&
+            topicList?.map((topic) => (
+              <Select.Option value={topic.title} key={topic.title}>
+                {topic.title}
+              </Select.Option>
+            ))}
         </Select>
-      )}
-    </>
+        <Select
+          defaultValue={commentType}
+          value={commentType}
+          onChange={handleCommentTypeChange}
+          style={{ width: "20%" }}
+        >
+          <Select.Option value={"Keyword"} key={"Keyword"}>
+            키워드
+          </Select.Option>
+          <Select.Option value={"Sentence"} key={"Sentence"}>
+            문장
+          </Select.Option>
+        </Select>
+        {commentType === "Keyword" && (
+          <Select
+            onChange={(value) => setComment(value)}
+            value={comment}
+            style={{ width: "20%" }}
+          >
+            {currentKeywordList.map((keyword) => (
+              <Select.Option value={keyword.id} key={keyword.name}>
+                {keyword.name}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
+
+        <Button onClick={handleSubmit} style={{ float: "right" }}>
+          추가
+        </Button>
+        {commentType === "Sentence" && (
+          <Select
+            onChange={(value) => {
+              setComment(value);
+            }}
+            value={comment}
+            style={{ width: "80%" }}
+          >
+            {currentSentenceList.map((sentence) => (
+              <Select.Option value={sentence.id} key={sentence.name}>
+                {sentence.name}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
+      </div>
+    </StyledChoiceForm>
   );
 }
 

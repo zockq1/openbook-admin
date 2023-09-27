@@ -185,24 +185,28 @@ function QuestionTemplate({
           </ContentBox>
         )}
       </ColumnFlex>
-      {questionState === "QuestionInfo" && (
-        <ContentBox title="선지">
-          {questionInfo && choiceList && (
-            <ChoiceForm
-              choiceCount={choiceList.length}
-              choiceType={questionInfo.choiceType}
-              roundNumber={Number(round)}
-              questionNumber={Number(question)}
-            />
-          )}
-          {questionInfo && choiceList && (
-            <ChoiceList
-              choiceList={choiceList}
-              choiceType={questionInfo.choiceType}
-            />
-          )}
-        </ContentBox>
-      )}
+      <ColumnFlex>
+        {questionState === "QuestionInfo" && (
+          <>
+            <ContentBox title="선지 추가">
+              {questionInfo && choiceList && (
+                <ChoiceForm
+                  choiceCount={choiceList.length}
+                  choiceType={questionInfo.choiceType}
+                  roundNumber={Number(round)}
+                  questionNumber={Number(question)}
+                />
+              )}
+            </ContentBox>
+            {questionInfo && choiceList && (
+              <ChoiceList
+                choiceList={choiceList}
+                choiceType={questionInfo.choiceType}
+              />
+            )}
+          </>
+        )}
+      </ColumnFlex>
     </BaseLayout>
   );
 }
