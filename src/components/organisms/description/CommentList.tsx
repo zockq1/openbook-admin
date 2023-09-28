@@ -46,8 +46,8 @@ function CommentList({ descriptionId, commentList }: CommentListProps) {
             ]}
           >
             <List.Item.Meta
-              title={`${item.chapterNumber}단원: ${item.topicTitle} `}
-              description={item.name}
+              title={item.name}
+              description={`${item.chapterNumber}단원: ${item.topicTitle} `}
             />
           </List.Item>
         )}

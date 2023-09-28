@@ -11,7 +11,7 @@ function QuestionInfo({ questionInfo }: QuestionInfoProps) {
       <Descriptions.Item label="문제 번호">
         {questionInfo.number}
       </Descriptions.Item>
-      <Descriptions.Item label="정답 주제">
+      <Descriptions.Item label="정답 선지 번호">
         {questionInfo.answer}
       </Descriptions.Item>
       <Descriptions.Item label="배점">{questionInfo.score}</Descriptions.Item>
