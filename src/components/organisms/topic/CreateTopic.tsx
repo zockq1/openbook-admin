@@ -7,7 +7,7 @@ import { CategoryModel } from "../../../types/categoryType";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import CategoryEditModal from "../category/CategoryEditModal";
 import { EraModel } from "../../../types/eraType";
-import EraEditModal from "../era/CreateEraModal";
+import EraEditModal from "../era/EraEditModal";
 
 interface CreateTopicProps {
   categoryList: CategoryModel[];
