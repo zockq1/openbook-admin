@@ -28,7 +28,7 @@ function QuestionPage() {
     useLazyGetChoicesQuery();
   const [
     getDescriptionTrigger,
-    { data: description, error: descriptionError },
+    { data: descriptionInfo, error: descriptionInfoError },
   ] = useLazyGetDescriptionQuery();
 
   useEffect(() => {
@@ -92,10 +92,10 @@ function QuestionPage() {
   }, [choiceListError]);
 
   useEffect(() => {
-    if (descriptionError) {
-      queryErrorNotification(descriptionError, "보기");
+    if (descriptionInfoError) {
+      queryErrorNotification(descriptionInfoError, "보기");
     }
-  }, [descriptionError]);
+  }, [descriptionInfoError]);
 
   return (
     <QuestionTemplate
@@ -106,7 +106,7 @@ function QuestionPage() {
       }
       questionInfo={questionInfo}
       choiceList={choiceList}
-      description={description}
+      descriptionInfo={descriptionInfo}
     />
   );
 }

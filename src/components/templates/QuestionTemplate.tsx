@@ -15,13 +15,11 @@ import EditQuestion from "../organisms/question/EditQuestion";
 import DeleteRoundButton from "../organisms/round/DeleteRoundButton";
 import EditRoundModal from "../organisms/round/EditRoundModal";
 import DeleteQuestionButton from "../organisms/question/DeleteQuestionButton";
-import ChoiceForm from "../organisms/question/ChoiceForm";
-import ChoiceList from "../organisms/question/ChoiceList";
+import ChoiceForm from "../organisms/choice/ChoiceForm";
+import ChoiceList from "../organisms/choice/ChoiceList";
 import Description from "../organisms/description/Description";
-import CommentForm from "../organisms/description/CommentForm";
 import { GetDescriptionModel } from "../../types/descriptionType";
 import { ColumnFlex } from "../atoms/FlexLayout";
-import CommentList from "../organisms/description/CommentList";
 import { GetChoiceModel } from "../../types/choiceType";
 
 interface QuestionTemplateProps {
@@ -30,7 +28,7 @@ interface QuestionTemplateProps {
   questionList: number[] | undefined;
   questionInfo: QuestionModel | undefined;
   choiceList: GetChoiceModel[] | undefined;
-  description: GetDescriptionModel | undefined;
+  descriptionInfo: GetDescriptionModel | undefined;
 }
 
 function QuestionTemplate({
@@ -39,7 +37,7 @@ function QuestionTemplate({
   questionInfo,
   questionList,
   choiceList,
-  description,
+  descriptionInfo,
 }: QuestionTemplateProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -169,18 +167,8 @@ function QuestionTemplate({
         </ContentBox>
         {questionState === "QuestionInfo" && (
           <ContentBox title="보기">
-            {description && (
-              <>
-                <Description
-                  descriptionId={description.descriptionId}
-                  description={description.description}
-                />
-                <CommentForm descriptionId={description.descriptionId} />
-                <CommentList
-                  descriptionId={description.descriptionId}
-                  commentList={description.commentList}
-                />
-              </>
+            {descriptionInfo && (
+              <Description descriptionInfo={descriptionInfo} />
             )}
           </ContentBox>
         )}
@@ -199,10 +187,7 @@ function QuestionTemplate({
               )}
             </ContentBox>
             {questionInfo && choiceList && (
-              <ChoiceList
-                choiceList={choiceList}
-                choiceType={questionInfo.choiceType}
-              />
+              <ChoiceList choiceList={choiceList} />
             )}
           </>
         )}

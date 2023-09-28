@@ -28,7 +28,7 @@ export const descriptionApi = createApi({
       },
       invalidatesTags: ["Description"],
     }),
-    addDescription: builder.mutation<void, AddDescriptionModel>({
+    addDescriptionComment: builder.mutation<void, AddDescriptionModel>({
       query: ({ descriptionId, comment }) => {
         return {
           url: `/descriptions/${descriptionId}/`,
@@ -38,7 +38,7 @@ export const descriptionApi = createApi({
       },
       invalidatesTags: ["Description"],
     }),
-    deleteDescription: builder.mutation<void, DeleteDescriptionModel>({
+    deleteDescriptionComment: builder.mutation<void, DeleteDescriptionModel>({
       query: ({ descriptionId, comment }) => {
         return {
           url: `/descriptions/${descriptionId}/`,
@@ -54,7 +54,7 @@ export const descriptionApi = createApi({
 export const {
   useGetDescriptionQuery,
   useLazyGetDescriptionQuery,
-  useAddDescriptionMutation,
+  useAddDescriptionCommentMutation,
   useUpdateDescriptionMutation,
-  useDeleteDescriptionMutation,
+  useDeleteDescriptionCommentMutation,
 } = descriptionApi;

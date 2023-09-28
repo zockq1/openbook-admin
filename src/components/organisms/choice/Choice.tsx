@@ -5,11 +5,16 @@ import { mutationErrorNotification } from "../../../services/errorNotification";
 import styled from "styled-components";
 import ImageUpload from "../../molecules/ImageUpload";
 import { ChoiceType } from "../../../types/questionTypes";
-import { useUpdateChoiceMutation } from "../../../store/api/choicesApi";
+import {
+  useAddChoiceCommentMutation,
+  useDeleteChoiceCommentMutation,
+  useUpdateChoiceMutation,
+} from "../../../store/api/choicesApi";
 import { GetChoiceModel } from "../../../types/choiceType";
-import ChoiceCommentForm from "./ChoiceCommentForm";
-import ChoiceCommentList from "./ChoiceCommentList";
 import ContentBox from "../../molecules/ContentBox";
+import CommentForm from "../comment/CommentForm";
+import CommentList from "../comment/CommentList";
+import { CommentType } from "../../../types/descriptionType";
 interface ChoiceFormGridContainerProps {
   choiceType: ChoiceType;
 }
@@ -28,24 +33,27 @@ const ChoiceNameBox = styled.div`
 `;
 
 interface ChoiceProps {
-  data: GetChoiceModel;
-  choiceType: ChoiceType;
+  choiceInfo: GetChoiceModel;
 }
 
-function Choice({ data, choiceType }: ChoiceProps) {
+function Choice({ choiceInfo }: ChoiceProps) {
+  const [addChoiceComment] = useAddChoiceCommentMutation();
+  const [deleteChoiceComment] = useDeleteChoiceCommentMutation();
+  const { choice, choiceId, choiceNumber, commentList, choiceType } =
+    choiceInfo;
   const [updateChoice] = useUpdateChoiceMutation();
   const [isEditing, setIsEditing] = useState(false);
-  const [editChoice, setEditChoice] = useState(data.choice);
+  const [editChoice, setEditChoice] = useState(choice);
 
   const handleEdit = async () => {
     try {
       console.log("수정");
       await updateChoice({
-        choiceId: data.choiceId,
+        choiceId,
         choice: {
           choice: editChoice,
           choiceType,
-          choiceNumber: data.choiceNumber,
+          choiceNumber,
         },
       }).unwrap();
     } catch (error) {
@@ -70,8 +78,35 @@ function Choice({ data, choiceType }: ChoiceProps) {
     setEditChoice(e.target.value);
   };
 
+  const addComment = async (id: number, type: CommentType) => {
+    try {
+      addChoiceComment({
+        choiceId,
+        comment: {
+          type,
+          id,
+        },
+      }).unwrap();
+      return true;
+    } catch (error) {
+      mutationErrorNotification(error);
+      return false;
+    }
+  };
+
+  const deleteComment = async (id: number, type: CommentType) => {
+    try {
+      await deleteChoiceComment({
+        choiceId,
+        comment: { id, type },
+      }).unwrap();
+    } catch (error) {
+      mutationErrorNotification(error);
+    }
+  };
+
   return (
-    <ContentBox title={data.choiceNumber + "번 선지"}>
+    <ContentBox title={choiceNumber + "번 선지"}>
       <List.Item
         actions={[
           <Space>
@@ -106,18 +141,15 @@ function Choice({ data, choiceType }: ChoiceProps) {
           <ChoiceGridContainer choiceType={choiceType}>
             {}
             {choiceType === "Image" ? (
-              <Image src={data.choice} />
+              <Image src={choice} />
             ) : (
-              <ChoiceNameBox>{data.choice}</ChoiceNameBox>
+              <ChoiceNameBox>{choice}</ChoiceNameBox>
             )}
           </ChoiceGridContainer>
         )}
       </List.Item>
-      <ChoiceCommentForm choiceId={data.choiceId} />
-      <ChoiceCommentList
-        choiceId={data.choiceId}
-        commentList={data.commentList}
-      />
+      <CommentForm addComment={addComment} />
+      <CommentList commentList={commentList} deleteComment={deleteComment} />
     </ContentBox>
   );
 }

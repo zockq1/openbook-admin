@@ -7,11 +7,9 @@ import { useEffect, useState } from "react";
 import { CommentType } from "../../../types/descriptionType";
 import { KeywordModel } from "../../../types/keywordType";
 import { SentenceModel } from "../../../types/sentenceType";
-import { mutationErrorNotification } from "../../../services/errorNotification";
-import { useAddChoiceCommentMutation } from "../../../store/api/choicesApi";
 import styled from "styled-components";
 
-const StyledChoiceForm = styled.div`
+const StyledCommentForm = styled.div`
   & > h1 {
     padding: 10px;
     font-weight: ${({ theme }) => theme.fontWeight.bold};
@@ -20,11 +18,10 @@ const StyledChoiceForm = styled.div`
 `;
 
 interface CommentFormProps {
-  choiceId: number;
+  addComment: (id: number, type: CommentType) => Promise<boolean>;
 }
 
-function ChoiceCommentForm({ choiceId }: CommentFormProps) {
-  const [addChoiceComment] = useAddChoiceCommentMutation();
+function CommentForm({ addComment }: CommentFormProps) {
   const { data: chapterList } = useGetChaptersQuery();
   const [getTopicListTrigger, { data: topicList }] =
     useLazyGetChapterTopicListQuery();
@@ -35,7 +32,7 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
   const [chapterNumber, setChapterNumber] = useState("");
   const [topicTitle, setTopicTitle] = useState("");
   const [commentType, setCommentType] = useState<CommentType>("Keyword");
-  const [comment, setComment] = useState<number | null>(null);
+  const [commentId, setCommentId] = useState<number | null>(null);
   const [currentKeywordList, setCurrentKeywordList] = useState<KeywordModel[]>(
     []
   );
@@ -57,7 +54,7 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
     setTopicTitle("");
     setCurrentKeywordList([]);
     setCurrentSentenceList([]);
-    setComment(null);
+    setCommentId(null);
     setChapterNumber(value);
   };
 
@@ -66,7 +63,7 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
     getKeywordListTrigger(value);
     getSentenceListTrigger(value);
     setTopicTitle(value);
-    setComment(null);
+    setCommentId(null);
   };
 
   const handleCommentTypeChange = (value: CommentType) => {
@@ -74,33 +71,28 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
     getKeywordListTrigger(value);
     getSentenceListTrigger(value);
     setCommentType(value);
-    setComment(null);
+    setCommentId(null);
   };
 
-  const handleSubmit = () => {
-    if (comment === null) return;
-    try {
-      addChoiceComment({
-        choiceId,
-        comment: {
-          type: commentType,
-          id: comment,
-        },
-      });
+  const handleSubmit = async () => {
+    if (commentId === null) return;
+
+    const result = await addComment(commentId, commentType);
+
+    if (result) {
       setTopicTitle("");
       setCurrentKeywordList([]);
       setCurrentSentenceList([]);
-      setComment(null);
+      setCommentId(null);
       setChapterNumber("");
-    } catch (error) {
-      mutationErrorNotification(error);
     }
   };
 
   return (
-    <StyledChoiceForm>
-      <h1>선지 해설 추가</h1>
+    <StyledCommentForm>
+      <h1>해설 추가</h1>
       <div>
+        {" "}
         <Select
           onChange={handleChapterChange}
           value={chapterNumber}
@@ -140,8 +132,8 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
         </Select>
         {commentType === "Keyword" && (
           <Select
-            onChange={(value) => setComment(value)}
-            value={comment}
+            onChange={(value) => setCommentId(value)}
+            value={commentId}
             style={{ width: "20%" }}
           >
             {currentKeywordList.map((keyword) => (
@@ -151,16 +143,15 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
             ))}
           </Select>
         )}
-
         <Button onClick={handleSubmit} style={{ float: "right" }}>
           추가
         </Button>
         {commentType === "Sentence" && (
           <Select
             onChange={(value) => {
-              setComment(value);
+              setCommentId(value);
             }}
-            value={comment}
+            value={commentId}
             style={{ width: "80%" }}
           >
             {currentSentenceList.map((sentence) => (
@@ -171,8 +162,8 @@ function ChoiceCommentForm({ choiceId }: CommentFormProps) {
           </Select>
         )}
       </div>
-    </StyledChoiceForm>
+    </StyledCommentForm>
   );
 }
 
-export default ChoiceCommentForm;
+export default CommentForm;
