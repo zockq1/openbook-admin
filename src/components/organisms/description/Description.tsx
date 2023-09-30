@@ -31,6 +31,11 @@ function Description({ descriptionInfo }: DescriptionProps) {
   const [newDescription, setNewDescription] = useState<string>(description);
 
   const handleEdit = async () => {
+    setNewDescription(description);
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
     try {
       await updateDescription({
         descriptionId,
@@ -39,10 +44,6 @@ function Description({ descriptionInfo }: DescriptionProps) {
     } catch (error) {
       mutationErrorNotification(error);
     }
-  };
-
-  const handleSave = () => {
-    handleEdit();
     setIsEditing(false);
   };
 
@@ -82,7 +83,7 @@ function Description({ descriptionInfo }: DescriptionProps) {
     <>
       <DescriptionImage>
         <Space style={{ float: "right" }}>
-          {!isEditing && <EditOutlined onClick={() => setIsEditing(true)} />}
+          {!isEditing && <EditOutlined onClick={handleEdit} />}
           {isEditing && (
             <div>
               <Button onClick={handleSave}>저장</Button>
