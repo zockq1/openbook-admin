@@ -1,6 +1,6 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Image, Space } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useAddDescriptionCommentMutation,
   useDeleteDescriptionCommentMutation,
@@ -29,6 +29,15 @@ function Description({ descriptionInfo }: DescriptionProps) {
   const { commentList, descriptionId, description } = descriptionInfo;
   const [isEditing, setIsEditing] = useState(false);
   const [newDescription, setNewDescription] = useState<string>(description);
+
+  useEffect(() => {
+    if (!description) {
+      handleEdit();
+    } else {
+      handleCancel();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [description]);
 
   const handleEdit = async () => {
     setNewDescription(description);
