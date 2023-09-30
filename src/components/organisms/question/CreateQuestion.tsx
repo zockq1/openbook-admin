@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Radio, RadioChangeEvent } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import { useAddQuestionMutation } from "../../../store/api/questionApi";
 import { ChoiceType, QuestionModel } from "../../../types/questionTypes";
 
-function CreateQuestion() {
-  const navigate = useNavigate();
+interface CreateQuestionProps {
+  numberOfQuestion: number;
+}
+
+function CreateQuestion({ numberOfQuestion }: CreateQuestionProps) {
   const [addQuestion] = useAddQuestionMutation();
   const { round } = useParams();
   const [choiceType, setChoiceType] = useState<ChoiceType>("String");
+  const [answer, setAnswer] = useState<number>(1);
+  const [score, setScore] = useState<number>(2);
+  const [form] = Form.useForm();
 
-  const onChangeChoiceType = ({ target: { value } }: RadioChangeEvent) => {
-    setChoiceType(value);
-  };
+  useEffect(() => {
+    form.setFieldsValue({
+      number: numberOfQuestion + 1,
+    });
+  }, [numberOfQuestion, form]);
 
   const onFinish = async (values: any) => {
-    const { number, answer, score } = values;
+    const { number } = values;
     let newQuestion: QuestionModel = {
       number,
       answer,
@@ -29,7 +37,6 @@ function CreateQuestion() {
         roundNumber: Number(round),
         question: newQuestion,
       }).unwrap();
-      navigate(`/question/${round}/${number}/question-info`);
     } catch (error) {
       mutationErrorNotification(error);
     }
@@ -38,6 +45,7 @@ function CreateQuestion() {
   return (
     <>
       <Form
+        form={form}
         onFinish={onFinish}
         style={{ width: "auto", margin: "20px" }}
         labelCol={{ span: 4 }}
@@ -48,7 +56,7 @@ function CreateQuestion() {
               { label: "문자", value: "String" },
               { label: "이미지", value: "Image" },
             ]}
-            onChange={onChangeChoiceType}
+            onChange={(e: RadioChangeEvent) => setChoiceType(e.target.value)}
             value={choiceType}
             optionType="button"
             buttonStyle="solid"
@@ -63,21 +71,30 @@ function CreateQuestion() {
           </Form.Item>
         </Form.Item>
 
-        <Form.Item label="정답" style={{ marginBottom: 0 }}>
-          <Form.Item
-            name="answer"
-            rules={[{ required: true, message: "정답을 입력해주세요!" }]}
+        <Form.Item label="정답">
+          <Radio.Group
+            buttonStyle="solid"
+            onChange={(e: RadioChangeEvent) => setAnswer(e.target.value)}
+            value={answer}
           >
-            <Input type="number" />
-          </Form.Item>
+            <Radio.Button value={1}>1</Radio.Button>
+            <Radio.Button value={2}>2</Radio.Button>
+            <Radio.Button value={3}>3</Radio.Button>
+            <Radio.Button value={4}>4</Radio.Button>
+            <Radio.Button value={5}>5</Radio.Button>
+          </Radio.Group>
         </Form.Item>
 
-        <Form.Item
-          name="score"
-          label="배점"
-          rules={[{ required: false, message: "배점을 입력해 주세요!" }]}
-        >
-          <Input type="number" />
+        <Form.Item label="배점">
+          <Radio.Group
+            buttonStyle="solid"
+            onChange={(e: RadioChangeEvent) => setScore(e.target.value)}
+            value={score}
+          >
+            <Radio.Button value={1}>1</Radio.Button>
+            <Radio.Button value={2}>2</Radio.Button>
+            <Radio.Button value={3}>3</Radio.Button>
+          </Radio.Group>
         </Form.Item>
 
         <Form.Item>

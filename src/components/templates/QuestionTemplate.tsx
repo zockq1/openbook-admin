@@ -67,7 +67,7 @@ function QuestionTemplate({
     if (questionState === "QuestionInfo" && questionInfo) {
       return <QuestionInfo questionInfo={questionInfo} />;
     } else if (questionState === "CreateQuestion") {
-      return <CreateQuesion />;
+      return <CreateQuesion numberOfQuestion={questionList?.length || 0} />;
     } else if (questionState === "EditQuestion" && questionInfo) {
       return (
         <EditQuestion

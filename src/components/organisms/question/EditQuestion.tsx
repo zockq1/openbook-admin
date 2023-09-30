@@ -21,13 +21,15 @@ function EditQuestion({
   const [choiceType, setChoiceType] = useState<ChoiceType>(
     questionInfo.choiceType
   );
+  const [answer, setAnswer] = useState<number>(questionInfo.answer);
+  const [score, setScore] = useState<number>(questionInfo.score);
 
   const onChangeChoiceType = ({ target: { value } }: RadioChangeEvent) => {
     setChoiceType(value);
   };
 
   const onFinish = async (values: any) => {
-    const { number, answer, score } = values;
+    const { number } = values;
     let newQuestion: QuestionModel = {
       number,
       answer,
@@ -76,23 +78,30 @@ function EditQuestion({
           </Form.Item>
         </Form.Item>
 
-        <Form.Item label="정답" style={{ marginBottom: 0 }}>
-          <Form.Item
-            name="answer"
-            rules={[{ required: true, message: "정답을 입력해주세요!" }]}
-            initialValue={questionInfo.answer}
+        <Form.Item label="정답">
+          <Radio.Group
+            buttonStyle="solid"
+            onChange={(e: RadioChangeEvent) => setAnswer(e.target.value)}
+            value={answer}
           >
-            <Input type="number" />
-          </Form.Item>
+            <Radio.Button value={1}>1</Radio.Button>
+            <Radio.Button value={2}>2</Radio.Button>
+            <Radio.Button value={3}>3</Radio.Button>
+            <Radio.Button value={4}>4</Radio.Button>
+            <Radio.Button value={5}>5</Radio.Button>
+          </Radio.Group>
         </Form.Item>
 
-        <Form.Item
-          name="score"
-          label="배점"
-          rules={[{ required: false, message: "배점을 입력해 주세요!" }]}
-          initialValue={questionInfo.score}
-        >
-          <Input type="number" />
+        <Form.Item label="배점">
+          <Radio.Group
+            buttonStyle="solid"
+            onChange={(e: RadioChangeEvent) => setScore(e.target.value)}
+            value={score}
+          >
+            <Radio.Button value={1}>1</Radio.Button>
+            <Radio.Button value={2}>2</Radio.Button>
+            <Radio.Button value={3}>3</Radio.Button>
+          </Radio.Group>
         </Form.Item>
 
         <Form.Item>
