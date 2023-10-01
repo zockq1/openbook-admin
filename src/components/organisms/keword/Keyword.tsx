@@ -114,7 +114,7 @@ function Keyword({ data }: KeywordProps) {
       ) : (
         <KeywordGridContainer>
           <KeywordNameBox>{data.name}</KeywordNameBox>
-          <Image src={data.file} />
+          <Image src={data.file} height="100%" />
           <KeywordCommentBox>{data.comment}</KeywordCommentBox>
         </KeywordGridContainer>
       )}
