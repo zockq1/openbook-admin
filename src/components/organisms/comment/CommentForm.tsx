@@ -42,11 +42,11 @@ function CommentForm({ addComment }: CommentFormProps) {
 
   useEffect(() => {
     setCurrentKeywordList(keywordList || []);
-  }, [keywordList]);
+  }, [keywordList, topicTitle]);
 
   useEffect(() => {
     setCurrentSentenceList(sentenceList || []);
-  }, [sentenceList]);
+  }, [sentenceList, topicTitle]);
 
   const handleChapterChange = (value: string) => {
     if (value === chapterNumber) return;
