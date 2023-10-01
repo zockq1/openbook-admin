@@ -93,7 +93,7 @@ function EditTopic({
           }}
           initialValue={topicInfo.category}
         >
-          <Select style={{ width: "100px" }}>
+          <Select style={{ width: "100px" }} showSearch placeholder="분류 선택">
             {categoryList.map((category: CategoryModel) => (
               <Select.Option value={category.name} key={category.name}>
                 {category.name}
@@ -114,7 +114,7 @@ function EditTopic({
           }}
           initialValue={topicInfo.era}
         >
-          <Select style={{ width: "100px" }}>
+          <Select style={{ width: "100px" }} showSearch placeholder="시대 선택">
             {eraList.map((era: EraModel) => (
               <Select.Option value={era.name} key={era.name}>
                 {era.name}
