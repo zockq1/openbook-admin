@@ -96,19 +96,19 @@ function CommentForm({ addComment }: CommentFormProps) {
         <Select
           onChange={handleChapterChange}
           value={chapterNumber}
-          style={{ width: "20%" }}
+          style={{ width: "30%" }}
         >
           {chapterList &&
             chapterList?.map((chapter) => (
               <Select.Option value={chapter.number} key={chapter.number}>
-                {chapter.number + "단원"}
+                {`${chapter.number}.${chapter.title}`}
               </Select.Option>
             ))}
         </Select>
         <Select
           onChange={handleTocpiChange}
           value={topicTitle}
-          style={{ width: "20%" }}
+          style={{ width: "30%" }}
         >
           {topicList &&
             topicList?.map((topic) => (
@@ -130,11 +130,14 @@ function CommentForm({ addComment }: CommentFormProps) {
             문장
           </Select.Option>
         </Select>
+        <Button onClick={handleSubmit} style={{ float: "right" }}>
+          추가
+        </Button>
         {commentType === "Keyword" && (
           <Select
             onChange={(value) => setCommentId(value)}
             value={commentId}
-            style={{ width: "20%" }}
+            style={{ width: "80%" }}
           >
             {currentKeywordList.map((keyword) => (
               <Select.Option value={keyword.id} key={keyword.name}>
@@ -143,9 +146,6 @@ function CommentForm({ addComment }: CommentFormProps) {
             ))}
           </Select>
         )}
-        <Button onClick={handleSubmit} style={{ float: "right" }}>
-          추가
-        </Button>
         {commentType === "Sentence" && (
           <Select
             onChange={(value) => {
