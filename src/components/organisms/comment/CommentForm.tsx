@@ -99,11 +99,13 @@ function CommentForm({ addComment }: CommentFormProps) {
           style={{ width: "30%" }}
         >
           {chapterList &&
-            chapterList?.map((chapter) => (
-              <Select.Option value={chapter.number} key={chapter.number}>
-                {`${chapter.number}.${chapter.title}`}
-              </Select.Option>
-            ))}
+            [...chapterList]
+              .sort((a, b) => a.number - b.number)
+              .map((chapter) => (
+                <Select.Option value={chapter.number} key={chapter.number}>
+                  {`${chapter.number}.${chapter.title}`}
+                </Select.Option>
+              ))}
         </Select>
         <Select
           onChange={handleTocpiChange}
