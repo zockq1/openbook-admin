@@ -1,5 +1,5 @@
 import styled, { ThemeContext, css } from "styled-components";
-import Icon from "../atoms/Icon";
+import Icon from "../../commons/Icon";
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 

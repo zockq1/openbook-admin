@@ -2,7 +2,7 @@ import { useState } from "react";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import styled from "styled-components";
 import { Button, Input } from "antd";
-import ImageUpload from "../../molecules/ImageUpload";
+import ImageUpload from "../../commons/ImageUpload";
 import { ChoiceType } from "../../../types/questionTypes";
 import { useAddChoiceMutation } from "../../../store/api/choicesApi";
 

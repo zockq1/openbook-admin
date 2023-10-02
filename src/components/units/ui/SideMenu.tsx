@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import SideMenuItem from "../molecules/SideMenuItem";
-import Icon from "../atoms/Icon";
+import SideMenuItem from "./SideMenuItem";
+import Icon from "../../commons/Icon";
 
 const StyledSideMenu = styled.ul`
   display: flex;

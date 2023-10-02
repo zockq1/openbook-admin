@@ -3,7 +3,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import styled from "styled-components";
-import ImageUpload from "../../molecules/ImageUpload";
+import ImageUpload from "../../commons/ImageUpload";
 import { ChoiceType } from "../../../types/questionTypes";
 import {
   useAddChoiceCommentMutation,
@@ -11,7 +11,7 @@ import {
   useUpdateChoiceMutation,
 } from "../../../store/api/choicesApi";
 import { GetChoiceModel } from "../../../types/choiceType";
-import ContentBox from "../../molecules/ContentBox";
+import ContentBox from "../../commons/ContentBox";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 import { CommentType } from "../../../types/descriptionType";

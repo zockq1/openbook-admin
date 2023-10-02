@@ -6,7 +6,7 @@ import { useUpdateKeywordMutation } from "../../../store/api/keywordApi";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import styled from "styled-components";
 import DeleteKeywordButton from "./DeleteKeywordButton";
-import ImageUpload from "../../molecules/ImageUpload";
+import ImageUpload from "../../commons/ImageUpload";
 const KeywordGridContainer = styled.div`
   display: grid;
   width: 100%;

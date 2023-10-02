@@ -3,7 +3,7 @@ import { useAddKeywordMutation } from "../../../store/api/keywordApi";
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import styled from "styled-components";
 import { Button, Input } from "antd";
-import ImageUpload from "../../molecules/ImageUpload";
+import ImageUpload from "../../commons/ImageUpload";
 
 const KeywordFormGridContainer = styled.div`
   display: grid;

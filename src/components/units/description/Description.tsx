@@ -7,7 +7,7 @@ import {
   useUpdateDescriptionMutation,
 } from "../../../store/api/descriptionApi";
 import { mutationErrorNotification } from "../../../services/errorNotification";
-import ImageUpload from "../../molecules/ImageUpload";
+import ImageUpload from "../../commons/ImageUpload";
 import styled from "styled-components";
 import {
   CommentType,

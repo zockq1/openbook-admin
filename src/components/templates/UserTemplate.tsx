@@ -1,5 +1,5 @@
-import BaseLayout from "../atoms/BaseLayout";
-import SideMenu from "../organisms/SideMenu";
+import BaseLayout from "../commons/BaseLayout";
+import SideMenu from "../units/ui/SideMenu";
 
 function UserTemplate() {
   return (

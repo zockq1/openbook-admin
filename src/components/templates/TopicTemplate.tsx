@@ -1,7 +1,7 @@
-import BaseLayout from "../atoms/BaseLayout";
-import SideMenu from "../organisms/SideMenu";
-import ContentBox from "../molecules/ContentBox";
-import Header from "../organisms/Header";
+import BaseLayout from "../commons/BaseLayout";
+import SideMenu from "../units/ui/SideMenu";
+import ContentBox from "../commons/ContentBox";
+import Header from "../units/ui/Header";
 import {
   ChapterDateModel,
   ChapterInfoModel,
@@ -9,28 +9,28 @@ import {
   ChapterTitleModel,
 } from "../../types/chapterTypes";
 import { Button, Empty } from "antd";
-import CreateChapterModal from "../organisms/chapter/CreateChpterModal";
-import SmallItemList from "../organisms/SmallItemList";
+import CreateChapterModal from "../units/chapter/CreateChpterModal";
+import SmallItemList from "../commons/SmallItemList";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { TopicListModel, TopicModel } from "../../types/topicTypes";
-import CreateTopic from "../organisms/topic/CreateTopic";
-import EditTopic from "../organisms/topic/EditTopic";
+import CreateTopic from "../units/topic/CreateTopic";
+import EditTopic from "../units/topic/EditTopic";
 import { ReactNode, useEffect, useState } from "react";
-import TopicInfo from "../organisms/topic/TopicInfo";
-import DeleteChapterButton from "../organisms/chapter/DeleteChapterButton";
-import EditChapterModal from "../organisms/chapter/EditChapterModal";
+import TopicInfo from "../units/topic/TopicInfo";
+import DeleteChapterButton from "../units/chapter/DeleteChapterButton";
+import EditChapterModal from "../units/chapter/EditChapterModal";
 import { CategoryModel } from "../../types/categoryType";
-import DeleteTopicButton from "../organisms/topic/DeleteTopicButton";
-import { ColumnFlex } from "../atoms/FlexLayout";
-import KeywordForm from "../organisms/keword/KeywordFrom";
-import KeywordList from "../organisms/keword/KeywordList";
+import DeleteTopicButton from "../units/topic/DeleteTopicButton";
+import { ColumnFlex } from "../commons/FlexLayout";
+import KeywordForm from "../units/keword/KeywordFrom";
+import KeywordList from "../units/keword/KeywordList";
 import { KeywordModel } from "../../types/keywordType";
 import { SentenceModel } from "../../types/sentenceType";
-import SentenceForm from "../organisms/sentence/SentenceForm";
-import SentenceList from "../organisms/sentence/SentenceList";
-import EditTopicOrder from "../organisms/topic/EditTopicOrder";
-import ChapterInfo from "../organisms/chapter/ChpaterInfo";
-import EditChapterInfo from "../organisms/chapter/EditChpaterInfo";
+import SentenceForm from "../units/sentence/SentenceForm";
+import SentenceList from "../units/sentence/SentenceList";
+import EditTopicOrder from "../units/topic/EditTopicOrder";
+import ChapterInfo from "../units/chapter/ChpaterInfo";
+import EditChapterInfo from "../units/chapter/EditChpaterInfo";
 import { EraModel } from "../../types/eraType";
 
 interface TopicTemplateProps {
