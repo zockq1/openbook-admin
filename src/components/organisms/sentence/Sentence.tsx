@@ -59,7 +59,7 @@ function Sentence({ data }: SentenceProps) {
       {isEditing ? (
         <Input value={editContent} onChange={handleChange} />
       ) : (
-        <div>{editContent}</div>
+        <div>{data.name}</div>
       )}
     </List.Item>
   );
