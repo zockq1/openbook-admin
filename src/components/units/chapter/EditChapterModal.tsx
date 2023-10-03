@@ -7,15 +7,13 @@ import { useNavigate } from "react-router-dom";
 interface EditChapterModalProps {
   chapterNumber: number;
   title: string;
-  startDate: number | null;
-  endDate: number | null;
+  dateComment: string;
 }
 
 function EditChapterModal({
   chapterNumber,
   title,
-  startDate,
-  endDate,
+  dateComment,
 }: EditChapterModalProps) {
   const navigate = useNavigate();
   const [updateChapter] = useUpdateChapterMutation();
@@ -25,10 +23,9 @@ function EditChapterModal({
     form.setFieldsValue({
       chapterTitle: title,
       chapterNumber: chapterNumber,
-      startDate: startDate,
-      endDate: endDate,
+      dateComment: dateComment,
     });
-  }, [form, title, chapterNumber, startDate, endDate]);
+  }, [form, title, chapterNumber, dateComment]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -43,15 +40,13 @@ function EditChapterModal({
       const {
         chapterTitle: newChapterTitle,
         chapterNumber: newChapterNumber,
-        startDate: newStartDate,
-        endDate: newEndDate,
+        dateComment: newDateComment,
       } = values;
       await updateChapter({
         editedChapter: {
           number: newChapterNumber,
           title: newChapterTitle,
-          startDate: newStartDate ? newStartDate : null,
-          endDate: newStartDate ? newEndDate : null,
+          dateComment: newDateComment,
         },
         currentChapterNumber: chapterNumber,
       }).unwrap();
@@ -111,14 +106,17 @@ function EditChapterModal({
             <Input type="number" />
           </Form.Item>
           <Form.Item
-            name="startDate"
+            name="dateComment"
             label="시작 년도"
-            initialValue={startDate}
+            rules={[
+              {
+                required: true,
+                message: "년도를 입력해주세요.",
+              },
+            ]}
+            initialValue={dateComment}
           >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item name="endDate" label="종료 년도" initialValue={endDate}>
-            <Input type="number" />
+            <Input />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" style={{ float: "right" }}>

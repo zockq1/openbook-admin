@@ -21,12 +21,11 @@ function CreateChapterModal() {
 
   const onSubmit = async (values: any) => {
     try {
-      const { chapterTitle, chapterNumber, startDate, endDate } = values;
+      const { chapterTitle, chapterNumber, dateComment } = values;
       await addChapter({
         number: chapterNumber,
         title: chapterTitle,
-        startDate: startDate ? startDate : null,
-        endDate: endDate ? endDate : null,
+        dateComment: dateComment,
       }).unwrap();
       form.resetFields();
       navigate(`/topic/${chapterNumber}/chapter-info`);
@@ -76,11 +75,17 @@ function CreateChapterModal() {
           >
             <Input type="number" />
           </Form.Item>
-          <Form.Item name="startDate" label="시작 년도">
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item name="endDate" label="종료 년도">
-            <Input type="number" />
+          <Form.Item
+            name="dateComment"
+            label="년도"
+            rules={[
+              {
+                required: true,
+                message: "년도를 입력해주세요.",
+              },
+            ]}
+          >
+            <Input />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" style={{ float: "right" }}>
