@@ -1,5 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { AddKeywordModel, KeywordModel } from "../../types/keywordType";
+import {
+  AddKeywordModel,
+  KeywordModel,
+  UpdateKeywordModel,
+} from "../../types/keywordType";
 import baseQueryWithReauth from "./baseApi";
 
 export const keywordApi = createApi({
@@ -22,7 +26,7 @@ export const keywordApi = createApi({
       invalidatesTags: ["KeywordList"],
     }),
     updateKeyword: builder.mutation({
-      query: (updateKeywordModel: KeywordModel) => {
+      query: (updateKeywordModel: UpdateKeywordModel) => {
         return {
           url: `/admin/keywords/${updateKeywordModel.id}`,
           method: "PATCH",
@@ -30,6 +34,8 @@ export const keywordApi = createApi({
             name: updateKeywordModel.name,
             comment: updateKeywordModel.comment,
             file: updateKeywordModel.file,
+            dateComment: updateKeywordModel.dateComment,
+            extraDateList: updateKeywordModel.extraDateList,
           },
         };
       },
