@@ -9,10 +9,7 @@ import {
 import { mutationErrorNotification } from "../../../services/errorNotification";
 import ImageUpload from "../../commons/ImageUpload";
 import styled from "styled-components";
-import {
-  CommentType,
-  GetDescriptionModel,
-} from "../../../types/descriptionType";
+import { GetDescriptionModel } from "../../../types/descriptionType";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 
@@ -61,12 +58,11 @@ function Description({ descriptionInfo }: DescriptionProps) {
     setIsEditing(false);
   };
 
-  const addComment = async (id: number, type: CommentType) => {
+  const addComment = async (id: number) => {
     try {
       addDescriptionComment({
         descriptionId,
         comment: {
-          type,
           id,
         },
       }).unwrap();
@@ -77,11 +73,11 @@ function Description({ descriptionInfo }: DescriptionProps) {
     }
   };
 
-  const deleteComment = async (id: number, type: CommentType) => {
+  const deleteComment = async (id: number) => {
     try {
       await deleteDescriptionComment({
         descriptionId,
-        comment: { id, type },
+        comment: { id },
       }).unwrap();
     } catch (error) {
       mutationErrorNotification(error);

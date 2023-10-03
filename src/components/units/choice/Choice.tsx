@@ -14,7 +14,6 @@ import { GetChoiceModel } from "../../../types/choiceType";
 import ContentBox from "../../commons/ContentBox";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
-import { CommentType } from "../../../types/descriptionType";
 interface ChoiceFormGridContainerProps {
   choiceType: ChoiceType;
 }
@@ -78,12 +77,11 @@ function Choice({ choiceInfo }: ChoiceProps) {
     setEditChoice(e.target.value);
   };
 
-  const addComment = async (id: number, type: CommentType) => {
+  const addComment = async (id: number) => {
     try {
       addChoiceComment({
         choiceId,
         comment: {
-          type,
           id,
         },
       }).unwrap();
@@ -94,11 +92,11 @@ function Choice({ choiceInfo }: ChoiceProps) {
     }
   };
 
-  const deleteComment = async (id: number, type: CommentType) => {
+  const deleteComment = async (id: number) => {
     try {
       await deleteChoiceComment({
         choiceId,
-        comment: { id, type },
+        comment: { id },
       }).unwrap();
     } catch (error) {
       mutationErrorNotification(error);

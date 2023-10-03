@@ -1,9 +1,6 @@
-export type CommentType = "Sentence" | "Keyword";
-
 export interface DescriptionCommentModel {
   chapterNumber: number;
   topicTitle: string;
-  type: CommentType;
   name: string;
   id: number;
 }
@@ -21,10 +18,10 @@ export interface UpdateDescriptionModel {
 
 export interface AddDescriptionModel {
   descriptionId: number;
-  comment: { type: CommentType; id: number };
+  comment: { id: number };
 }
 
 export interface DeleteDescriptionModel {
   descriptionId: number;
-  comment: { type: CommentType; id: number };
+  comment: { id: number };
 }

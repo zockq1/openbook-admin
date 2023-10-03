@@ -25,9 +25,6 @@ import { ColumnFlex } from "../commons/FlexLayout";
 import KeywordForm from "../units/keword/KeywordFrom";
 import KeywordList from "../units/keword/KeywordList";
 import { KeywordModel } from "../../types/keywordType";
-import { SentenceModel } from "../../types/sentenceType";
-import SentenceForm from "../units/sentence/SentenceForm";
-import SentenceList from "../units/sentence/SentenceList";
 import EditTopicOrder from "../units/topic/EditTopicOrder";
 import ChapterInfo from "../units/chapter/ChpaterInfo";
 import EditChapterInfo from "../units/chapter/EditChpaterInfo";
@@ -42,7 +39,6 @@ interface TopicTemplateProps {
   chapterInfo: ChapterInfoModel | undefined;
   categoryList: CategoryModel[] | undefined;
   keywordList: KeywordModel[] | undefined;
-  sentenceLsit: SentenceModel[] | undefined;
   eraList: EraModel[] | undefined;
 }
 
@@ -55,7 +51,6 @@ function TopicTemplate({
   chapterInfo,
   categoryList,
   keywordList,
-  sentenceLsit,
   eraList,
 }: TopicTemplateProps) {
   const navigate = useNavigate();
@@ -160,9 +155,8 @@ function TopicTemplate({
                 {chapterTitle && chapterDate && (
                   <EditChapterModal
                     chapterNumber={Number(chapter)}
-                    title={chapterTitle?.title}
-                    startDate={chapterDate?.startDate}
-                    endDate={chapterDate?.endDate}
+                    title={chapterTitle.title}
+                    dateComment={chapterDate.dateComment}
                   />
                 )}
                 {topicList && (
@@ -240,16 +234,6 @@ function TopicTemplate({
             <KeywordForm topicTitle={String(topic)} />
             {keywordList ? (
               <KeywordList keywordList={keywordList} />
-            ) : (
-              <Empty />
-            )}
-          </ContentBox>
-        )}
-        {topicState === "TopicInfo" && (
-          <ContentBox title="문장">
-            <SentenceForm topicTitle={String(topic)} />
-            {sentenceLsit ? (
-              <SentenceList sentenceList={sentenceLsit} />
             ) : (
               <Empty />
             )}

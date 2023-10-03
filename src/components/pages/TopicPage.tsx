@@ -14,7 +14,6 @@ import {
 } from "../../store/api/topicApi";
 import { useGetCategoryListQuery } from "../../store/api/categoryApi";
 import { useLazyGetKeywordListQuery } from "../../store/api/keywordApi";
-import { useLazyGetSentencesQuery } from "../../store/api/sentenceApi";
 import { useGetEraListQuery } from "../../store/api/eraApi";
 
 function TopicPage() {
@@ -43,10 +42,6 @@ function TopicPage() {
     getKeywordListTrigger,
     { data: keywordList, error: keywordListError },
   ] = useLazyGetKeywordListQuery();
-  const [
-    getSentenceListTrigger,
-    { data: sentenceList, error: sentenceListError },
-  ] = useLazyGetSentencesQuery();
 
   useEffect(() => {
     if (chapter) {
@@ -67,9 +62,8 @@ function TopicPage() {
     if (topic) {
       getTopicTrigger(topic);
       getKeywordListTrigger(topic);
-      getSentenceListTrigger(topic);
     }
-  }, [topic, getTopicTrigger, getKeywordListTrigger, getSentenceListTrigger]);
+  }, [topic, getTopicTrigger, getKeywordListTrigger]);
 
   useEffect(() => {
     queryErrorNotification(categoryListError, "분류 목록");
@@ -106,12 +100,6 @@ function TopicPage() {
   }, [keywordListError]);
 
   useEffect(() => {
-    if (sentenceListError) {
-      queryErrorNotification(sentenceListError, "문장 목록");
-    }
-  }, [sentenceListError]);
-
-  useEffect(() => {
     if (topicListError) {
       queryErrorNotification(topicListError, "주제 목록");
     }
@@ -144,7 +132,6 @@ function TopicPage() {
       categoryList={categoryList}
       eraList={eraList}
       keywordList={keywordList}
-      sentenceLsit={sentenceList}
     />
   );
 }

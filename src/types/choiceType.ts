@@ -1,11 +1,8 @@
-import { CommentType } from "./descriptionType";
-
 export type ChoiceType = "String" | "Image";
 
 export interface ChoiceCommentModel {
   chapterNumber: number;
   topicTitle: string;
-  type: CommentType;
   name: string;
   id: number;
 }
@@ -31,10 +28,10 @@ export interface UpdateChoiceModel {
 
 export interface AddChoiceCommentModel {
   choiceId: number;
-  comment: { type: CommentType; id: number };
+  comment: { id: number };
 }
 
 export interface DeleteChoiceCommentModel {
   choiceId: number;
-  comment: { type: CommentType; id: number };
+  comment: { id: number };
 }

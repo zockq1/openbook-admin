@@ -8,7 +8,6 @@ import { authApi } from "./api/authApi";
 import { categoryApi } from "./api/categoryApi";
 import { choicesApi } from "./api/choicesApi";
 import { descriptionApi } from "./api/descriptionApi";
-import { sentenceApi } from "./api/sentenceApi";
 import { keywordApi } from "./api/keywordApi";
 import { roundApi } from "./api/roundApi";
 import { questionApi } from "./api/questionApi";
@@ -29,7 +28,6 @@ const rootReducer = combineReducers({
   [choicesApi.reducerPath]: choicesApi.reducer,
   [descriptionApi.reducerPath]: descriptionApi.reducer,
   [keywordApi.reducerPath]: keywordApi.reducer,
-  [sentenceApi.reducerPath]: sentenceApi.reducer,
   [roundApi.reducerPath]: roundApi.reducer,
   [questionApi.reducerPath]: questionApi.reducer,
   [eraApi.reducerPath]: eraApi.reducer,
@@ -52,7 +50,6 @@ export const store = configureStore({
       choicesApi.middleware,
       descriptionApi.middleware,
       keywordApi.middleware,
-      sentenceApi.middleware,
       roundApi.middleware,
       questionApi.middleware,
       eraApi.middleware
