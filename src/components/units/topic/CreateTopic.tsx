@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useAddTopicMutation } from "../../../store/api/topicApi";
 import { mutationErrorNotification } from "../../../services/errorNotification";
-import { ExtraDate, TopicModel } from "../../../types/topicTypes";
-import { Button, Form, Input, Select, Space, Switch } from "antd";
+import { ExtraDateModel, TopicModel } from "../../../types/topicTypes";
+import { Button, Form, Input, Select, Space } from "antd";
 import { CategoryModel } from "../../../types/categoryType";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import CategoryEditModal from "../category/CategoryEditModal";
@@ -23,24 +23,29 @@ function CreateTopic({
   const navigate = useNavigate();
   const [addTopic] = useAddTopicMutation();
 
-  const onFinish = async (values: TopicModel) => {
+  const onFinish = async (values: any) => {
+    const {
+      chapter,
+      title,
+      category,
+      era,
+      detail,
+      dateComment,
+      extraDateList,
+    } = values;
     let newTopic: TopicModel = {
-      chapter: Number(values.chapter),
-      title: values.title,
-      category: values.category,
-      era: values.era,
-      startDate: values.startDate ? Number(values.startDate) : null,
-      startDateCheck: Boolean(values.startDateCheck),
-      endDate: values.endDate ? Number(values.endDate) : null,
-      endDateCheck: Boolean(values.endDateCheck),
-      detail: values.detail ? values.detail : "",
+      chapter,
+      title,
+      category,
+      era,
+      detail: detail ? detail : "",
+      dateComment,
       extraDateList: [],
     };
-    if (values.extraDateList) {
-      values.extraDateList.forEach((item) => {
-        const newExtraDate: ExtraDate = {
+    if (extraDateList) {
+      extraDateList.forEach((item: ExtraDateModel) => {
+        const newExtraDate: ExtraDateModel = {
           extraDate: item.extraDate,
-          extraDateCheck: Boolean(item.extraDateCheck),
           extraDateComment: String(item.extraDateComment),
         };
         newTopic.extraDateList.push(newExtraDate);
@@ -88,7 +93,7 @@ function CreateTopic({
             display: "inline-block",
           }}
         >
-          <Select style={{ width: "100px" }} showSearch placeholder="분류 선택">
+          <Select style={{ width: "300px" }} showSearch placeholder="분류 선택">
             {categoryList?.map((category: CategoryModel) => (
               <Select.Option value={category.name} key={category.name}>
                 {category.name}
@@ -108,7 +113,7 @@ function CreateTopic({
             display: "inline-block",
           }}
         >
-          <Select style={{ width: "100px" }} showSearch placeholder="시대 선택">
+          <Select style={{ width: "300px" }} showSearch placeholder="시대 선택">
             {eraList?.map((era: EraModel) => (
               <Select.Option value={era.name} key={era.name}>
                 {era.name}
@@ -120,49 +125,15 @@ function CreateTopic({
         <EraEditModal eraList={eraList} />
       </Form.Item>
 
-      <Form.Item label="시작 년도" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="startDate"
-          style={{
-            display: "inline-block",
-            width: "150px",
-            marginRight: "10px",
-          }}
-        >
-          <Input type="number" />
-        </Form.Item>
-        <Form.Item
-          label="연표 사용"
-          name="startDateCheck"
-          style={{ display: "inline-block" }}
-          valuePropName="checked"
-        >
-          <Switch />
-        </Form.Item>
+      <Form.Item
+        name="dateComment"
+        label="년도"
+        rules={[{ required: false, message: "년도를 입력해 주세요!" }]}
+      >
+        <Input />
       </Form.Item>
 
-      <Form.Item label="종료 년도" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="endDate"
-          style={{
-            display: "inline-block",
-            width: "150px",
-            marginRight: "10px",
-          }}
-        >
-          <Input type="number" />
-        </Form.Item>
-        <Form.Item
-          label="연표 사용"
-          name="endDateCheck"
-          style={{ display: "inline-block" }}
-          valuePropName="checked"
-        >
-          <Switch />
-        </Form.Item>
-      </Form.Item>
-
-      <Form.Item label="추가 년도">
+      <Form.Item label="연표용 년도 추가">
         <Form.List name="extraDateList">
           {(fields, { add, remove }) => (
             <>
@@ -194,15 +165,6 @@ function CreateTopic({
                     }}
                   >
                     <Input type="text" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    label="연표 사용"
-                    name={[name, "extraDateCheck"]}
-                    style={{ display: "inline-block" }}
-                    valuePropName="checked"
-                  >
-                    <Switch />
                   </Form.Item>
                   <MinusCircleOutlined
                     onClick={() => remove(name)}

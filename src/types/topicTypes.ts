@@ -1,6 +1,5 @@
-export interface ExtraDate {
+export interface ExtraDateModel {
   extraDate: number;
-  extraDateCheck: boolean;
   extraDateComment: string;
 }
 
@@ -10,11 +9,8 @@ export interface TopicModel {
   title: string;
   category: string;
   era: string;
-  startDate: number | null;
-  startDateCheck: boolean;
-  endDate: number | null;
-  endDateCheck: boolean;
-  extraDateList: ExtraDate[];
+  dateComment: string;
+  extraDateList: ExtraDateModel[];
   detail: string;
 }
 
