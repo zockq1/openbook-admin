@@ -29,7 +29,14 @@ const KeywordNameBox = styled.div`
   overflow: auto;
 `;
 
+const KeywordDate = styled.div`
+  display: grid;
+  grid-column: 1/3;
+  grid-template-columns: 100px 1fr;
+`;
+
 const KeywordDateBox = styled.div`
+  grid-column: 1/2;
   border: 1px solid rgba(5, 5, 5, 0.12);
   border-radius: 8px;
   display: flex;
@@ -230,12 +237,12 @@ function Keyword({ data }: KeywordProps) {
           {data.extraDateList &&
             data.extraDateList.map((item) => {
               return (
-                <div key={item.extraDate}>
+                <KeywordDate key={item.extraDate}>
                   <KeywordDateBox>{item.extraDate}</KeywordDateBox>
                   <KeywordDateCommentBox>
                     {item.extraDateComment}
                   </KeywordDateCommentBox>
-                </div>
+                </KeywordDate>
               );
             })}
         </KeywordGridContainer>
