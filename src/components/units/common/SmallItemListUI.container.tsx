@@ -1,14 +1,10 @@
 import styled, { css } from "styled-components";
+import ContentBox from "../../commons/ContentBox";
 
 interface SmallItemType {
   name: string;
   key: string;
   onClick: () => void;
-}
-
-interface SmallItemListProps {
-  itemList: SmallItemType[];
-  currentItemKey: string;
 }
 
 const ItemList = styled.ul`
@@ -39,22 +35,36 @@ const Item = styled.li<ItemProps>`
   cursor: pointer;
 `;
 
-function SmallItemList({ itemList, currentItemKey }: SmallItemListProps) {
+interface SmallItemListProps {
+  itemList: SmallItemType[];
+  currentItemKey: string;
+  title: React.ReactNode;
+  option: React.ReactNode;
+}
+
+function SmallItemListUI({
+  itemList,
+  currentItemKey,
+  title,
+  option,
+}: SmallItemListProps) {
   return (
-    <ItemList>
-      {itemList.map((item) => {
-        return (
-          <Item
-            key={item.key}
-            onClick={item.onClick}
-            $isCurrent={currentItemKey === item.key}
-          >
-            {item.name}
-          </Item>
-        );
-      })}
-    </ItemList>
+    <ContentBox title={title} option={option}>
+      <ItemList>
+        {itemList.map((item) => {
+          return (
+            <Item
+              key={item.key}
+              onClick={item.onClick}
+              $isCurrent={currentItemKey === item.key}
+            >
+              {item.name}
+            </Item>
+          );
+        })}
+      </ItemList>
+    </ContentBox>
   );
 }
 
-export default SmallItemList;
+export default SmallItemListUI;

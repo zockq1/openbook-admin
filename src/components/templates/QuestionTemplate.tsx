@@ -5,7 +5,7 @@ import BaseLayout from "../commons/BaseLayout";
 import ContentBox from "../commons/ContentBox";
 import Header from "../units/ui/Header";
 import SideMenu from "../units/ui/SideMenu";
-import SmallItemList from "../commons/SmallItemList";
+import SmallItemList from "../units/common/SmallItemListUI.container";
 import { Button, Empty } from "antd";
 import CreateRoundModal from "../units/round/CreateRoundModal";
 import { ReactNode, useEffect, useState } from "react";
@@ -84,63 +84,59 @@ function QuestionTemplate({
     <BaseLayout>
       <SideMenu />
       <Header />
-      <ContentBox title="회차 선택" option={<CreateRoundModal />}>
-        {roundList && roundList.length !== 0 ? (
-          <SmallItemList
-            currentItemKey={String(round)}
-            itemList={roundList.map((item) => {
-              return {
-                name: item.number + "회차",
-                key: item.number.toString(),
-                onClick: () =>
-                  navigate(`/question/${item.number}/question-list`),
-              };
-            })}
-          />
-        ) : (
-          <Empty />
-        )}
-      </ContentBox>
-      <ContentBox
-        title="문제 선택"
-        option={
-          round && (
-            <>
-              <Link to={`/question/${round}/create-question`}>
-                <Button>문제 추가</Button>
-              </Link>
-              {roundDate && (
-                <EditRoundModal
-                  roundNumber={Number(round)}
-                  roundDate={roundDate}
-                />
-              )}
-              {questionList && (
-                <DeleteRoundButton
-                  roundNumber={Number(round)}
-                  questionListLength={questionList.length}
-                />
-              )}
-            </>
-          )
-        }
-      >
-        {questionList && round && questionList.length !== 0 ? (
-          <SmallItemList
-            currentItemKey={String(question)}
-            itemList={questionList.map((item) => {
-              return {
-                name: item.toString(),
-                key: item.toString(),
-                onClick: () =>
-                  navigate(`/question/${round}/${item}/question-info`),
-              };
-            })}
-          />
-        ) : (
-          <Empty />
-        )}
-      </ContentBox>
+      {roundList && roundList.length !== 0 ? (
+        <SmallItemList
+          title="회차 선택"
+          option={<CreateRoundModal />}
+          currentItemKey={String(round)}
+          itemList={roundList.map((item) => {
+            return {
+              name: item.number + "회차",
+              key: item.number.toString(),
+              onClick: () => navigate(`/question/${item.number}/question-list`),
+            };
+          })}
+        />
+      ) : (
+        <Empty />
+      )}
+      {questionList && round && questionList.length !== 0 ? (
+        <SmallItemList
+          title="문제 선택"
+          option={
+            round && (
+              <>
+                <Link to={`/question/${round}/create-question`}>
+                  <Button>문제 추가</Button>
+                </Link>
+                {roundDate && (
+                  <EditRoundModal
+                    roundNumber={Number(round)}
+                    roundDate={roundDate}
+                  />
+                )}
+                {questionList && (
+                  <DeleteRoundButton
+                    roundNumber={Number(round)}
+                    questionListLength={questionList.length}
+                  />
+                )}
+              </>
+            )
+          }
+          currentItemKey={String(question)}
+          itemList={questionList.map((item) => {
+            return {
+              name: item.toString(),
+              key: item.toString(),
+              onClick: () =>
+                navigate(`/question/${round}/${item}/question-info`),
+            };
+          })}
+        />
+      ) : (
+        <Empty />
+      )}
       <ColumnFlex>
         {" "}
         <ContentBox

@@ -1,108 +1,37 @@
-import { useEffect } from "react";
-import {
-  useGetChaptersQuery,
-  useLazyGetChapterDateQuery,
-  useLazyGetChapterInfoQuery,
-  useLazyGetChapterTitleQuery,
-} from "../../store/api/chapterApi";
-import TopicTemplate from "../templates/TopicTemplate";
-import { queryErrorNotification } from "../../services/errorNotification";
-import { useParams } from "react-router-dom";
-import { useLazyGetChapterTopicListQuery } from "../../store/api/topicApi";
-import { useLazyGetKeywordListQuery } from "../../store/api/keywordApi";
+import BaseLayout from "../commons/BaseLayout";
+import SideMenu from "../units/ui/SideMenu";
+import Header from "../units/ui/Header";
+import { useLocation } from "react-router-dom";
+import CreateTopic from "../units/topic/presenter/CreateTopic.presenter";
+import EditTopic from "../units/topic/presenter/EditTopic.presenter";
+import TopicInfo from "../units/topic/presenter/TopicInfo.presenter";
+import { ColumnFlex } from "../commons/FlexLayout";
+import KeywordForm from "../units/keword/presenter/KeywordFrom.presenter";
+import KeywordList from "../units/keword/presenter/KeywordList.presenter";
+import EditChapterInfo from "../units/chapter/presenter/EditChpaterInfo.presenter";
+import ChapterList from "../units/chapter/presenter/ChapterList.presenter";
+import TopicList from "../units/topic/presenter/TopicList.presenter";
 
 function TopicPage() {
-  const { chapter, topic } = useParams();
-  const { data: chapterList, error: chapterError } = useGetChaptersQuery();
-  const [
-    getChapterTitleTrigger,
-    { data: chapterTitle, error: chapterTitleError },
-  ] = useLazyGetChapterTitleQuery();
-  const [
-    getChapterDateTrigger,
-    { data: chapterDate, error: chapterDateError },
-  ] = useLazyGetChapterDateQuery();
-  const [
-    getChapterInfoTrigger,
-    { data: chapterInfo, error: chapterInfoError },
-  ] = useLazyGetChapterInfoQuery();
-  const [getTopicListTrigger, { data: topicList, error: topicListError }] =
-    useLazyGetChapterTopicListQuery();
-  const [
-    getKeywordListTrigger,
-    { data: keywordList, error: keywordListError },
-  ] = useLazyGetKeywordListQuery();
-
-  useEffect(() => {
-    if (chapter) {
-      getTopicListTrigger(Number(chapter));
-      getChapterTitleTrigger(Number(chapter));
-      getChapterDateTrigger(Number(chapter));
-      getChapterInfoTrigger(Number(chapter));
-    }
-  }, [
-    chapter,
-    getTopicListTrigger,
-    getChapterDateTrigger,
-    getChapterTitleTrigger,
-    getChapterInfoTrigger,
-  ]);
-
-  useEffect(() => {
-    if (topic) {
-      getKeywordListTrigger(topic);
-    }
-  }, [topic, getKeywordListTrigger]);
-
-  useEffect(() => {
-    if (chapterInfoError) {
-      queryErrorNotification(chapterInfoError, "단원 학습");
-    }
-  }, [chapterInfoError]);
-
-  useEffect(() => {
-    if (chapterTitleError) {
-      queryErrorNotification(chapterTitleError, "단원 제목");
-    }
-  }, [chapterTitleError]);
-
-  useEffect(() => {
-    if (chapterDateError) {
-      queryErrorNotification(chapterDateError, "단원 년도");
-    }
-  }, [chapterDateError]);
-
-  useEffect(() => {
-    if (keywordListError) {
-      queryErrorNotification(keywordListError, "키워드 목록");
-    }
-  }, [keywordListError]);
-
-  useEffect(() => {
-    if (topicListError) {
-      queryErrorNotification(topicListError, "주제 목록");
-    }
-  }, [topicListError]);
-
-  useEffect(() => {
-    if (chapterError) {
-      queryErrorNotification(chapterError, "단원 목록");
-    }
-  }, [chapterError]);
-
+  const location = useLocation();
   return (
-    <TopicTemplate
-      chapterList={chapterList}
-      topicList={
-        topicList
-          ? [...topicList].sort((a, b) => a.number - b.number)
-          : undefined
-      }
-      chapterTitle={chapterTitle}
-      chapterDate={chapterDate}
-      chapterInfo={chapterInfo}
-      keywordList={keywordList}
-    />
+    <BaseLayout>
+      <SideMenu />
+      <Header />
+      <ChapterList />
+      <TopicList />
+      {location.pathname.endsWith("topic-info") && <TopicInfo />}
+      {location.pathname.endsWith("create-topic") && <CreateTopic />}
+      {location.pathname.endsWith("edit-topic") && <EditTopic />}
+      {location.pathname.endsWith("chapter-info")}
+      {location.pathname.endsWith("edit-chapter") && <EditChapterInfo />}
+      {location.pathname.endsWith("topic-info") && (
+        <ColumnFlex>
+          <KeywordForm />
+          <KeywordList />
+        </ColumnFlex>
+      )}
+    </BaseLayout>
   );
 }
 

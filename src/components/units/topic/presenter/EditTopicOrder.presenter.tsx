@@ -22,7 +22,8 @@ function EditTopicOrder() {
   useNotificationErrorList([setError(topicListError, "주제 목록")]);
 
   useEffect(() => {
-    if (topicList?.length) setEditedTopicList([...topicList]);
+    if (topicList?.length)
+      setEditedTopicList([...topicList].sort((a, b) => a.number - b.number));
   }, [topicList]);
 
   const showModal = () => {

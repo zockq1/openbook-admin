@@ -1,40 +1,21 @@
-import { Button, Form, Input, Modal } from "antd";
-import { useState } from "react";
-import { useAddChapterMutation } from "../../../store/api/chapterApi";
-import { mutationErrorNotification } from "../../../services/errorNotification";
-import { useNavigate } from "react-router-dom";
+import { Button, Form, FormInstance, Input, Modal } from "antd";
+interface CreateChapterModalProps {
+  showModal: () => void;
+  handleCancel: () => void;
+  onSubmit: (values: any) => Promise<void>;
+  form: FormInstance<any>;
+  isModalOpen: boolean;
+  isLoading: boolean;
+}
 
-function CreateChapterModal() {
-  const navigate = useNavigate();
-  const [addChapter] = useAddChapterMutation();
-  const [form] = Form.useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    form.resetFields();
-    setIsModalOpen(false);
-  };
-
-  const onSubmit = async (values: any) => {
-    try {
-      const { chapterTitle, chapterNumber, dateComment } = values;
-      await addChapter({
-        number: chapterNumber,
-        title: chapterTitle,
-        dateComment: dateComment,
-      }).unwrap();
-      form.resetFields();
-      navigate(`/topic/${chapterNumber}/chapter-info`);
-    } catch (error) {
-      mutationErrorNotification(error);
-    }
-    setIsModalOpen(false);
-  };
-
+function CreateChapterModalUI({
+  showModal,
+  handleCancel,
+  onSubmit,
+  form,
+  isModalOpen,
+  isLoading,
+}: CreateChapterModalProps) {
   return (
     <>
       <Button onClick={showModal}>단원 추가</Button>
@@ -88,7 +69,12 @@ function CreateChapterModal() {
             <Input />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ float: "right" }}
+              loading={isLoading}
+            >
               저장
             </Button>
           </Form.Item>
@@ -98,4 +84,4 @@ function CreateChapterModal() {
   );
 }
 
-export default CreateChapterModal;
+export default CreateChapterModalUI;

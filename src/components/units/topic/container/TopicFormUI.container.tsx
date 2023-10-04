@@ -6,6 +6,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { EraModel } from "../../../../types/eraType";
 import { TopicModel } from "../../../../types/topicTypes";
 import { ChapterModel } from "../../../../types/chapterTypes";
+import ContentBox from "../../../commons/ContentBox";
 
 interface TopicFormUIProps {
   onFinish: (values: any) => Promise<void>;
@@ -35,162 +36,179 @@ function TopicFormUI({
   } = initialValue;
 
   return (
-    <Form
-      onFinish={onFinish}
-      style={{ width: "auto", margin: "20px" }}
-      labelCol={{ span: 4 }}
-    >
-      <Form.Item label="단원" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="chapter"
-          rules={[{ required: true, message: "단원을 입력해주세요!" }]}
-          initialValue={chapterNumber}
-        >
-          <Select style={{ width: "300px" }} showSearch placeholder="단원 선택">
-            {chapterList.map((chapter: ChapterModel) => (
-              <Select.Option value={chapter.number} key={chapter.number}>
-                {`${chapter.number}. ${chapter.title}`}
-              </Select.Option>
-            ))}
-          </Select>
+    <ContentBox title="주제 정보">
+      <Form
+        onFinish={onFinish}
+        style={{ width: "auto", margin: "20px" }}
+        labelCol={{ span: 4 }}
+      >
+        <Form.Item label="단원" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="chapter"
+            rules={[{ required: true, message: "단원을 입력해주세요!" }]}
+            initialValue={chapterNumber}
+          >
+            <Select
+              style={{ width: "300px" }}
+              showSearch
+              placeholder="단원 선택"
+            >
+              {chapterList.map((chapter: ChapterModel) => (
+                <Select.Option value={chapter.number} key={chapter.number}>
+                  {`${chapter.number}. ${chapter.title}`}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
         </Form.Item>
-      </Form.Item>
 
-      <Form.Item label="이름" style={{ marginBottom: 0 }}>
+        <Form.Item label="이름" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="title"
+            rules={[{ required: true, message: "이름을 입력해주세요!" }]}
+            initialValue={title}
+          >
+            <Input />
+          </Form.Item>
+        </Form.Item>
+
+        <Form.Item label="분류" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="category"
+            rules={[{ required: true, message: "분류를 선택해 주세요!" }]}
+            style={{
+              display: "inline-block",
+            }}
+            initialValue={category}
+          >
+            <Select
+              style={{ width: "300px" }}
+              showSearch
+              placeholder="분류 선택"
+            >
+              {categoryList.map((category: CategoryModel) => (
+                <Select.Option value={category.name} key={category.name}>
+                  {category.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <CategoryEditModal />
+        </Form.Item>
+
+        <Form.Item label="시대" style={{ marginBottom: 0 }}>
+          <Form.Item
+            name="era"
+            rules={[{ required: true, message: "시대를 선택해 주세요!" }]}
+            style={{
+              display: "inline-block",
+            }}
+            initialValue={era}
+          >
+            <Select
+              style={{ width: "300px" }}
+              showSearch
+              placeholder="시대 선택"
+            >
+              {eraList.map((era: EraModel) => (
+                <Select.Option value={era.name} key={era.name}>
+                  {era.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <EraEditModal />
+        </Form.Item>
+
         <Form.Item
-          name="title"
-          rules={[{ required: true, message: "이름을 입력해주세요!" }]}
-          initialValue={title}
+          name="dateComment"
+          label="년도"
+          rules={[{ required: false, message: "년도를 입력해 주세요!" }]}
+          initialValue={dateComment}
         >
           <Input />
         </Form.Item>
-      </Form.Item>
 
-      <Form.Item label="분류" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="category"
-          rules={[{ required: true, message: "분류를 선택해 주세요!" }]}
-          style={{
-            display: "inline-block",
-          }}
-          initialValue={category}
-        >
-          <Select style={{ width: "300px" }} showSearch placeholder="분류 선택">
-            {categoryList.map((category: CategoryModel) => (
-              <Select.Option value={category.name} key={category.name}>
-                {category.name}
-              </Select.Option>
-            ))}
-          </Select>
+        <Form.Item label="연표 년도 추가">
+          <Form.List name="extraDateList" initialValue={extraDateList}>
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{ marginBottom: 0, position: "relative" }}
+                  >
+                    <Form.Item
+                      {...restField}
+                      name={[name, "extraDate"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "추가 년도를 입력해 주세요!",
+                        },
+                      ]}
+                      style={{
+                        marginRight: "3px",
+                        display: "inline-block",
+                      }}
+                    >
+                      <Input type="number" />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      label="설명"
+                      name={[name, "extraDateComment"]}
+                      style={{
+                        marginRight: "3px",
+                        display: "inline-block",
+                      }}
+                    >
+                      <Input type="text" />
+                    </Form.Item>
+                    <MinusCircleOutlined
+                      onClick={() => remove(name)}
+                      style={{ position: "absolute" }}
+                    />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    추가
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
         </Form.Item>
 
-        <CategoryEditModal categoryList={categoryList} />
-      </Form.Item>
-
-      <Form.Item label="시대" style={{ marginBottom: 0 }}>
         <Form.Item
-          name="era"
-          rules={[{ required: true, message: "시대를 선택해 주세요!" }]}
-          style={{
-            display: "inline-block",
-          }}
-          initialValue={era}
+          name="detail"
+          label="상세설명"
+          rules={[{ required: false, message: "상세설명을 입력해 주세요!" }]}
+          initialValue={detail}
         >
-          <Select style={{ width: "300px" }} showSearch placeholder="시대 선택">
-            {eraList.map((era: EraModel) => (
-              <Select.Option value={era.name} key={era.name}>
-                {era.name}
-              </Select.Option>
-            ))}
-          </Select>
+          <Input.TextArea rows={10} />
         </Form.Item>
 
-        <EraEditModal eraList={eraList} />
-      </Form.Item>
-
-      <Form.Item
-        name="dateComment"
-        label="년도"
-        rules={[{ required: false, message: "년도를 입력해 주세요!" }]}
-        initialValue={dateComment}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item label="연표 년도 추가">
-        <Form.List name="extraDateList" initialValue={extraDateList}>
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <Space
-                  key={key}
-                  style={{ marginBottom: 0, position: "relative" }}
-                >
-                  <Form.Item
-                    {...restField}
-                    name={[name, "extraDate"]}
-                    rules={[
-                      { required: true, message: "추가 년도를 입력해 주세요!" },
-                    ]}
-                    style={{
-                      marginRight: "3px",
-                      display: "inline-block",
-                    }}
-                  >
-                    <Input type="number" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    label="설명"
-                    name={[name, "extraDateComment"]}
-                    style={{
-                      marginRight: "3px",
-                      display: "inline-block",
-                    }}
-                  >
-                    <Input type="text" />
-                  </Form.Item>
-                  <MinusCircleOutlined
-                    onClick={() => remove(name)}
-                    style={{ position: "absolute" }}
-                  />
-                </Space>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  추가
-                </Button>
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
-      </Form.Item>
-
-      <Form.Item
-        name="detail"
-        label="상세설명"
-        rules={[{ required: false, message: "상세설명을 입력해 주세요!" }]}
-        initialValue={detail}
-      >
-        <Input.TextArea rows={10} />
-      </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{ float: "right" }}
-          loading={isLoading}
-        >
-          저장
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ float: "right" }}
+            loading={isLoading}
+          >
+            저장
+          </Button>
+        </Form.Item>
+      </Form>
+    </ContentBox>
   );
 }
 

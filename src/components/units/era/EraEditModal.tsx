@@ -1,17 +1,18 @@
-import { Button, Form, Input, Modal, Space } from "antd";
+import { Form, Modal, Spin } from "antd";
 import { useState } from "react";
 import {
   useAddEraMutation,
   useDeleteEraMutation,
+  useGetEraListQuery,
 } from "../../../store/api/eraApi";
-import { EraModel } from "../../../types/eraType";
 import { mutationErrorNotification } from "../../../services/errorNotification";
+import ItemEditModalUI from "../common/ItemEditModalUI.container";
+import useNotificationErrorList from "../../../hooks/useNotificationErrorList";
+import setError from "../../../services/setError";
 
-interface EraEditModalProps {
-  eraList: EraModel[];
-}
-
-function EraEditModal({ eraList }: EraEditModalProps) {
+function EraEditModal() {
+  const { data: eraList, error: eraListError } = useGetEraListQuery();
+  useNotificationErrorList([setError(eraListError, "시대 목록")]);
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addEra] = useAddEraMutation();
@@ -31,15 +32,15 @@ function EraEditModal({ eraList }: EraEditModalProps) {
 
   const onSubmit = async (values: any) => {
     try {
-      const { eraName } = values;
-      await addEra(eraName).unwrap();
+      const { name } = values;
+      await addEra(name).unwrap();
       form.resetFields();
     } catch (error) {
       mutationErrorNotification(error);
     }
   };
 
-  const handleDelete = async (era: string) => {
+  const handleDelete = async (item: string) => {
     Modal.confirm({
       title: "주의",
       content: "정말 이 항목을 삭제하시겠습니까?",
@@ -48,7 +49,7 @@ function EraEditModal({ eraList }: EraEditModalProps) {
       cancelText: "아니오",
       onOk: async () => {
         try {
-          await deleteEra(era).unwrap();
+          await deleteEra(item).unwrap();
         } catch (error) {
           mutationErrorNotification(error);
         }
@@ -56,48 +57,22 @@ function EraEditModal({ eraList }: EraEditModalProps) {
     });
   };
 
+  if (!eraList) {
+    return <Spin />;
+  }
+
   return (
-    <div style={{ display: "inline", marginLeft: "20px" }}>
-      <Button type="primary" onClick={showModal}>
-        시대 설정
-      </Button>
-      <Modal
-        title="시대 설정"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Form name="era-form" form={form} onFinish={onSubmit} layout="vertical">
-          <Form.Item
-            name="eraName"
-            label="시대명"
-            rules={[
-              {
-                required: true,
-                message: "분류명을 입력해주세요.",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-              저장
-            </Button>
-          </Form.Item>
-        </Form>
-        {eraList.map((era: EraModel) => (
-          <Space key={era.name}>
-            <span style={{ fontSize: 18 }}>{era.name}</span>
-            <Button onClick={() => handleDelete(era.name)} danger>
-              삭제
-            </Button>
-            <span> </span>
-          </Space>
-        ))}
-      </Modal>
-    </div>
+    <ItemEditModalUI
+      handleCancel={handleCancel}
+      handleDelete={handleDelete}
+      handleOk={handleOk}
+      showModal={showModal}
+      isModalOpen={isModalOpen}
+      onSubmit={onSubmit}
+      form={form}
+      title="시대"
+      itemList={eraList}
+    />
   );
 }
 

@@ -1,62 +1,28 @@
-import { Button, Form, Input, Modal } from "antd";
-import { useUpdateChapterMutation } from "../../../store/api/chapterApi";
-import { useEffect, useState } from "react";
-import { mutationErrorNotification } from "../../../services/errorNotification";
-import { useNavigate } from "react-router-dom";
+import { Button, Form, FormInstance, Input, Modal } from "antd";
 
 interface EditChapterModalProps {
+  showModal: () => void;
+  handleCancel: () => void;
+  onSubmit: (values: any) => Promise<void>;
+  isModalOpen: boolean;
+  form: FormInstance<any>;
   chapterNumber: number;
-  title: string;
+  chapterTitle: string;
   dateComment: string;
+  isLoading: boolean;
 }
 
-function EditChapterModal({
+function EditChapterModalUI({
+  showModal,
+  handleCancel,
+  onSubmit,
+  isModalOpen,
+  form,
   chapterNumber,
-  title,
+  chapterTitle,
   dateComment,
+  isLoading,
 }: EditChapterModalProps) {
-  const navigate = useNavigate();
-  const [updateChapter] = useUpdateChapterMutation();
-  const [form] = Form.useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  useEffect(() => {
-    form.setFieldsValue({
-      chapterTitle: title,
-      chapterNumber: chapterNumber,
-      dateComment: dateComment,
-    });
-  }, [form, title, chapterNumber, dateComment]);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const onSubmit = async (values: any) => {
-    try {
-      const {
-        chapterTitle: newChapterTitle,
-        chapterNumber: newChapterNumber,
-        dateComment: newDateComment,
-      } = values;
-      await updateChapter({
-        editedChapter: {
-          number: newChapterNumber,
-          title: newChapterTitle,
-          dateComment: newDateComment,
-        },
-        currentChapterNumber: chapterNumber,
-      }).unwrap();
-      navigate(`/topic/${newChapterNumber}/chapter-info`);
-    } catch (error) {
-      mutationErrorNotification(error);
-    }
-    setIsModalOpen(false);
-  };
-
   return (
     <div
       style={{
@@ -88,7 +54,7 @@ function EditChapterModal({
                 message: "단원명을 입력해주세요.",
               },
             ]}
-            initialValue={title}
+            initialValue={chapterTitle}
           >
             <Input />
           </Form.Item>
@@ -119,7 +85,12 @@ function EditChapterModal({
             <Input />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ float: "right" }}
+              loading={isLoading}
+            >
               저장
             </Button>
           </Form.Item>
@@ -129,4 +100,4 @@ function EditChapterModal({
   );
 }
 
-export default EditChapterModal;
+export default EditChapterModalUI;
