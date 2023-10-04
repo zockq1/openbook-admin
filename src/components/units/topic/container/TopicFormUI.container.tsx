@@ -1,68 +1,38 @@
-import { useNavigate } from "react-router-dom";
-import { useUpdateTopicMutation } from "../../../store/api/topicApi";
-import { mutationErrorNotification } from "../../../services/errorNotification";
-import { ExtraDateModel, TopicModel } from "../../../types/topicTypes";
 import { Button, Form, Input, Select, Space } from "antd";
-import { CategoryModel } from "../../../types/categoryType";
+import { CategoryModel } from "../../../../types/categoryType";
+import CategoryEditModal from "../../category/CategoryEditModal";
+import EraEditModal from "../../era/EraEditModal";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import CategoryEditModal from "../category/CategoryEditModal";
-import { EraModel } from "../../../types/eraType";
-import EraEditModal from "../era/EraEditModal";
+import { EraModel } from "../../../../types/eraType";
+import { TopicModel } from "../../../../types/topicTypes";
+import { ChapterModel } from "../../../../types/chapterTypes";
 
-interface TopicInfoProps {
-  topicInfo: TopicModel;
+interface TopicFormUIProps {
+  onFinish: (values: any) => Promise<void>;
   categoryList: CategoryModel[];
   eraList: EraModel[];
-  topicTitle: string;
-  chapterNumber: number;
+  chapterList: ChapterModel[];
+  initialValue: TopicModel;
+  isLoading: boolean;
 }
 
-function EditTopic({
-  topicInfo,
+function TopicFormUI({
+  onFinish,
   categoryList,
   eraList,
-  topicTitle,
-  chapterNumber,
-}: TopicInfoProps) {
-  const navigate = useNavigate();
-  const [updateTopic] = useUpdateTopicMutation();
-
-  const onFinish = async (values: any) => {
-    const {
-      chapter,
-      title,
-      category,
-      era,
-      detail,
-      dateComment,
-      extraDateList,
-    } = values;
-    let updatedTopic: TopicModel = {
-      chapter,
-      title,
-      category,
-      era,
-      detail: detail ? detail : "",
-      dateComment,
-      extraDateList: [],
-    };
-
-    if (extraDateList) {
-      extraDateList.forEach((item: ExtraDateModel) => {
-        const newExtraDate: ExtraDateModel = {
-          extraDate: item.extraDate,
-          extraDateComment: String(item.extraDateComment),
-        };
-        updatedTopic.extraDateList.push(newExtraDate);
-      });
-    }
-    try {
-      await updateTopic({ updatedTopic, title: topicTitle }).unwrap();
-      navigate(`/topic/${chapter}/${title}/topic-info`);
-    } catch (error) {
-      mutationErrorNotification(error);
-    }
-  };
+  initialValue,
+  chapterList,
+  isLoading,
+}: TopicFormUIProps) {
+  const {
+    category,
+    era,
+    dateComment,
+    detail,
+    extraDateList,
+    title,
+    chapter: chapterNumber,
+  } = initialValue;
 
   return (
     <Form
@@ -76,7 +46,13 @@ function EditTopic({
           rules={[{ required: true, message: "단원을 입력해주세요!" }]}
           initialValue={chapterNumber}
         >
-          <Input type="number" />
+          <Select style={{ width: "300px" }} showSearch placeholder="단원 선택">
+            {chapterList.map((chapter: ChapterModel) => (
+              <Select.Option value={chapter.number} key={chapter.number}>
+                {`${chapter.number}. ${chapter.title}`}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form.Item>
 
@@ -84,7 +60,7 @@ function EditTopic({
         <Form.Item
           name="title"
           rules={[{ required: true, message: "이름을 입력해주세요!" }]}
-          initialValue={topicInfo.title}
+          initialValue={title}
         >
           <Input />
         </Form.Item>
@@ -97,7 +73,7 @@ function EditTopic({
           style={{
             display: "inline-block",
           }}
-          initialValue={topicInfo.category}
+          initialValue={category}
         >
           <Select style={{ width: "300px" }} showSearch placeholder="분류 선택">
             {categoryList.map((category: CategoryModel) => (
@@ -118,7 +94,7 @@ function EditTopic({
           style={{
             display: "inline-block",
           }}
-          initialValue={topicInfo.era}
+          initialValue={era}
         >
           <Select style={{ width: "300px" }} showSearch placeholder="시대 선택">
             {eraList.map((era: EraModel) => (
@@ -136,13 +112,13 @@ function EditTopic({
         name="dateComment"
         label="년도"
         rules={[{ required: false, message: "년도를 입력해 주세요!" }]}
-        initialValue={topicInfo.dateComment}
+        initialValue={dateComment}
       >
         <Input />
       </Form.Item>
 
       <Form.Item label="연표 년도 추가">
-        <Form.List name="extraDateList" initialValue={topicInfo.extraDateList}>
+        <Form.List name="extraDateList" initialValue={extraDateList}>
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
@@ -199,13 +175,18 @@ function EditTopic({
         name="detail"
         label="상세설명"
         rules={[{ required: false, message: "상세설명을 입력해 주세요!" }]}
-        initialValue={topicInfo.detail}
+        initialValue={detail}
       >
         <Input.TextArea rows={10} />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ float: "right" }}
+          loading={isLoading}
+        >
           저장
         </Button>
       </Form.Item>
@@ -213,4 +194,4 @@ function EditTopic({
   );
 }
 
-export default EditTopic;
+export default TopicFormUI;

@@ -1,14 +1,13 @@
-import { Button, Modal } from "antd";
-import { useDeleteTopicMutation } from "../../../store/api/topicApi";
-import { useNavigate } from "react-router-dom";
-import { mutationErrorNotification } from "../../../services/errorNotification";
+import { Modal } from "antd";
+import { useDeleteTopicMutation } from "../../../../store/api/topicApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { mutationErrorNotification } from "../../../../services/errorNotification";
+import DeleteTopicButtonUI from "../container/DeleteTopicButtonUI.container";
 
-interface DeleteTopicProps {
-  topicTitle: string;
-  chapterNumber: number;
-}
-
-function DeleteTopicButton({ topicTitle, chapterNumber }: DeleteTopicProps) {
+function DeleteTopicButton() {
+  const { chapter, topic } = useParams();
+  const chapterNumber = Number(chapter);
+  const topicTitle = String(topic);
   const navigate = useNavigate();
   const [deleteTopic] = useDeleteTopicMutation();
 
@@ -29,11 +28,7 @@ function DeleteTopicButton({ topicTitle, chapterNumber }: DeleteTopicProps) {
       },
     });
   };
-  return (
-    <Button danger type="primary" onClick={handleDeleteClick}>
-      삭제
-    </Button>
-  );
+  return <DeleteTopicButtonUI handleDeleteClick={handleDeleteClick} />;
 }
 
 export default DeleteTopicButton;

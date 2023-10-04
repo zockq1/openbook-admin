@@ -1,10 +1,10 @@
 import { Descriptions } from "antd";
-import { TopicModel } from "../../../types/topicTypes";
+import { TopicModel } from "../../../../types/topicTypes";
 
 interface TopicInfoProps {
   topicInfo: TopicModel;
 }
-function TopicInfo({ topicInfo }: TopicInfoProps) {
+function TopicInfoUI({ topicInfo }: TopicInfoProps) {
   const { title, category, chapter, era, dateComment } = topicInfo;
   return (
     <Descriptions layout="vertical" bordered>
@@ -29,4 +29,4 @@ function TopicInfo({ topicInfo }: TopicInfoProps) {
   );
 }
 
-export default TopicInfo;
+export default TopicInfoUI;

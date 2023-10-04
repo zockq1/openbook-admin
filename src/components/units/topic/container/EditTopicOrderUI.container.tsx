@@ -1,4 +1,3 @@
-import { useUpdateTopicOrderMutation } from "../../../store/api/topicApi";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import {
@@ -7,7 +6,7 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
-import { TopicListModel } from "../../../types/topicTypes";
+import { TopicListModel } from "../../../../types/topicTypes";
 import styled from "styled-components";
 
 const Item = styled.div`
@@ -17,44 +16,29 @@ const Item = styled.div`
 `;
 
 interface EditTopicOrderProps {
-  topicList: TopicListModel[];
+  editedTopicList: TopicListModel[];
+  showModal: () => void;
+  handleCancel: () => void;
+  onSubmit: () => Promise<void>;
+  handleChange: (result: DropResult) => Promise<void>;
+  isModalOpen: boolean;
+  isLoading: boolean;
 }
 
-function EditTopicOrder({ topicList }: EditTopicOrderProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function EditTopicOrderUI({
+  editedTopicList,
+  showModal,
+  handleCancel,
+  onSubmit,
+  handleChange,
+  isModalOpen,
+  isLoading,
+}: EditTopicOrderProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const [editedTopicList, setEditedTopicList] = useState<TopicListModel[]>([]);
-  const [updateTopicOrder, { isLoading }] = useUpdateTopicOrderMutation();
 
   useEffect(() => {
     setIsMounted(true);
-    setEditedTopicList([...topicList]);
-  }, [setIsMounted, topicList]);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const onSubmit = async () => {
-    updateTopicOrder(
-      editedTopicList.map((item, index) => {
-        return { title: item.title, number: index };
-      })
-    );
-    setIsModalOpen(false);
-  };
-
-  const handleChange = async (result: DropResult) => {
-    if (!result.destination) return;
-    const items = [...editedTopicList];
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setEditedTopicList(items);
-  };
+  }, [setIsMounted]);
 
   return (
     <>
@@ -109,4 +93,4 @@ function EditTopicOrder({ topicList }: EditTopicOrderProps) {
   );
 }
 
-export default EditTopicOrder;
+export default EditTopicOrderUI;

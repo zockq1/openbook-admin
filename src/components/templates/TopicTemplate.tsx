@@ -12,46 +12,38 @@ import { Button, Empty } from "antd";
 import CreateChapterModal from "../units/chapter/CreateChpterModal";
 import SmallItemList from "../commons/SmallItemList";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { TopicListModel, TopicModel } from "../../types/topicTypes";
-import CreateTopic from "../units/topic/CreateTopic";
-import EditTopic from "../units/topic/EditTopic";
+import { TopicListModel } from "../../types/topicTypes";
+import CreateTopic from "../units/topic/presenter/CreateTopic.presenter";
+import EditTopic from "../units/topic/presenter/EditTopic.presenter";
 import { ReactNode, useEffect, useState } from "react";
-import TopicInfo from "../units/topic/TopicInfo";
+import TopicInfo from "../units/topic/presenter/TopicInfo.presenter";
 import DeleteChapterButton from "../units/chapter/DeleteChapterButton";
 import EditChapterModal from "../units/chapter/EditChapterModal";
-import { CategoryModel } from "../../types/categoryType";
-import DeleteTopicButton from "../units/topic/DeleteTopicButton";
+import DeleteTopicButton from "../units/topic/presenter/DeleteTopicButton.presenter";
 import { ColumnFlex } from "../commons/FlexLayout";
 import KeywordForm from "../units/keword/KeywordFrom";
 import KeywordList from "../units/keword/KeywordList";
 import { KeywordModel } from "../../types/keywordType";
-import EditTopicOrder from "../units/topic/EditTopicOrder";
+import EditTopicOrder from "../units/topic/presenter/EditTopicOrder.presenter";
 import ChapterInfo from "../units/chapter/ChpaterInfo";
 import EditChapterInfo from "../units/chapter/EditChpaterInfo";
-import { EraModel } from "../../types/eraType";
 
 interface TopicTemplateProps {
   chapterList: ChapterModel[] | undefined;
   topicList: TopicListModel[] | undefined;
-  topicInfo: TopicModel | undefined;
   chapterTitle: ChapterTitleModel | undefined;
   chapterDate: ChapterDateModel | undefined;
   chapterInfo: ChapterInfoModel | undefined;
-  categoryList: CategoryModel[] | undefined;
   keywordList: KeywordModel[] | undefined;
-  eraList: EraModel[] | undefined;
 }
 
 function TopicTemplate({
   chapterList,
   topicList,
-  topicInfo,
   chapterTitle,
   chapterDate,
   chapterInfo,
-  categoryList,
   keywordList,
-  eraList,
 }: TopicTemplateProps) {
   const navigate = useNavigate();
   const { chapter, topic } = useParams();
@@ -82,31 +74,12 @@ function TopicTemplate({
   }, [setTopicState, location]);
 
   const renderMainContent = (): ReactNode => {
-    if (topicState === "TopicInfo" && topicInfo) {
-      return <TopicInfo topicInfo={topicInfo} />;
-    } else if (topicState === "TopicCreate" && categoryList && eraList) {
-      return (
-        <CreateTopic
-          eraList={eraList}
-          categoryList={categoryList}
-          chapterNumber={Number(chapter)}
-        />
-      );
-    } else if (
-      topicState === "TopicEdit" &&
-      topicInfo &&
-      categoryList &&
-      eraList
-    ) {
-      return (
-        <EditTopic
-          eraList={eraList}
-          topicInfo={topicInfo}
-          categoryList={categoryList}
-          chapterNumber={Number(chapter)}
-          topicTitle={String(topic)}
-        />
-      );
+    if (topicState === "TopicInfo") {
+      return <TopicInfo />;
+    } else if (topicState === "TopicCreate") {
+      return <CreateTopic />;
+    } else if (topicState === "TopicEdit") {
+      return <EditTopic />;
     } else if (topicState === "ChapterInfo" && chapterInfo) {
       return <ChapterInfo chapterInfo={chapterInfo} />;
     } else if (topicState === "ChapterEdit" && chapterInfo) {
@@ -151,7 +124,7 @@ function TopicTemplate({
                 <Link to={`/topic/${chapter}/create-topic`}>
                   <Button>주제 추가</Button>
                 </Link>
-                <EditTopicOrder topicList={topicList || []} />
+                <EditTopicOrder />
                 {chapterTitle && chapterDate && (
                   <EditChapterModal
                     chapterNumber={Number(chapter)}
@@ -208,10 +181,7 @@ function TopicTemplate({
                   >
                     수정
                   </Button>
-                  <DeleteTopicButton
-                    chapterNumber={Number(chapter)}
-                    topicTitle={String(topic)}
-                  />
+                  <DeleteTopicButton />
                 </>
               ) : topicState === "ChapterInfo" ? (
                 <Button
