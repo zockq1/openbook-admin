@@ -2,12 +2,14 @@ import { Button, Descriptions } from "antd";
 import { TopicModel } from "../../../../types/topicTypes";
 import ContentBox from "../../../commons/ContentBox";
 import DeleteTopicButton from "../presenter/DeleteTopicButton.presenter";
+import { KeywordModel } from "../../../../types/keywordType";
 
 interface TopicInfoProps {
   topicInfo: TopicModel;
+  keywordList: KeywordModel[];
   toEditTopic: () => void;
 }
-function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
+function TopicInfoUI({ topicInfo, keywordList, toEditTopic }: TopicInfoProps) {
   const { title, category, chapter, era, dateComment } = topicInfo;
   return (
     <ContentBox
@@ -33,6 +35,11 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
               </div>
             );
           })}
+        </Descriptions.Item>
+        <Descriptions.Item span={3} label="키워드">
+          {keywordList.map((keyword) => (
+            <>{`${keyword.name} / `}</>
+          ))}
         </Descriptions.Item>
         <Descriptions.Item span={3} label="상세설명">
           {topicInfo.detail}
