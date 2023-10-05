@@ -11,7 +11,7 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
   const { title, category, chapter, era, dateComment } = topicInfo;
   return (
     <ContentBox
-      title="주제 정보"
+      title={title}
       option={
         <>
           <Button onClick={toEditTopic}>수정</Button>

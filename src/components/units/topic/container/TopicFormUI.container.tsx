@@ -36,7 +36,7 @@ function TopicFormUI({
   } = initialValue;
 
   return (
-    <ContentBox title="주제 정보">
+    <ContentBox title={title || "주제 생성"}>
       <Form
         onFinish={onFinish}
         style={{ width: "auto", margin: "20px" }}
