@@ -69,6 +69,8 @@ function CommentForm({ addComment }: CommentFormProps) {
           onChange={handleChapterChange}
           value={chapterNumber}
           style={{ width: "40%" }}
+          showSearch
+          placeholder="단원 선택"
         >
           {chapterList &&
             [...chapterList]
@@ -83,6 +85,8 @@ function CommentForm({ addComment }: CommentFormProps) {
           onChange={handleTocpiChange}
           value={topicTitle}
           style={{ width: "40%" }}
+          showSearch
+          placeholder="주제 선택"
         >
           {topicList &&
             topicList?.map((topic) => (
@@ -98,6 +102,8 @@ function CommentForm({ addComment }: CommentFormProps) {
           onChange={(value) => setCommentId(value)}
           value={commentId}
           style={{ width: "80%" }}
+          showSearch
+          placeholder="키워드 선택"
         >
           {currentKeywordList.map((keyword) => (
             <Select.Option value={keyword.id} key={keyword.name}>
