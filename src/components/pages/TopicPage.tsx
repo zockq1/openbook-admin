@@ -21,13 +21,13 @@ function TopicPage() {
       <Header />
       <RowFlex>
         <ChapterList />
-        {location.pathname.endsWith("chapter-info") && <TopicList />}
-        {location.pathname.endsWith("topic-info") && <TopicInfo />}
-        {location.pathname.endsWith("create-topic") && <CreateTopic />}
-        {location.pathname.endsWith("edit-topic") && <EditTopic />}
-        {location.pathname.endsWith("chapter-info") && <ChapterInfo />}
-        {location.pathname.endsWith("edit-chapter") && <EditChapterInfo />}
-        {location.pathname.endsWith("topic-info") && (
+        {!location.pathname.endsWith("/topic") && <TopicList />}
+        {location.pathname.endsWith("/topic-info") && <TopicInfo />}
+        {location.pathname.endsWith("/create-topic") && <CreateTopic />}
+        {location.pathname.endsWith("/edit-topic") && <EditTopic />}
+        {location.pathname.endsWith("/chapter-info") && <ChapterInfo />}
+        {location.pathname.endsWith("/edit-chapter") && <EditChapterInfo />}
+        {location.pathname.endsWith("/topic-info") && (
           <ColumnFlex>
             <KeywordForm />
             <KeywordList />
