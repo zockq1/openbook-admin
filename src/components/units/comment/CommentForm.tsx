@@ -56,10 +56,7 @@ function CommentForm({ addComment }: CommentFormProps) {
     const result = await addComment(commentId);
 
     if (result) {
-      setTopicTitle("");
-      setCurrentKeywordList([]);
       setCommentId(null);
-      setChapterNumber("");
     }
   };
 
