@@ -135,7 +135,9 @@ function QuestionTemplate({
           })}
         />
       ) : (
-        <Empty />
+        <ContentBox title="문제 선택">
+          <Empty />
+        </ContentBox>
       )}
       <ColumnFlex>
         {" "}

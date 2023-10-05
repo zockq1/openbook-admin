@@ -8,6 +8,7 @@ const ColumnFlex = styled.ul`
 const RowFlex = styled.ul`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export { ColumnFlex, RowFlex };
