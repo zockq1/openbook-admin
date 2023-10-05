@@ -36,6 +36,7 @@ function ItemEditModalUI({
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
+        forceRender
       >
         <Form
           name="item-form"

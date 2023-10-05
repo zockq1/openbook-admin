@@ -57,6 +57,7 @@ function EditTopicOrderUI({
             Submit
           </Button>,
         ]}
+        forceRender
       >
         {isMounted && (
           <DragDropContext onDragEnd={handleChange}>

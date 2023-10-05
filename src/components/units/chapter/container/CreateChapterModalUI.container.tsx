@@ -25,6 +25,7 @@ function CreateChapterModalUI({
         onOk={onSubmit}
         onCancel={handleCancel}
         footer={null}
+        forceRender
       >
         <Form
           name="chapter-form"

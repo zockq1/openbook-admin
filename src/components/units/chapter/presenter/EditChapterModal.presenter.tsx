@@ -66,7 +66,11 @@ function EditChapterModal() {
   };
 
   if (!chapterTitle || !dateComment) {
-    return <Spin />;
+    return (
+      <Form form={form}>
+        <Spin />
+      </Form>
+    );
   }
 
   return (
