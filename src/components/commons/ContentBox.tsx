@@ -12,6 +12,8 @@ const StyledContentBox = styled.div`
   padding: 10px;
   margin: 10px;
   width: 547.5px;
+  min-height: 272px;
+  height: max-content;
   border-radius: ${({ theme }) => theme.borderRadius.small};
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadow.defaultShadow};

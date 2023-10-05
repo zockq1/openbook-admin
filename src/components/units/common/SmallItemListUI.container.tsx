@@ -10,6 +10,15 @@ interface SmallItemType {
 const ItemList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  max-height: 200px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    background: rgb(255, 255, 255);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+  }
 `;
 
 interface ItemProps {
