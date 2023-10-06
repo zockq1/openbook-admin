@@ -11,7 +11,7 @@ const Table = styled.table`
     top: 0px;
     padding: 6px;
     text-align: left;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.bg};
   }
 `;
 
