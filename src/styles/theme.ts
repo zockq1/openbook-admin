@@ -3,6 +3,8 @@ import { DefaultTheme } from "styled-components";
 const calcRem = (size: number) => `${size / 16}rem`;
 
 const fontSizes = {
+  xxxs: calcRem(8),
+  xxs: calcRem(10),
   xs: calcRem(12),
   small: calcRem(14),
   base: calcRem(16),
