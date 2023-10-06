@@ -28,8 +28,8 @@ export interface TopicListModel {
   number: number;
   category: string;
   title: string;
-  startDate: number;
-  endDate: number;
+  era: string;
+  dateComment: string;
   descriptionCount: number;
   choiceCount: number;
   keywordCount: number;

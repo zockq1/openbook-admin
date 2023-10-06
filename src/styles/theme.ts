@@ -42,6 +42,7 @@ const colors = {
   lightPurple: "#A56EFF",
 
   bg: "#fafafa",
+  border: "rgba(5, 5, 5, 0.06)",
 };
 
 const shadow = {

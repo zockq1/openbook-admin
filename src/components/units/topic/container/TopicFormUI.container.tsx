@@ -82,7 +82,7 @@ function TopicFormUI({
             initialValue={category}
           >
             <Select
-              style={{ width: "300px" }}
+              style={{ width: "250px" }}
               showSearch
               placeholder="분류 선택"
             >
@@ -107,7 +107,7 @@ function TopicFormUI({
             initialValue={era}
           >
             <Select
-              style={{ width: "300px" }}
+              style={{ width: "250px" }}
               showSearch
               placeholder="시대 선택"
             >
@@ -131,7 +131,7 @@ function TopicFormUI({
           <Input />
         </Form.Item>
 
-        <Form.Item label="연표 년도 추가">
+        <Form.Item label="연표 년도">
           <Form.List name="extraDateList" initialValue={extraDateList}>
             {(fields, { add, remove }) => (
               <>

@@ -3,11 +3,11 @@ import useNotificationErrorList from "../../../../hooks/useNotificationErrorList
 import setError from "../../../../services/setError";
 import { Button, Empty } from "antd";
 import ContentBox from "../../../commons/ContentBox";
-import SmallItemListUI from "../../common/SmallItemListUI.container";
 import { useGetChapterTopicListQuery } from "../../../../store/api/topicApi";
 import EditTopicOrder from "./EditTopicOrder.presenter";
 import EditChapterModal from "../../chapter/presenter/EditChapterModal.presenter";
 import DeleteChapterButton from "../../chapter/presenter/DeleteChapterButton.presenter";
+import TableUI from "../../common/TableUI.container";
 
 function TopicList() {
   const navigate = useNavigate();
@@ -27,13 +27,24 @@ function TopicList() {
   }
 
   return (
-    <SmallItemListUI
+    <TableUI
       currentItemKey={topicTitle}
+      tableHead={[
+        { name: "category", title: "분류" },
+        { name: "title", title: "주제명" },
+        { name: "era", title: "시대" },
+        { name: "dateComment", title: "년도" },
+      ]}
       itemList={[...topicList]
         .sort((a, b) => a.number - b.number)
         .map((item) => {
           return {
-            name: item.title,
+            data: {
+              category: item.category,
+              title: item.title,
+              era: item.era,
+              dateComment: item.dateComment,
+            },
             key: item.title,
             onClick: () =>
               navigate(`/topic/${chapter}/${item.title}/topic-info`),
