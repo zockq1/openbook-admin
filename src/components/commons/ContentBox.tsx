@@ -11,6 +11,7 @@ const StyledContentBox = styled.div`
   padding: 10px;
   margin: 10px;
   width: 547.5px;
+  height: fit-content;
   border-radius: ${({ theme }) => theme.borderRadius.small};
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadow.defaultShadow};
@@ -26,14 +27,14 @@ const Title = styled.div`
 `;
 
 interface BodyProps {
-  maxHeight: number | string;
+  height: number | string;
 }
 
 const Body = styled.div<BodyProps>`
   grid-area: body;
   margin: 10px;
-  max-height: ${({ maxHeight }) =>
-    typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight};
+  height: ${({ height }) =>
+    typeof height === "number" ? `${height}px` : height};
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -58,21 +59,21 @@ const Option = styled.div`
 interface ContentBoxProps {
   title?: ReactNode;
   option?: ReactNode;
-  maxHeight?: number | string;
+  height?: number | string;
   children?: ReactNode;
 }
 
 function ContentBox({
   title,
   option,
-  maxHeight = "none",
+  height = "none",
   children,
 }: ContentBoxProps) {
   return (
     <StyledContentBox>
       <Title>{title}</Title>
       <Option>{option}</Option>
-      <Body maxHeight={maxHeight}>{children}</Body>
+      <Body height={height}>{children}</Body>
     </StyledContentBox>
   );
 }

@@ -64,7 +64,7 @@ function TableUI({
   tableHead,
 }: TableUIProps) {
   return (
-    <ContentBox title={title} option={option} maxHeight={300}>
+    <ContentBox title={title} option={option} height={300}>
       <div></div>
       <Table>
         <thead>

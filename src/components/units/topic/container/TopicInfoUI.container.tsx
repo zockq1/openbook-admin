@@ -38,7 +38,7 @@ function TopicInfoUI({ topicInfo, keywordList, toEditTopic }: TopicInfoProps) {
         </Descriptions.Item>
         <Descriptions.Item span={3} label="키워드">
           {keywordList.map((keyword) => (
-            <>{`${keyword.name} / `}</>
+            <div key={keyword.name}>{`${keyword.name} / `}</div>
           ))}
         </Descriptions.Item>
         <Descriptions.Item span={3} label="상세설명">
