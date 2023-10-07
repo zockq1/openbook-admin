@@ -48,6 +48,12 @@ const StyledKeywordForm = styled.tr`
     background-color: #f44336;
     color: white;
   }
+
+  .create-button {
+    border-radius: ${({ theme }) => theme.borderRadius.xs};
+    width: 100%;
+    height: 75px;
+  }
 `;
 
 interface KeywordProps {
@@ -105,12 +111,18 @@ function KeywordFormUI({
         </button>
       </td>
       <td className="option">
-        <button className="white" onClick={onSubmit}>
-          {onCancle ? "저장" : "추가"}
-        </button>
-        {onCancle && (
-          <button className="red" onClick={onCancle}>
-            취소
+        {onCancle ? (
+          <>
+            <button className="white" onClick={onSubmit}>
+              저장
+            </button>
+            <button className="red" onClick={onCancle}>
+              취소
+            </button>
+          </>
+        ) : (
+          <button className="white create-button" onClick={onSubmit}>
+            추가
           </button>
         )}
       </td>
