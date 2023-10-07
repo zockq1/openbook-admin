@@ -8,6 +8,7 @@ a{
     color: inherit;
 }
 *{
+    font-family: 'Spoqa Han Sans Neo';
     box-sizing: border-box;
 }
 input, textarea { 
