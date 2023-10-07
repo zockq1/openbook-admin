@@ -1,148 +1,120 @@
 import styled from "styled-components";
-import { Button, Form, Input } from "antd";
+import { UseFormRegister } from "react-hook-form";
+import { KeywordFormValues } from "../presenter/Keyword.presenter";
 import ImageUpload from "../../../commons/ImageUpload";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { FormInstance } from "antd/es/form/Form";
-import ContentBox from "../../../commons/ContentBox";
 
-const KeywordFormGridContainer = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: 100px 1fr 56.23px;
-  grid-template-rows: 32px 100px 32px;
+const StyledKeywordForm = styled.tr`
+  & > td {
+    text-align: center;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid ${({ theme }) => theme.colors.lightGrey};
+    border-radius: ${({ theme }) => theme.borderRadius.xxxs};
+    font-weight: ${({ theme }) => theme.fontWeight.regular};
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    :focus {
+      border: 1px solid ${({ theme }) => theme.colors.blue};
+    }
+  }
+
+  textarea {
+    resize: none;
+    display: block;
+    :focus {
+      outline: none;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .white,
+  .red {
+    border-radius: ${({ theme }) => theme.borderRadius.xxxs};
+    padding: 4px;
+    margin: 2px;
+  }
+
+  .white {
+    border: 1px solid ${({ theme }) => theme.colors.lightGrey};
+  }
+
+  .red {
+    background-color: #f44336;
+    color: white;
+  }
 `;
 
-interface KeywordFormProps {
-  handleNameChange: (e: any) => void;
-  handleCommentChange: (e: any) => void;
-  handleDateCommentChange: (e: any) => void;
-  handleSubmit: () => Promise<void>;
-  imgFile: string;
-  setImgFile: React.Dispatch<React.SetStateAction<string>>;
-  form: FormInstance<any>;
-  name: string;
-  comment: string;
-  dateComment: string;
+interface KeywordProps {
+  onSubmit: () => void;
+  onCancle?: () => void;
+  onDeleteImage: () => void;
+  register: UseFormRegister<KeywordFormValues>;
+  setImage: React.Dispatch<React.SetStateAction<string>>;
+  image: string;
 }
 
 function KeywordFormUI({
-  handleCommentChange,
-  handleDateCommentChange,
-  handleNameChange,
-  handleSubmit,
-  form,
-  setImgFile,
-  imgFile,
-  name,
-  comment,
-  dateComment,
-}: KeywordFormProps) {
+  onCancle,
+  onSubmit,
+  onDeleteImage,
+  register,
+  setImage,
+  image,
+}: KeywordProps) {
   return (
-    <ContentBox title="키워드 입력">
-      <KeywordFormGridContainer>
-        <Input
-          value={name}
-          onChange={handleNameChange}
-          style={{
-            gridColumn: "1/3",
-          }}
-          placeholder="키워드"
+    <StyledKeywordForm>
+      <td className="name">
+        <textarea rows={4} {...register("name")} />
+      </td>
+      <td className="comment">
+        <textarea rows={4} {...register("comment")} />
+      </td>
+      <td className="dateComment">
+        <textarea rows={4} {...register("dateComment")} />
+      </td>
+      <td className="extraDate">
+        <input
+          type="number"
+          {...register("extraDate1")}
+          style={{ marginBottom: "5px" }}
         />
-        <Button type="primary" onClick={handleSubmit}>
-          추가
-        </Button>
-
+        <input type="number" {...register("extraDate2")} />
+      </td>
+      <td className="extraDateComment">
+        <input
+          type="text"
+          {...register("extraDateComment1")}
+          style={{ marginBottom: "5px" }}
+        />
+        <input type="text" {...register("extraDateComment2")} />
+      </td>
+      <td className="image">
         <ImageUpload
-          setImgFile={setImgFile}
-          imgFile={imgFile}
+          setImgFile={setImage}
+          imgFile={image}
           htmlFor="keyword-form"
         />
-
-        <Input.TextArea
-          value={comment}
-          onChange={handleCommentChange}
-          placeholder="설명"
-        />
-
-        <Input
-          style={{
-            gridColumn: "1/3",
-          }}
-          placeholder="년도"
-          value={dateComment}
-          onChange={handleDateCommentChange}
-        />
-        <Form
-          style={{
-            gridColumn: "1/3",
-          }}
-          form={form}
-        >
-          <Form.Item>
-            <Form.List name="extraDateList">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <div key={key}>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "extraDate"]}
-                        rules={[
-                          {
-                            required: true,
-                            message: "추가 년도를 입력해 주세요!",
-                          },
-                        ]}
-                        style={{
-                          marginRight: "3px",
-                          marginBottom: "0",
-                          display: "inline-block",
-                        }}
-                      >
-                        <Input
-                          type="number"
-                          placeholder="년도"
-                          style={{ width: "100px" }}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "extraDateComment"]}
-                        style={{
-                          marginRight: "3px",
-                          marginBottom: "0",
-                          display: "inline-block",
-                        }}
-                      >
-                        <Input
-                          type="text"
-                          placeholder="설명"
-                          style={{ width: "330px" }}
-                        />
-                      </Form.Item>
-                      <MinusCircleOutlined
-                        onClick={() => remove(name)}
-                        style={{ position: "absolute" }}
-                      />
-                    </div>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      block
-                      icon={<PlusOutlined />}
-                    >
-                      연표용 년도 추가
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
-          </Form.Item>
-        </Form>
-      </KeywordFormGridContainer>
-    </ContentBox>
+        <button className="red" onClick={onDeleteImage}>
+          이미지 삭제
+        </button>
+      </td>
+      <td className="option">
+        <button className="white" onClick={onSubmit}>
+          {onCancle ? "저장" : "추가"}
+        </button>
+        {onCancle && (
+          <button className="red" onClick={onCancle}>
+            취소
+          </button>
+        )}
+      </td>
+    </StyledKeywordForm>
   );
 }
 

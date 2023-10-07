@@ -63,7 +63,7 @@ function ImageUpload({ setImgFile, imgFile }: ImageUploadProps) {
         type="file"
         accept="image/*"
         id={htmlFor}
-        style={{ visibility: "hidden" }}
+        style={{ display: "none" }}
         onChange={saveImgFile}
         ref={imgRef}
       />

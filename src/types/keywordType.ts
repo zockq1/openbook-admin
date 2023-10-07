@@ -1,4 +1,4 @@
-interface extraDateModel {
+export interface extraDateModel {
   extraDate: number;
   extraDateComment: string;
 }

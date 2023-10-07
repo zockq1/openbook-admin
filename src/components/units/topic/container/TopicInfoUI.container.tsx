@@ -2,54 +2,18 @@ import { Button, Descriptions } from "antd";
 import { TopicModel } from "../../../../types/topicTypes";
 import ContentBox from "../../../commons/ContentBox";
 import DeleteTopicButton from "../presenter/DeleteTopicButton.presenter";
-import { KeywordModel } from "../../../../types/keywordType";
-import styled from "styled-components";
-
-const Keyword = styled.table`
-  border-collapse: collapse;
-  font-weight: ${({ theme }) => theme.fontWeight.regular};
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-
-  & tr {
-    &:hover {
-      background-color: ${({ theme }) =>
-        theme.colors.bg}; // hover 시 배경색 변경
-    }
-    border-bottom: 1pt solid ${({ theme }) => theme.colors.border};
-  }
-
-  & th {
-    text-align: left;
-    border-bottom: 1pt solid ${({ theme }) => theme.colors.border};
-  }
-
-  & td {
-    padding: 4px;
-  }
-
-  .name {
-    width: 30%;
-  }
-
-  .comment {
-    width: 50%;
-  }
-
-  .dateComment {
-    width: 20%;
-  }
-`;
+import KeywordList from "../../keword/presenter/KeywordList.presenter";
 
 interface TopicInfoProps {
   topicInfo: TopicModel;
-  keywordList: KeywordModel[];
   toEditTopic: () => void;
 }
 
-function TopicInfoUI({ topicInfo, keywordList, toEditTopic }: TopicInfoProps) {
+function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
   const { title, category, chapter, era, dateComment } = topicInfo;
   return (
     <ContentBox
+      width="full"
       title={title}
       option={
         <>
@@ -74,23 +38,7 @@ function TopicInfoUI({ topicInfo, keywordList, toEditTopic }: TopicInfoProps) {
           })}
         </Descriptions.Item>
         <Descriptions.Item span={3} label="키워드">
-          <Keyword>
-            <thead>
-              <th className="name">키워드</th>
-              <th className="comment">해설</th>
-              <th className="dateComment">년도</th>
-            </thead>
-
-            <tbody>
-              {keywordList.map((keyword) => (
-                <tr key={keyword.name}>
-                  <td className="name">{keyword.name}</td>
-                  <td className="comment">{keyword.comment}</td>
-                  <td className="dateComment">{keyword.dateComment}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Keyword>
+          <KeywordList />
         </Descriptions.Item>
         <Descriptions.Item span={3} label="상세설명">
           {topicInfo.detail}

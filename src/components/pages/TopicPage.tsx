@@ -5,9 +5,7 @@ import { useLocation } from "react-router-dom";
 import CreateTopic from "../units/topic/presenter/CreateTopic.presenter";
 import EditTopic from "../units/topic/presenter/EditTopic.presenter";
 import TopicInfo from "../units/topic/presenter/TopicInfo.presenter";
-import { ColumnFlex, RowFlex } from "../commons/FlexLayout";
-import KeywordForm from "../units/keword/presenter/KeywordFrom.presenter";
-import KeywordList from "../units/keword/presenter/KeywordList.presenter";
+import { RowFlex } from "../commons/FlexLayout";
 import EditChapterInfo from "../units/chapter/presenter/EditChpaterInfo.presenter";
 import ChapterList from "../units/chapter/presenter/ChapterList.presenter";
 import TopicList from "../units/topic/presenter/TopicList.presenter";
@@ -27,12 +25,6 @@ function TopicPage() {
         {location.pathname.endsWith("/edit-topic") && <EditTopic />}
         {location.pathname.endsWith("/chapter-info") && <ChapterInfo />}
         {location.pathname.endsWith("/edit-chapter") && <EditChapterInfo />}
-        {location.pathname.endsWith("/topic-info") && (
-          <ColumnFlex>
-            <KeywordForm />
-            <KeywordList />
-          </ColumnFlex>
-        )}
       </RowFlex>
     </BaseLayout>
   );

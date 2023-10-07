@@ -1,7 +1,13 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 
-const StyledContentBox = styled.div`
+interface StyledContentBoxProps {
+  height: number | string;
+  width: "half" | "full";
+}
+
+const StyledContentBox = styled.div<StyledContentBoxProps>`
+  --width: 547.5px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: minmax(50px, max-content) minmax(50px, max-content);
@@ -10,8 +16,10 @@ const StyledContentBox = styled.div`
     "body body";
   padding: 10px;
   margin: 10px;
-  width: 547.5px;
-  height: fit-content;
+  width: ${({ width }) =>
+    width === "half" ? "var(--width)" : "calc(var(--width) * 2 + 20)"};
+  height: ${({ height }) =>
+    typeof height === "number" ? `${height}px` : height};
   border-radius: ${({ theme }) => theme.borderRadius.small};
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadow.defaultShadow};
@@ -26,15 +34,9 @@ const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.large};
 `;
 
-interface BodyProps {
-  height: number | string;
-}
-
-const Body = styled.div<BodyProps>`
+const Body = styled.div`
   grid-area: body;
   margin: 10px;
-  height: ${({ height }) =>
-    typeof height === "number" ? `${height}px` : height};
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -60,20 +62,22 @@ interface ContentBoxProps {
   title?: ReactNode;
   option?: ReactNode;
   height?: number | string;
+  width?: "half" | "full";
   children?: ReactNode;
 }
 
 function ContentBox({
   title,
   option,
-  height = "none",
+  height = "fit-content",
+  width = "half",
   children,
 }: ContentBoxProps) {
   return (
-    <StyledContentBox>
+    <StyledContentBox height={height} width={width}>
       <Title>{title}</Title>
       <Option>{option}</Option>
-      <Body height={height}>{children}</Body>
+      <Body>{children}</Body>
     </StyledContentBox>
   );
 }

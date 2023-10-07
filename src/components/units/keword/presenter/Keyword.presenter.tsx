@@ -1,76 +1,85 @@
-import { Modal } from "antd";
 import { useState } from "react";
-import { KeywordModel } from "../../../../types/keywordType";
+import { KeywordModel, extraDateModel } from "../../../../types/keywordType";
+import KeywordUI from "../container/KeywordUI.container";
+import KeywordFormUI from "../container/KeywordFormUI.container";
+import { useForm } from "react-hook-form";
+import { Modal } from "antd";
+import { mutationErrorNotification } from "../../../../services/errorNotification";
 import {
   useDeleteKeywordMutation,
   useUpdateKeywordMutation,
 } from "../../../../store/api/keywordApi";
-import { mutationErrorNotification } from "../../../../services/errorNotification";
-import { useForm } from "antd/es/form/Form";
-import EditKeywordFormUI from "../container/EditKeywordFormUI.container";
-import KeywordInfoUI from "../container/KeywordInfoUI.container";
+
+export type KeywordFormValues = {
+  name: string;
+  comment: string;
+  dateComment: string;
+  extraDate1: number | "";
+  extraDate2: number | "";
+  extraDateComment1: string;
+  extraDateComment2: string;
+};
 
 interface KeywordProps {
-  keywordInfo: KeywordModel;
+  keyword: KeywordModel;
 }
 
-function Keyword({ keywordInfo }: KeywordProps) {
-  const { name, comment, file, dateComment, extraDateList, id } = keywordInfo;
+function Keyword({ keyword }: KeywordProps) {
   const [deleteKeyword] = useDeleteKeywordMutation();
   const [updateKeyword] = useUpdateKeywordMutation();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editName, setEditName] = useState(name);
-  const [editComment, setEditComment] = useState(comment);
-  const [editFile, setEditFile] = useState(file);
-  const [editDateComment, setEditDateComment] = useState(dateComment);
-  const [form] = useForm();
+  const { name, comment, dateComment, extraDateList, file, id } = keyword;
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm<KeywordFormValues>({
+    defaultValues: {
+      name,
+      comment,
+      dateComment,
+      extraDate1: extraDateList[0]?.extraDate || "",
+      extraDate2: extraDateList[1]?.extraDate || "",
+      extraDateComment1: extraDateList[0]?.extraDateComment || "",
+      extraDateComment2: extraDateList[1]?.extraDateComment || "",
+    },
+  });
+  const [image, setImage] = useState(file);
 
-  const handleEdit = async () => {
+  const onSubmit = handleSubmit(async (data) => {
+    let newExtraDateList: extraDateModel[] = [];
+    if (data.extraDate1) {
+      newExtraDateList.push({
+        extraDate: data.extraDate1,
+        extraDateComment: data.extraDateComment1,
+      });
+    }
+    if (data.extraDate2) {
+      newExtraDateList.push({
+        extraDate: data.extraDate2,
+        extraDateComment: data.extraDateComment2,
+      });
+    }
+
     try {
       await updateKeyword({
-        name: editName,
-        comment: editComment,
-        file: editFile,
-        dateComment: editDateComment,
-        extraDateList: form.getFieldValue("extraDateList"),
+        name: data.name,
+        comment: data.comment,
+        file: image,
+        dateComment: data.dateComment,
+        extraDateList: newExtraDateList,
         id: id,
       }).unwrap();
+      setIsEditing(false);
     } catch (error) {
       mutationErrorNotification(error);
     }
-  };
+  });
 
-  const onEdit = () => {
-    setEditName(name);
-    setEditFile(file);
-    setEditComment(comment);
-    setEditDateComment(dateComment);
-    form.setFieldValue("extraDateList", extraDateList);
+  const handleEdit = () => {
     setIsEditing(true);
   };
-
-  const handleCancel = () => {
+  const handleCancle = () => {
     setIsEditing(false);
   };
 
-  const handleSave = () => {
-    handleEdit();
-    setIsEditing(false);
-  };
-
-  const handleNameChange = (e: any) => {
-    setEditName(e.target.value);
-  };
-
-  const handleCommentChange = (e: any) => {
-    setEditComment(e.target.value);
-  };
-
-  const handleDateCommentChange = (e: any) => {
-    setEditDateComment(e.target.value);
-  };
-
-  const handleDelete = async () => {
+  const handleDelete = () => {
     Modal.confirm({
       title: "주의",
       content: "정말 이 키워드를 삭제하시겠습니까?",
@@ -87,27 +96,29 @@ function Keyword({ keywordInfo }: KeywordProps) {
     });
   };
 
-  return isEditing ? (
-    <EditKeywordFormUI
-      handleCancel={handleCancel}
-      handleCommentChange={handleCommentChange}
-      handleDateCommentChange={handleDateCommentChange}
-      handleNameChange={handleNameChange}
-      handleSave={handleSave}
-      setEditFile={setEditFile}
-      form={form}
-      keywordInfo={keywordInfo}
-      editComment={editComment}
-      editDateComment={editDateComment}
-      editFile={editFile}
-      editName={editName}
-    />
-  ) : (
-    <KeywordInfoUI
-      keywordInfo={keywordInfo}
-      handleDelete={handleDelete}
-      onEdit={onEdit}
-    />
+  const handleDeleteImage = () => {
+    setImage("");
+  };
+
+  return (
+    <>
+      {isEditing ? (
+        <KeywordFormUI
+          onCancle={handleCancle}
+          onSubmit={onSubmit}
+          onDeleteImage={handleDeleteImage}
+          register={register}
+          image={image}
+          setImage={setImage}
+        />
+      ) : (
+        <KeywordUI
+          keyword={keyword}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+        />
+      )}
+    </>
   );
 }
 

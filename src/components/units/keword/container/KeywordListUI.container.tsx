@@ -1,6 +1,66 @@
-import { List } from "antd";
-import Keyword from "../presenter/Keyword.presenter";
 import { KeywordModel } from "../../../../types/keywordType";
+import styled from "styled-components";
+import Keyword from "../presenter/Keyword.presenter";
+import CreateKeyword from "../presenter/CreateKeyword.presenter";
+
+const StyledKeyword = styled.table`
+  border-collapse: collapse;
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  border-spacing: 0px;
+  & tr {
+    &:hover {
+      background-color: ${({ theme }) =>
+        theme.colors.bg}; // hover 시 배경색 변경
+    }
+    border-bottom: 1pt solid ${({ theme }) => theme.colors.border};
+  }
+
+  & th {
+    text-align: left;
+    border: 1pt solid ${({ theme }) => theme.colors.border};
+  }
+
+  & td {
+    padding: 4px;
+    vertical-align: middle;
+    border-left: 1pt solid ${({ theme }) => theme.colors.border};
+    border-right: 1pt solid ${({ theme }) => theme.colors.border};
+  }
+
+  .name {
+    width: 15%;
+  }
+
+  .comment {
+    width: 30%;
+  }
+
+  .dateComment {
+    width: 10%;
+  }
+
+  .extraDate {
+    width: 10%;
+  }
+
+  .extraDate {
+    width: 10%;
+  }
+
+  .image {
+    width: 10%;
+  }
+
+  .option {
+    width: 10%;
+    text-align: center;
+  }
+
+  img {
+    width: 100%;
+  }
+`;
 
 interface KeywordListProps {
   keywordList: KeywordModel[];
@@ -8,10 +68,26 @@ interface KeywordListProps {
 
 function KeywordListUI({ keywordList }: KeywordListProps) {
   return (
-    <List
-      dataSource={keywordList}
-      renderItem={(item) => <Keyword keywordInfo={item} />}
-    />
+    <StyledKeyword>
+      <thead>
+        <tr>
+          <th className="name">키워드</th>
+          <th className="comment">해설</th>
+          <th className="dateComment">년도</th>
+          <th className="extraDate">연표 년도</th>
+          <th className="extraDateComment">연표 설명</th>
+          <th className="image">이미지</th>
+          <th className="option">옵션</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {keywordList.map((keyword) => (
+          <Keyword keyword={keyword} key={keyword.name} />
+        ))}
+        <CreateKeyword />
+      </tbody>
+    </StyledKeyword>
   );
 }
 
