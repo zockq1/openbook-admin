@@ -58,7 +58,7 @@ function SmallItemListUI({
   option,
 }: SmallItemListProps) {
   return (
-    <ContentBox title={title} option={option}>
+    <ContentBox title={title} option={option} height={300}>
       <ItemList>
         {itemList.map((item) => {
           return (

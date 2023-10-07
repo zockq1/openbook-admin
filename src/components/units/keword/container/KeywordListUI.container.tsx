@@ -30,6 +30,7 @@ const StyledKeyword = styled.table`
 
   .name {
     width: 15%;
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 
   .comment {
