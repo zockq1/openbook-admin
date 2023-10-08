@@ -1,5 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useAddTopicMutation } from "../../../../store/api/topicApi";
+import {
+  useAddTopicMutation,
+  useGetChapterTopicListQuery,
+} from "../../../../store/api/topicApi";
 import { mutationErrorNotification } from "../../../../services/errorNotification";
 import { ExtraDateModel, TopicModel } from "../../../../types/topicTypes";
 import { Spin } from "antd";
@@ -9,6 +12,7 @@ import TopicFormUI from "../container/TopicFormUI.container";
 import { useGetChaptersQuery } from "../../../../store/api/chapterApi";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
+import { useEffect } from "react";
 
 function CreateTopic() {
   const navigate = useNavigate();
@@ -19,12 +23,19 @@ function CreateTopic() {
   const { data: categoryList, error: categoryListError } =
     useGetCategoryListQuery();
   const { data: eraList, error: eraListError } = useGetEraListQuery();
+  const { data: topicList, error: topicListError } =
+    useGetChapterTopicListQuery(chapterNumber);
 
   useNotificationErrorList([
     setError(categoryListError, "분류 목록"),
     setError(eraListError, "시대 목록"),
     setError(chapterError, "단원 목록"),
+    setError(topicListError, "주제 목록"),
   ]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 400, left: 0, behavior: "smooth" });
+  }, []);
 
   const onFinish = async (values: any) => {
     const {
@@ -37,6 +48,7 @@ function CreateTopic() {
       extraDateList,
     } = values;
     let newTopic: TopicModel = {
+      number: topicList?.length,
       chapter,
       title,
       category,
