@@ -17,6 +17,7 @@ const StyledKeyword = styled.table`
   }
 
   & th {
+    padding: 4px;
     text-align: left;
     border: 1pt solid ${({ theme }) => theme.colors.border};
   }
