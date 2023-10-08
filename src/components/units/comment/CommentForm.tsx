@@ -5,6 +5,7 @@ import { useLazyGetChapterTopicListQuery } from "../../../store/api/topicApi";
 import { useEffect, useState } from "react";
 import { KeywordModel } from "../../../types/keywordType";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 const StyledCommentForm = styled.div`
   & > h1 {
@@ -19,6 +20,7 @@ interface CommentFormProps {
 }
 
 function CommentForm({ addComment }: CommentFormProps) {
+  const { question } = useParams();
   const { data: chapterList } = useGetChaptersQuery();
   const [getTopicListTrigger, { data: topicList }] =
     useLazyGetChapterTopicListQuery();
@@ -34,6 +36,13 @@ function CommentForm({ addComment }: CommentFormProps) {
   useEffect(() => {
     setCurrentKeywordList(keywordList || []);
   }, [keywordList, topicTitle]);
+
+  useEffect(() => {
+    setTopicTitle("");
+    setCurrentKeywordList([]);
+    setCommentId(null);
+    setChapterNumber("");
+  }, [question]);
 
   const handleChapterChange = (value: string) => {
     if (value === chapterNumber) return;
