@@ -29,9 +29,9 @@ function EditChapterModal() {
 
   useEffect(() => {
     form.setFieldsValue({
-      chapterTitle: chapterTitle,
+      chapterTitle: chapterTitle?.title,
       chapterNumber: chapterNumber,
-      dateComment: dateComment,
+      dateComment: dateComment?.dateComment,
     });
   }, [form, chapterTitle, chapterNumber, dateComment]);
 

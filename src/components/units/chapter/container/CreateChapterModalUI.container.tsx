@@ -57,16 +57,7 @@ function CreateChapterModalUI({
           >
             <Input type="number" />
           </Form.Item>
-          <Form.Item
-            name="dateComment"
-            label="년도"
-            rules={[
-              {
-                required: true,
-                message: "년도를 입력해주세요.",
-              },
-            ]}
-          >
+          <Form.Item name="dateComment" label="년도">
             <Input />
           </Form.Item>
           <Form.Item>

@@ -74,12 +74,6 @@ function EditChapterModalUI({
           <Form.Item
             name="dateComment"
             label="시작 년도"
-            rules={[
-              {
-                required: true,
-                message: "년도를 입력해주세요.",
-              },
-            ]}
             initialValue={dateComment}
           >
             <Input />
