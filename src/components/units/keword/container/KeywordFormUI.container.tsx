@@ -75,6 +75,7 @@ function KeywordFormUI({
 }: KeywordProps) {
   return (
     <StyledKeywordForm>
+      <td className="number"></td>
       <td className="name">
         <textarea rows={4} {...register("name")} />
       </td>

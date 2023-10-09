@@ -9,6 +9,7 @@ import {
 } from "../../../../store/api/keywordApi";
 import { KeywordModel } from "../../../../types/keywordType";
 import EditOrderUI from "../../common/EditOrderUI.container";
+import { Button } from "antd";
 
 function EditkeywordOrder() {
   const { topic } = useParams();
@@ -58,7 +59,11 @@ function EditkeywordOrder() {
   return (
     <EditOrderUI
       orderList={editedkeywordList}
-      showModal={showModal}
+      button={
+        <Button onClick={showModal} size="small">
+          변경
+        </Button>
+      }
       handleCancel={handleCancel}
       onSubmit={onSubmit}
       handleChange={handleChange}

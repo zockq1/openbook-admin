@@ -30,13 +30,17 @@ const StyledKeyword = styled.table`
     border-right: 1pt solid ${({ theme }) => theme.colors.border};
   }
 
+  .number {
+    width: 5%;
+  }
+
   .name {
     width: 15%;
     font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 
   .comment {
-    width: 30%;
+    width: 25%;
   }
 
   .dateComment {
@@ -72,10 +76,12 @@ interface KeywordListProps {
 function KeywordListUI({ keywordList }: KeywordListProps) {
   return (
     <>
-      <EditkeywordOrder />
       <StyledKeyword>
         <thead>
           <tr>
+            <th className="number">
+              <EditkeywordOrder />
+            </th>
             <th className="name">키워드</th>
             <th className="comment">해설</th>
             <th className="dateComment">년도</th>

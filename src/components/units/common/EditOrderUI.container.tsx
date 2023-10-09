@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import {
   DragDropContext,
@@ -18,7 +18,7 @@ const Item = styled.div`
 
 interface EditOrderProps {
   orderList: TopicListModel[] | KeywordModel[];
-  showModal: () => void;
+  button: ReactNode;
   handleCancel: () => void;
   onSubmit: () => Promise<void>;
   handleChange: (result: DropResult) => Promise<void>;
@@ -28,7 +28,7 @@ interface EditOrderProps {
 
 function EditOrderUI({
   orderList,
-  showModal,
+  button,
   handleCancel,
   onSubmit,
   handleChange,
@@ -43,7 +43,7 @@ function EditOrderUI({
 
   return (
     <>
-      <Button onClick={showModal}>순서 변경</Button>
+      {button}
       <Modal
         title="순서 변경"
         open={isModalOpen}

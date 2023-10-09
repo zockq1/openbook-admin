@@ -30,6 +30,7 @@ function TopicList() {
     <TableUI
       currentItemKey={topicTitle}
       tableHead={[
+        { name: "number", title: "순서" },
         { name: "category", title: "분류" },
         { name: "title", title: "주제명" },
         { name: "era", title: "시대" },
@@ -40,6 +41,7 @@ function TopicList() {
         .map((item) => {
           return {
             data: {
+              number: item.number + 1,
               category: item.category,
               title: item.title,
               era: item.era,

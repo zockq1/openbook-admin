@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import EditOrderUI from "../../common/EditOrderUI.container";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
+import { Button } from "antd";
 
 function EditTopicOrder() {
   const { chapter } = useParams();
@@ -54,7 +55,7 @@ function EditTopicOrder() {
   return (
     <EditOrderUI
       orderList={editedTopicList}
-      showModal={showModal}
+      button={<Button onClick={showModal}>순서 변경</Button>}
       handleCancel={handleCancel}
       onSubmit={onSubmit}
       handleChange={handleChange}

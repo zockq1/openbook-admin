@@ -22,9 +22,10 @@ const Button = styled.button`
 `;
 
 function KeywordUI({ keyword, onDelete, onEdit }: KeywordProps) {
-  const { name, comment, dateComment, extraDateList, file } = keyword;
+  const { name, comment, dateComment, extraDateList, file, number } = keyword;
   return (
     <tr key={keyword.name}>
+      <td className="number">{number + 1}</td>
       <td className="name">{name}</td>
       <td className="comment">{comment}</td>
       <td className="dateComment">{dateComment}</td>
