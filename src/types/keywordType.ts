@@ -36,6 +36,7 @@ export interface UpdateKeywordModel {
   file: any;
   dateComment: string;
   extraDateList: extraDateModel[];
+  number: number;
 }
 
 export interface KeywordOrderModel {

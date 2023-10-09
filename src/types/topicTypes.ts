@@ -15,7 +15,7 @@ export interface TopicModel {
 }
 
 export interface UpdateTopicModel {
-  updatedTopic: Omit<TopicModel, "number">;
+  updatedTopic: TopicModel;
   title: string;
 }
 

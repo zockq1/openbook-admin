@@ -27,7 +27,8 @@ interface KeywordProps {
 function Keyword({ keyword }: KeywordProps) {
   const [deleteKeyword] = useDeleteKeywordMutation();
   const [updateKeyword] = useUpdateKeywordMutation();
-  const { name, comment, dateComment, extraDateList, file, id } = keyword;
+  const { name, comment, dateComment, extraDateList, file, id, number } =
+    keyword;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<KeywordFormValues>({
     defaultValues: {
@@ -65,6 +66,7 @@ function Keyword({ keyword }: KeywordProps) {
         dateComment: data.dateComment,
         extraDateList: newExtraDateList,
         id: id,
+        number: number,
       }).unwrap();
       setIsEditing(false);
     } catch (error) {

@@ -32,6 +32,7 @@ function EditTopic() {
   ]);
 
   const onFinish = async (values: any) => {
+    if (!topicInfo) return;
     const {
       chapter,
       title,
@@ -42,7 +43,7 @@ function EditTopic() {
       extraDateList,
     } = values;
 
-    let updatedTopic: Omit<TopicModel, "number"> = {
+    let updatedTopic: TopicModel = {
       chapter,
       title,
       category,
@@ -50,6 +51,7 @@ function EditTopic() {
       detail: detail ? detail : "",
       dateComment,
       extraDateList: [],
+      number: topicInfo.number,
     };
 
     if (extraDateList) {
