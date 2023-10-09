@@ -4,7 +4,7 @@ export interface ExtraDateModel {
 }
 
 export interface TopicModel {
-  number?: number;
+  number: number;
   chapter: number;
   title: string;
   category: string;
@@ -15,7 +15,7 @@ export interface TopicModel {
 }
 
 export interface UpdateTopicModel {
-  updatedTopic: TopicModel;
+  updatedTopic: Omit<TopicModel, "number">;
   title: string;
 }
 

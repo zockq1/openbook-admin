@@ -13,7 +13,7 @@ interface TopicFormUIProps {
   categoryList: CategoryModel[];
   eraList: EraModel[];
   chapterList: ChapterModel[];
-  initialValue: TopicModel;
+  initialValue: Omit<TopicModel, "number">;
   isLoading: boolean;
 }
 

@@ -41,7 +41,8 @@ function EditTopic() {
       dateComment,
       extraDateList,
     } = values;
-    let updatedTopic: TopicModel = {
+
+    let updatedTopic: Omit<TopicModel, "number"> = {
       chapter,
       title,
       category,

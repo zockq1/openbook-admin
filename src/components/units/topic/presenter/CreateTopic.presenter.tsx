@@ -38,6 +38,9 @@ function CreateTopic() {
   }, []);
 
   const onFinish = async (values: any) => {
+    if (!topicList) {
+      return;
+    }
     const {
       chapter,
       title,
@@ -48,7 +51,7 @@ function CreateTopic() {
       extraDateList,
     } = values;
     let newTopic: TopicModel = {
-      number: topicList?.length,
+      number: topicList.length,
       chapter,
       title,
       category,
@@ -75,7 +78,7 @@ function CreateTopic() {
     }
   };
 
-  if (!categoryList || !eraList || !chapterList) {
+  if (!categoryList || !eraList || !chapterList || !topicList) {
     return <Spin />;
   }
 
