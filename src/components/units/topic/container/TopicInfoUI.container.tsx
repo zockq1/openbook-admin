@@ -23,6 +23,9 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
       }
     >
       <Descriptions layout="vertical" bordered>
+        <Descriptions.Item span={3} label="키워드">
+          <KeywordList />
+        </Descriptions.Item>
         <Descriptions.Item label="주제">{title}</Descriptions.Item>
         <Descriptions.Item label="분류">{category}</Descriptions.Item>
         <Descriptions.Item label="단원">{chapter}</Descriptions.Item>
@@ -36,9 +39,6 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
               </div>
             );
           })}
-        </Descriptions.Item>
-        <Descriptions.Item span={3} label="키워드">
-          <KeywordList />
         </Descriptions.Item>
         <Descriptions.Item span={3} label="상세설명">
           {topicInfo.detail}

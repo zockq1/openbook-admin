@@ -34,7 +34,7 @@ const TableRow = styled.tr<TableRowProps>`
 
   &:hover {
     background-color: ${({ theme, $isCurrent }) =>
-      !$isCurrent && theme.colors.bg}; // hover 시 배경색 변경
+      !$isCurrent && theme.colors.bg};
   }
 
   & > td {
@@ -83,9 +83,7 @@ function TableUI({
                 $isCurrent={currentItemKey === item.key}
               >
                 {tableHead.map((columnName) => (
-                  <td key={columnName.name}>
-                    {item.data[columnName.name] || "NULL"}
-                  </td>
+                  <td key={columnName.name}>{item.data[columnName.name]}</td>
                 ))}
               </TableRow>
             );
