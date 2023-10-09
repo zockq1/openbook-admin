@@ -2,6 +2,7 @@ import { KeywordModel } from "../../../../types/keywordType";
 import styled from "styled-components";
 import Keyword from "../presenter/Keyword.presenter";
 import CreateKeyword from "../presenter/CreateKeyword.presenter";
+import EditkeywordOrder from "../presenter/EditKeywordOrder.presenter";
 
 const StyledKeyword = styled.table`
   border-collapse: collapse;
@@ -70,26 +71,29 @@ interface KeywordListProps {
 
 function KeywordListUI({ keywordList }: KeywordListProps) {
   return (
-    <StyledKeyword>
-      <thead>
-        <tr>
-          <th className="name">키워드</th>
-          <th className="comment">해설</th>
-          <th className="dateComment">년도</th>
-          <th className="extraDate">연표 년도</th>
-          <th className="extraDateComment">연표 설명</th>
-          <th className="image">이미지</th>
-          <th className="option">옵션</th>
-        </tr>
-      </thead>
+    <>
+      <EditkeywordOrder />
+      <StyledKeyword>
+        <thead>
+          <tr>
+            <th className="name">키워드</th>
+            <th className="comment">해설</th>
+            <th className="dateComment">년도</th>
+            <th className="extraDate">연표 년도</th>
+            <th className="extraDateComment">연표 설명</th>
+            <th className="image">이미지</th>
+            <th className="option">옵션</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {keywordList.map((keyword) => (
-          <Keyword keyword={keyword} key={keyword.name} />
-        ))}
-        <CreateKeyword />
-      </tbody>
-    </StyledKeyword>
+        <tbody>
+          {keywordList.map((keyword) => (
+            <Keyword keyword={keyword} key={keyword.name} />
+          ))}
+          <CreateKeyword length={keywordList.length} />
+        </tbody>
+      </StyledKeyword>
+    </>
   );
 }
 

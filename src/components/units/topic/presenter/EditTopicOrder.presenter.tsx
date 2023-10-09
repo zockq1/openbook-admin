@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { TopicListModel } from "../../../../types/topicTypes";
 import { useParams } from "react-router-dom";
-import EditTopicOrderUI from "../container/EditTopicOrderUI.container";
+import EditOrderUI from "../../common/EditOrderUI.container";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
 
@@ -52,8 +52,8 @@ function EditTopicOrder() {
   };
 
   return (
-    <EditTopicOrderUI
-      editedTopicList={editedTopicList}
+    <EditOrderUI
+      orderList={editedTopicList}
       showModal={showModal}
       handleCancel={handleCancel}
       onSubmit={onSubmit}

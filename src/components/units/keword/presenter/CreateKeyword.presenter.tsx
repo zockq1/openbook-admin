@@ -16,7 +16,11 @@ export type KeywordFormValues = {
   extraDateComment2: string;
 };
 
-function CreateKeyword() {
+interface CreateKeywordProps {
+  length: number;
+}
+
+function CreateKeyword({ length }: CreateKeywordProps) {
   const { topic } = useParams();
   const topicTitle = String(topic);
   const [addKeyword] = useAddKeywordMutation();
@@ -46,6 +50,7 @@ function CreateKeyword() {
         file: image,
         dateComment: data.dateComment,
         extraDateList: newExtraDateList,
+        number: length,
       });
       setImage("");
       reset({

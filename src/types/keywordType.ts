@@ -10,6 +10,7 @@ export interface AddKeywordModel {
   file: any;
   dateComment: string;
   extraDateList: extraDateModel[];
+  number: number;
 }
 
 interface QuestionModel {
@@ -25,6 +26,7 @@ export interface KeywordModel {
   dateComment: string;
   extraDateList: extraDateModel[];
   questionList: QuestionModel[];
+  number: number;
 }
 
 export interface UpdateKeywordModel {
@@ -34,4 +36,9 @@ export interface UpdateKeywordModel {
   file: any;
   dateComment: string;
   extraDateList: extraDateModel[];
+}
+
+export interface KeywordOrderModel {
+  id: number;
+  number: number;
 }

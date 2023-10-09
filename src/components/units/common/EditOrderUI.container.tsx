@@ -6,8 +6,9 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
-import { TopicListModel } from "../../../../types/topicTypes";
+import { TopicListModel } from "../../../types/topicTypes";
 import styled from "styled-components";
+import { KeywordModel } from "../../../types/keywordType";
 
 const Item = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
@@ -15,8 +16,8 @@ const Item = styled.div`
   text-align: center;
 `;
 
-interface EditTopicOrderProps {
-  editedTopicList: TopicListModel[];
+interface EditOrderProps {
+  orderList: TopicListModel[] | KeywordModel[];
   showModal: () => void;
   handleCancel: () => void;
   onSubmit: () => Promise<void>;
@@ -25,15 +26,15 @@ interface EditTopicOrderProps {
   isLoading: boolean;
 }
 
-function EditTopicOrderUI({
-  editedTopicList,
+function EditOrderUI({
+  orderList,
   showModal,
   handleCancel,
   onSubmit,
   handleChange,
   isModalOpen,
   isLoading,
-}: EditTopicOrderProps) {
+}: EditOrderProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ function EditTopicOrderUI({
     <>
       <Button onClick={showModal}>순서 변경</Button>
       <Modal
-        title="주제 순서 변경"
+        title="순서 변경"
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[
@@ -64,25 +65,31 @@ function EditTopicOrderUI({
             <Droppable droppableId="played">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {editedTopicList.map((item, i: number) => (
-                    <Draggable
-                      draggableId={`${item.title}`}
-                      index={i}
-                      key={`${item.title}`}
-                    >
-                      {(provided, snapshot) => {
-                        return (
-                          <div
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                          >
-                            <Item>{item.title}</Item>
-                          </div>
-                        );
-                      }}
-                    </Draggable>
-                  ))}
+                  {orderList.map((item, i: number) => {
+                    let name = "";
+                    if ("name" in item) name = item.name;
+                    if ("title" in item) name = item.title;
+                    if (item.dateComment) name += `(${item.dateComment})`;
+                    return (
+                      <Draggable
+                        draggableId={`${name}`}
+                        index={i}
+                        key={`${name}`}
+                      >
+                        {(provided, snapshot) => {
+                          return (
+                            <div
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                            >
+                              <Item>{name}</Item>
+                            </div>
+                          );
+                        }}
+                      </Draggable>
+                    );
+                  })}
                   {provided.placeholder}
                 </div>
               )}
@@ -94,4 +101,4 @@ function EditTopicOrderUI({
   );
 }
 
-export default EditTopicOrderUI;
+export default EditOrderUI;
