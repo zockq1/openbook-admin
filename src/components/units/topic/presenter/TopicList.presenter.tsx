@@ -56,13 +56,7 @@ function TopicList() {
       option={
         <>
           <Link to={`/topic/${chapter}/create-topic`}>
-            <Button
-              onClick={() =>
-                window.scrollTo({ top: 400, left: 0, behavior: "smooth" })
-              }
-            >
-              주제 추가
-            </Button>
+            <Button>주제 추가</Button>
           </Link>
           <EditTopicOrder />
           <EditChapterModal />

@@ -12,7 +12,6 @@ import TopicFormUI from "../container/TopicFormUI.container";
 import { useGetChaptersQuery } from "../../../../store/api/chapterApi";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
-import { useEffect } from "react";
 
 function CreateTopic() {
   const navigate = useNavigate();
@@ -32,10 +31,6 @@ function CreateTopic() {
     setError(chapterError, "단원 목록"),
     setError(topicListError, "주제 목록"),
   ]);
-
-  useEffect(() => {
-    window.scrollTo({ top: 400, left: 0, behavior: "smooth" });
-  }, []);
 
   const onFinish = async (values: any) => {
     if (!topicList) {

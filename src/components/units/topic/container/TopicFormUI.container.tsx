@@ -7,6 +7,7 @@ import { EraModel } from "../../../../types/eraType";
 import { TopicModel } from "../../../../types/topicTypes";
 import { ChapterModel } from "../../../../types/chapterTypes";
 import ContentBox from "../../../commons/ContentBox";
+import { useEffect } from "react";
 
 interface TopicFormUIProps {
   onFinish: (values: any) => Promise<void>;
@@ -34,6 +35,10 @@ function TopicFormUI({
     title,
     chapter: chapterNumber,
   } = initialValue;
+
+  useEffect(() => {
+    window.scrollTo({ top: 400, left: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <ContentBox title={title || "주제 생성"}>
