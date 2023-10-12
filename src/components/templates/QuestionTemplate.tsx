@@ -100,7 +100,7 @@ function QuestionTemplate({
       ) : (
         <Empty />
       )}
-      {questionList && round && questionList.length !== 0 ? (
+      {round ? (
         <SmallItemList
           title="문제 선택"
           option={
@@ -125,14 +125,18 @@ function QuestionTemplate({
             )
           }
           currentItemKey={String(question)}
-          itemList={questionList.map((item) => {
-            return {
-              name: item.toString(),
-              key: item.toString(),
-              onClick: () =>
-                navigate(`/question/${round}/${item}/question-info`),
-            };
-          })}
+          itemList={
+            questionList
+              ? questionList.map((item) => {
+                  return {
+                    name: item.toString(),
+                    key: item.toString(),
+                    onClick: () =>
+                      navigate(`/question/${round}/${item}/question-info`),
+                  };
+                })
+              : []
+          }
         />
       ) : (
         <ContentBox title="문제 선택">
