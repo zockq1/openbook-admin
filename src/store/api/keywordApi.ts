@@ -37,6 +37,7 @@ export const keywordApi = createApi({
             file: updateKeywordModel.file,
             dateComment: updateKeywordModel.dateComment,
             extraDateList: updateKeywordModel.extraDateList,
+            number: updateKeywordModel.number,
           },
         };
       },
