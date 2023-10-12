@@ -8,6 +8,7 @@ import { TopicModel } from "../../../../types/topicTypes";
 import { ChapterModel } from "../../../../types/chapterTypes";
 import ContentBox from "../../../commons/ContentBox";
 import { useEffect } from "react";
+import filterOption from "../../../../services/filterOption";
 
 interface TopicFormUIProps {
   onFinish: (values: any) => Promise<void>;
@@ -56,6 +57,7 @@ function TopicFormUI({
             <Select
               style={{ width: "300px" }}
               showSearch
+              filterOption={filterOption}
               placeholder="단원 선택"
             >
               {chapterList.map((chapter: ChapterModel) => (
@@ -89,6 +91,7 @@ function TopicFormUI({
             <Select
               style={{ width: "250px" }}
               showSearch
+              filterOption={filterOption}
               placeholder="분류 선택"
             >
               {categoryList.map((category: CategoryModel) => (
@@ -114,6 +117,7 @@ function TopicFormUI({
             <Select
               style={{ width: "250px" }}
               showSearch
+              filterOption={filterOption}
               placeholder="시대 선택"
             >
               {eraList.map((era: EraModel) => (

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { KeywordModel } from "../../../types/keywordType";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import filterOption from "../../../services/filterOption";
 
 const StyledCommentForm = styled.div`
   & > h1 {
@@ -79,6 +80,7 @@ function CommentForm({ addComment }: CommentFormProps) {
           value={chapterNumber}
           style={{ width: "40%" }}
           showSearch
+          filterOption={filterOption}
           placeholder="단원 선택"
         >
           {chapterList &&
@@ -95,6 +97,7 @@ function CommentForm({ addComment }: CommentFormProps) {
           value={topicTitle}
           style={{ width: "40%" }}
           showSearch
+          filterOption={filterOption}
           placeholder="주제 선택"
         >
           {topicList &&
@@ -112,6 +115,7 @@ function CommentForm({ addComment }: CommentFormProps) {
           value={commentId}
           style={{ width: "80%" }}
           showSearch
+          filterOption={filterOption}
           placeholder="키워드 선택"
         >
           {currentKeywordList.map((keyword) => (
