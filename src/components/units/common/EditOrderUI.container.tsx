@@ -55,7 +55,7 @@ function EditOrderUI({
             loading={isLoading}
             onClick={onSubmit}
           >
-            Submit
+            변경
           </Button>,
         ]}
         forceRender

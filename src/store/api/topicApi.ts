@@ -48,7 +48,7 @@ export const topicApi = createApi({
           body: topicList,
         };
       },
-      invalidatesTags: ["TopicList"],
+      invalidatesTags: ["TopicList", "TopicInfo"],
     }),
     deleteTopic: builder.mutation({
       query: ({ title }) => {
