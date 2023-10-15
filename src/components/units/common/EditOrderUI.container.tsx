@@ -9,6 +9,7 @@ import {
 import { TopicListModel } from "../../../types/topicTypes";
 import styled from "styled-components";
 import { KeywordModel } from "../../../types/keywordType";
+import { ChapterModel } from "../../../types/chapterTypes";
 
 const Item = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
@@ -17,7 +18,7 @@ const Item = styled.div`
 `;
 
 interface EditOrderProps {
-  orderList: TopicListModel[] | KeywordModel[];
+  orderList: TopicListModel[] | KeywordModel[] | ChapterModel[];
   button: ReactNode;
   handleCancel: () => void;
   onSubmit: () => Promise<void>;

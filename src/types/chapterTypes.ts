@@ -9,6 +9,13 @@ export interface ChapterModel {
   dateComment: string;
 }
 
+export interface GetChapterModel {
+  id: number;
+  title: string;
+  number: number;
+  dateComment: string;
+}
+
 export interface UpdateChapterModel {
   editedChapter: ChapterModel;
   currentChapterNumber: number;
@@ -24,4 +31,9 @@ export interface ChapterDateModel {
 
 export interface ChapterInfoModel {
   content: string;
+}
+
+export interface ChapterOrderModel {
+  number: number;
+  id: number;
 }

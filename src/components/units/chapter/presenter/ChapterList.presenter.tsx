@@ -6,6 +6,7 @@ import setError from "../../../../services/setError";
 import { Empty } from "antd";
 import ContentBox from "../../../commons/ContentBox";
 import ChapterListUI from "../../common/TableUI.container";
+import EditChapterOrder from "./EditChapterOrder.presenter";
 
 function ChapterList() {
   const navigate = useNavigate();
@@ -43,7 +44,12 @@ function ChapterList() {
           };
         })}
       title="단원 선택"
-      option={<CreateChapterModal />}
+      option={
+        <>
+          <CreateChapterModal />
+          <EditChapterOrder />
+        </>
+      }
     />
   );
 }

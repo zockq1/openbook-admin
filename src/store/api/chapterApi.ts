@@ -3,7 +3,9 @@ import {
   ChapterDateModel,
   ChapterInfoModel,
   ChapterModel,
+  ChapterOrderModel,
   ChapterTitleModel,
+  GetChapterModel,
   UpdateChapterModel,
 } from "../../types/chapterTypes";
 import baseQueryWithReauth from "./baseApi";
@@ -13,7 +15,7 @@ export const chapterApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["ChapterList", "ChapterTitle", "ChapterInfo"],
   endpoints: (builder) => ({
-    getChapters: builder.query<ChapterModel[], void>({
+    getChapters: builder.query<GetChapterModel[], void>({
       query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
     }),
@@ -59,6 +61,16 @@ export const chapterApi = createApi({
       },
       invalidatesTags: ["ChapterTitle", "ChapterList"],
     }),
+    updateChapterOrder: builder.mutation<any, ChapterOrderModel[]>({
+      query: (chapterList) => {
+        return {
+          url: `/admin/chapter-numbers`,
+          method: "PATCH",
+          body: chapterList,
+        };
+      },
+      invalidatesTags: ["ChapterList", "ChapterInfo"],
+    }),
     deleteChapter: builder.mutation({
       query: ({ number }) => {
         return {
@@ -83,4 +95,5 @@ export const {
   useGetChapterInfoQuery,
   useLazyGetChapterInfoQuery,
   useUpdateChapterInfoMutation,
+  useUpdateChapterOrderMutation,
 } = chapterApi;
