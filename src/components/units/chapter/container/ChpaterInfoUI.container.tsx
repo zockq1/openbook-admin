@@ -1,22 +1,6 @@
-import parse from "html-react-parser";
-import styled from "styled-components";
 import { GetChapterInfoModel } from "../../../../types/chapterTypes";
 import ContentBox from "../../../commons/ContentBox";
-import { Button } from "antd";
-
-const Info = styled.div`
-  padding: 20px;
-  table {
-    border: solid 1px black;
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    border: solid 1px black;
-    padding: 4px;
-  }
-`;
+import { Button, Image } from "antd";
 
 interface ChapterInfoProps {
   chapterInfo: GetChapterInfoModel;
@@ -29,7 +13,9 @@ function ChapterInfoUI({ chapterInfo, toChapterInfoEdit }: ChapterInfoProps) {
       title="단원 정보"
       option={<Button onClick={toChapterInfoEdit}>수정</Button>}
     >
-      <Info>{parse(String(chapterInfo?.content))}</Info>
+      {chapterInfo.content && (
+        <Image src={chapterInfo.content} alt="단원 이미지" />
+      )}
     </ContentBox>
   );
 }

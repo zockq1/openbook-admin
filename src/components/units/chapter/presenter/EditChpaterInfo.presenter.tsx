@@ -37,9 +37,14 @@ function EditChapterInfo() {
     }
   };
 
+  const handleDelete = () => {
+    setContent("");
+  };
+
   return (
     <EditChapterInfoUI
-      handleSubmit={handleSubmit}
+      onSubmit={handleSubmit}
+      onDelete={handleDelete}
       content={content}
       setContent={setContent}
     />
