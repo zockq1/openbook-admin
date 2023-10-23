@@ -4,6 +4,7 @@ import TopicPage from "./components/pages/TopicPage";
 import QuestionPage from "./components/pages/QuestionPage";
 import LoginPage from "./components/pages/LoginPage";
 import UserPage from "./components/pages/UserPage";
+import TimelinePage from "./components/pages/TimelinePage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/user",
         element: <UserPage />,
+      },
+      {
+        path: "/timeline",
+        element: <TimelinePage />,
       },
     ],
   },

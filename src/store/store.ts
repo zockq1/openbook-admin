@@ -12,6 +12,8 @@ import { keywordApi } from "./api/keywordApi";
 import { roundApi } from "./api/roundApi";
 import { questionApi } from "./api/questionApi";
 import { eraApi } from "./api/eraApi";
+import { timelineApi } from "./api/timelineApi";
+import { JJHApi } from "./api/JJHApi";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +33,8 @@ const rootReducer = combineReducers({
   [roundApi.reducerPath]: roundApi.reducer,
   [questionApi.reducerPath]: questionApi.reducer,
   [eraApi.reducerPath]: eraApi.reducer,
+  [timelineApi.reducerPath]: timelineApi.reducer,
+  [JJHApi.reducerPath]: JJHApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -52,7 +56,9 @@ export const store = configureStore({
       keywordApi.middleware,
       roundApi.middleware,
       questionApi.middleware,
-      eraApi.middleware
+      eraApi.middleware,
+      timelineApi.middleware,
+      JJHApi.middleware
     ),
 });
 
