@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Keyword from "../presenter/Keyword.presenter";
 import CreateKeyword from "../presenter/CreateKeyword.presenter";
 import EditkeywordOrder from "../presenter/EditKeywordOrder.presenter";
+import { Switch } from "antd";
 
 const StyledKeyword = styled.table`
   border-collapse: collapse;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   border-spacing: 0px;
+  margin-top: 10px;
   & tr {
     &:hover {
       background-color: ${({ theme }) =>
@@ -71,11 +73,23 @@ const StyledKeyword = styled.table`
 
 interface KeywordListProps {
   keywordList: KeywordModel[];
+  isKeywordQuestion: boolean;
+  onChange: () => void;
 }
 
-function KeywordListUI({ keywordList }: KeywordListProps) {
+function KeywordListUI({
+  keywordList,
+  isKeywordQuestion,
+  onChange,
+}: KeywordListProps) {
   return (
     <>
+      <Switch
+        checkedChildren="연관 문제 ON"
+        unCheckedChildren="연관 문제 OFF"
+        onChange={onChange}
+        defaultChecked={isKeywordQuestion}
+      />
       <StyledKeyword>
         <thead>
           <tr>

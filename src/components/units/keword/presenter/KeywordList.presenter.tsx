@@ -5,13 +5,29 @@ import useNotificationErrorList from "../../../../hooks/useNotificationErrorList
 import setError from "../../../../services/setError";
 import KeywordListUI from "../container/KeywordListUI.container";
 import ContentBox from "../../../commons/ContentBox";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
+import { useDispatch } from "react-redux";
+import {
+  keywordQuestionOff,
+  keywordQuestionOn,
+} from "../../../../store/slices/keywordSlice";
 
 function KeywordList() {
+  const dispatch = useDispatch();
+  const isKeywordQuestion = useSelector(
+    (state: RootState) => state.keyword.isKeywordQuestion
+  );
   const { topic } = useParams();
   const topicTitle = String(topic);
   const { data: keywordList, error: keywordListError } =
     useGetKeywordListQuery(topicTitle);
   useNotificationErrorList([setError(keywordListError, "키워드 목록")]);
+
+  const handleChange = () => {
+    if (!isKeywordQuestion) dispatch(keywordQuestionOn());
+    else dispatch(keywordQuestionOff());
+  };
 
   if (!keywordList) {
     return (
@@ -21,7 +37,13 @@ function KeywordList() {
     );
   }
 
-  return <KeywordListUI keywordList={keywordList} />;
+  return (
+    <KeywordListUI
+      keywordList={keywordList}
+      onChange={handleChange}
+      isKeywordQuestion={isKeywordQuestion}
+    />
+  );
 }
 
 export default KeywordList;

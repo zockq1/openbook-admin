@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./slices/authSlice";
+import keywordReducer from "./slices/keywordSlice";
 import { chapterApi } from "./api/chapterApi";
 import { topicApi } from "./api/topicApi";
 import { authApi } from "./api/authApi";
@@ -18,11 +19,12 @@ import { JJHApi } from "./api/JJHApi";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["chapter", "auth"],
+  whitelist: ["auth", "keyword"],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  keyword: keywordReducer,
   [chapterApi.reducerPath]: chapterApi.reducer,
   [topicApi.reducerPath]: topicApi.reducer,
   [authApi.reducerPath]: authApi.reducer,

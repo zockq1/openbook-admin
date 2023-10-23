@@ -16,6 +16,7 @@ export interface AddKeywordModel {
 interface QuestionModel {
   roundNumber: number;
   questionNumber: number;
+  choice: string;
 }
 
 export interface KeywordModel {

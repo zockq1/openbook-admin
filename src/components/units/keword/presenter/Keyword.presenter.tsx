@@ -9,6 +9,8 @@ import {
   useDeleteKeywordMutation,
   useUpdateKeywordMutation,
 } from "../../../../store/api/keywordApi";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store";
 
 export type KeywordFormValues = {
   name: string;
@@ -27,6 +29,9 @@ interface KeywordProps {
 function Keyword({ keyword }: KeywordProps) {
   const [deleteKeyword] = useDeleteKeywordMutation();
   const [updateKeyword] = useUpdateKeywordMutation();
+  const isKeywordQuestion = useSelector(
+    (state: RootState) => state.keyword.isKeywordQuestion
+  );
   const { name, comment, dateComment, extraDateList, file, id, number } =
     keyword;
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -118,6 +123,7 @@ function Keyword({ keyword }: KeywordProps) {
           keyword={keyword}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          isKeywordQuestion={isKeywordQuestion}
         />
       )}
     </>
