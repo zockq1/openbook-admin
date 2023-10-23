@@ -1,10 +1,7 @@
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { QuestionModel } from "../../types/questionTypes";
 import { RoundDateModel, RoundModel } from "../../types/roundTypes";
-import BaseLayout from "../commons/BaseLayout";
 import ContentBox from "../commons/ContentBox";
-import Header from "../units/ui/Header";
-import SideMenu from "../units/ui/SideMenu";
 import SmallItemList from "../units/common/SmallItemListUI.container";
 import { Button, Empty } from "antd";
 import CreateRoundModal from "../units/round/CreateRoundModal";
@@ -19,7 +16,7 @@ import ChoiceForm from "../units/choice/ChoiceForm";
 import ChoiceList from "../units/choice/ChoiceList";
 import Description from "../units/description/Description";
 import { GetDescriptionModel } from "../../types/descriptionType";
-import { ColumnFlex } from "../commons/FlexLayout";
+import { ColumnFlex, RowFlex } from "../commons/FlexLayout";
 import { GetChoiceModel } from "../../types/choiceType";
 
 interface QuestionTemplateProps {
@@ -81,9 +78,7 @@ function QuestionTemplate({
   };
 
   return (
-    <BaseLayout>
-      <SideMenu />
-      <Header />
+    <RowFlex>
       {roundList && roundList.length !== 0 ? (
         <SmallItemList
           title="회차 선택"
@@ -194,7 +189,7 @@ function QuestionTemplate({
           </>
         )}
       </ColumnFlex>
-    </BaseLayout>
+    </RowFlex>
   );
 }
 

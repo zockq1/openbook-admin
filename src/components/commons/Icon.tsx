@@ -48,7 +48,7 @@ function Icon({ category, color = "inherit", size }: Iconprops) {
     myInfo: <LiaReadme color={color} size={size} />,
     option: <BsGear color={color} size={size} />,
     인물: <GrUser color={color} size={size} />,
-    시간제한: <FaClock color={color} size={size} />,
+    clock: <FaClock color={color} size={size} />,
     갯수: <PiListNumbersBold color={color} size={size} />,
     설명: <IoMdListBox color={color} size={size} />,
     모의고사: <FaPen color={color} size={size} />,

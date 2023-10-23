@@ -1,6 +1,3 @@
-import BaseLayout from "../commons/BaseLayout";
-import SideMenu from "../units/ui/SideMenu";
-import Header from "../units/ui/Header";
 import { useLocation } from "react-router-dom";
 import CreateTopic from "../units/topic/presenter/CreateTopic.presenter";
 import EditTopic from "../units/topic/presenter/EditTopic.presenter";
@@ -14,19 +11,15 @@ import ChapterInfo from "../units/chapter/presenter/ChpaterInfo.presenter";
 function TopicPage() {
   const location = useLocation();
   return (
-    <BaseLayout>
-      <SideMenu />
-      <Header />
-      <RowFlex>
-        <ChapterList />
-        {!location.pathname.endsWith("/topic") && <TopicList />}
-        {location.pathname.endsWith("/topic-info") && <TopicInfo />}
-        {location.pathname.endsWith("/create-topic") && <CreateTopic />}
-        {location.pathname.endsWith("/edit-topic") && <EditTopic />}
-        {location.pathname.endsWith("/chapter-info") && <ChapterInfo />}
-        {location.pathname.endsWith("/edit-chapter") && <EditChapterInfo />}
-      </RowFlex>
-    </BaseLayout>
+    <RowFlex>
+      <ChapterList />
+      {!location.pathname.endsWith("/topic") && <TopicList />}
+      {location.pathname.endsWith("/topic-info") && <TopicInfo />}
+      {location.pathname.endsWith("/create-topic") && <CreateTopic />}
+      {location.pathname.endsWith("/edit-topic") && <EditTopic />}
+      {location.pathname.endsWith("/chapter-info") && <ChapterInfo />}
+      {location.pathname.endsWith("/edit-chapter") && <EditChapterInfo />}
+    </RowFlex>
   );
 }
 
