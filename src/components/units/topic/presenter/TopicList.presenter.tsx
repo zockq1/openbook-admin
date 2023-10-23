@@ -28,6 +28,7 @@ function TopicList() {
 
   return (
     <TableUI
+      height={300}
       currentItemKey={topicTitle}
       tableHead={[
         { name: "number", title: "순서" },

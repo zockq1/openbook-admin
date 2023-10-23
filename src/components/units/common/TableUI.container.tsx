@@ -13,6 +13,10 @@ const Table = styled.table`
     text-align: left;
     background-color: ${({ theme }) => theme.colors.bg};
   }
+
+  .colored {
+    color: ${({ theme }) => theme.colors.blue};
+  }
 `;
 
 interface TableRowProps {
@@ -46,6 +50,7 @@ interface TableItemListModel {
   data: Record<string, any>;
   key: string;
   onClick: () => void;
+  colored?: boolean;
 }
 
 interface TableUIProps {
@@ -54,6 +59,7 @@ interface TableUIProps {
   currentItemKey: string;
   title: React.ReactNode;
   option: React.ReactNode;
+  height?: number;
 }
 
 function TableUI({
@@ -62,9 +68,10 @@ function TableUI({
   title,
   option,
   tableHead,
+  height,
 }: TableUIProps) {
   return (
-    <ContentBox title={title} option={option} height={300}>
+    <ContentBox title={title} option={option} height={height}>
       <div></div>
       <Table>
         <thead>
@@ -81,6 +88,7 @@ function TableUI({
                 key={item.key}
                 onClick={item.onClick}
                 $isCurrent={currentItemKey === item.key}
+                className={item.colored ? "colored" : ""}
               >
                 {tableHead.map((columnName) => (
                   <td key={columnName.name}>{item.data[columnName.name]}</td>

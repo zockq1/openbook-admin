@@ -24,6 +24,7 @@ function ChapterList() {
 
   return (
     <ChapterListUI
+      height={300}
       currentItemKey={String(chapter)}
       tableHead={[
         { name: "number", title: "단원" },

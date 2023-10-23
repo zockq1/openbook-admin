@@ -19,8 +19,12 @@ function TimelineList() {
   }
 
   return (
-    <ContentBox title="연표" width="full" option={<EraEditModal />}>
-      <TimelineListUI timelineList={timelineList} />
+    <ContentBox title="연표" width="half" option={<EraEditModal />}>
+      <TimelineListUI
+        timelineList={[...timelineList].sort(
+          (a, b) => a.startDate - b.startDate
+        )}
+      />
     </ContentBox>
   );
 }

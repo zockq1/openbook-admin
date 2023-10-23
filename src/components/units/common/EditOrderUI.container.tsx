@@ -10,15 +10,24 @@ import { TopicListModel } from "../../../types/topicTypes";
 import styled from "styled-components";
 import { KeywordModel } from "../../../types/keywordType";
 import { GetChapterModel } from "../../../types/chapterTypes";
+import { JJHOrderModel } from "../jjh/EditJJHOrder.presenter";
 
 const Item = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   font-size: ${({ theme }) => theme.fontSizes.large};
   text-align: center;
+
+  &.colored {
+    color: ${({ theme }) => theme.colors.blue};
+  }
 `;
 
 interface EditOrderProps {
-  orderList: TopicListModel[] | KeywordModel[] | GetChapterModel;
+  orderList:
+    | TopicListModel[]
+    | KeywordModel[]
+    | GetChapterModel
+    | JJHOrderModel[];
   button: ReactNode;
   handleCancel: () => void;
   onSubmit: () => Promise<void>;
@@ -68,9 +77,12 @@ function EditOrderUI({
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {orderList.map((item, i: number) => {
                     let name = "";
+                    let colored = false;
                     if ("name" in item) name = item.name;
                     if ("title" in item) name = item.title;
-                    if (item.dateComment) name += `(${item.dateComment})`;
+                    if ("dateComment" in item && item.dateComment)
+                      name += `(${item.dateComment})`;
+                    if ("type" in item) colored = item.type === "Timeline";
                     return (
                       <Draggable
                         draggableId={`${name}`}
@@ -84,7 +96,9 @@ function EditOrderUI({
                               {...provided.dragHandleProps}
                               ref={provided.innerRef}
                             >
-                              <Item>{name}</Item>
+                              <Item className={colored ? "colored" : ""}>
+                                {name}
+                              </Item>
                             </div>
                           );
                         }}

@@ -35,15 +35,15 @@ const StyledTimeline = styled.table`
   }
 
   .startDate {
-    width: 30%;
+    width: 25%;
   }
 
   .endDate {
-    width: 30%;
+    width: 25%;
   }
 
   .option {
-    width: 10%;
+    width: 20%;
     text-align: center;
   }
 `;
