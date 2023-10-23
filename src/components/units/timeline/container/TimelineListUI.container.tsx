@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TimelineModel } from "../../../../types/timelinTypes";
+import { TimelineModel } from "../../../../types/timelineTypes";
 import CreateTimeline from "../presenter/CreateTimeline.presenter";
 import Timeline from "../presenter/Timeline.presenter";
 

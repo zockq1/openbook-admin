@@ -4,7 +4,7 @@ import {
   AddTimelineModel,
   GetTimelineModel,
   UpdateTimelineModel,
-} from "../../types/timelinTypes";
+} from "../../types/timelineTypes";
 
 export const timelineApi = createApi({
   reducerPath: "timelineApi",

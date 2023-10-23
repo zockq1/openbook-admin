@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TimelineModel } from "../../../../types/timelinTypes";
+import { TimelineModel } from "../../../../types/timelineTypes";
 
 interface TimelineProps {
   timeline: TimelineModel;

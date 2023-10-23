@@ -3,7 +3,7 @@ import TimelineFormUI from "../container/TimelineFormUI.container";
 import { useForm } from "react-hook-form";
 import { Modal } from "antd";
 import { mutationErrorNotification } from "../../../../services/errorNotification";
-import { TimelineModel } from "../../../../types/timelinTypes";
+import { TimelineModel } from "../../../../types/timelineTypes";
 import {
   useDeletetimelineMutation,
   useUpdatetimelineMutation,

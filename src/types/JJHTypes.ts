@@ -1,5 +1,5 @@
 import { ChapterModel } from "./chapterTypes";
-import { TimelineModel } from "./timelinTypes";
+import { TimelineModel } from "./timelineTypes";
 
 interface JJHModel {
   id: number;
