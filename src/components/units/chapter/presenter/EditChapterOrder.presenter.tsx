@@ -13,7 +13,7 @@ import { GetChapterModel } from "../../../../types/chapterTypes";
 function EditChapterOrder() {
   const { data: ChapterList, error: ChapterListError } = useGetChaptersQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedChapterList, setEditedChapterList] = useState<GetChapterModel[]>(
+  const [editedChapterList, setEditedChapterList] = useState<GetChapterModel>(
     []
   );
   const [updateChapterOrder, { isLoading }] = useUpdateChapterOrderMutation();

@@ -1,11 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
+  AddChapterModel,
   ChapterDateModel,
-  ChapterInfoModel,
-  ChapterModel,
   ChapterOrderModel,
   ChapterTitleModel,
+  GetChapterInfoModel,
   GetChapterModel,
+  UpdateChapterInfoModel,
   UpdateChapterModel,
 } from "../../types/chapterTypes";
 import baseQueryWithReauth from "./baseApi";
@@ -15,7 +16,7 @@ export const chapterApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["ChapterList", "ChapterTitle", "ChapterInfo"],
   endpoints: (builder) => ({
-    getChapters: builder.query<GetChapterModel[], void>({
+    getChapters: builder.query<GetChapterModel, void>({
       query: () => "/admin/chapters",
       providesTags: ["ChapterList"],
     }),
@@ -23,7 +24,7 @@ export const chapterApi = createApi({
       query: (chapterNumber) => `/chapters/chapter-title?num=${chapterNumber}`,
       providesTags: ["ChapterTitle"],
     }),
-    getChapterInfo: builder.query<ChapterInfoModel, number>({
+    getChapterInfo: builder.query<GetChapterInfoModel, number>({
       query: (chapterNumber) => `/chapters/${chapterNumber}/info`,
       providesTags: ["ChapterInfo"],
     }),
@@ -31,8 +32,8 @@ export const chapterApi = createApi({
       query: (chapterNumber) => `/chapters/${chapterNumber}/date`,
       providesTags: ["ChapterTitle"],
     }),
-    addChapter: builder.mutation<any, ChapterModel>({
-      query: (newChapter: ChapterModel) => {
+    addChapter: builder.mutation<void, AddChapterModel>({
+      query: (newChapter: AddChapterModel) => {
         return {
           url: `/admin/chapters`,
           method: "POST",
@@ -41,7 +42,7 @@ export const chapterApi = createApi({
       },
       invalidatesTags: ["ChapterList"],
     }),
-    updateChapterInfo: builder.mutation({
+    updateChapterInfo: builder.mutation<void, UpdateChapterInfoModel>({
       query: ({ chapterNumber, content }) => {
         return {
           url: `/admin/chapters/${chapterNumber}/info`,
@@ -51,7 +52,7 @@ export const chapterApi = createApi({
       },
       invalidatesTags: ["ChapterInfo"],
     }),
-    updateChapter: builder.mutation<any, UpdateChapterModel>({
+    updateChapter: builder.mutation<void, UpdateChapterModel>({
       query: ({ editedChapter, currentChapterNumber }: UpdateChapterModel) => {
         return {
           url: `/admin/chapters/${currentChapterNumber}`,
@@ -61,7 +62,7 @@ export const chapterApi = createApi({
       },
       invalidatesTags: ["ChapterTitle", "ChapterList"],
     }),
-    updateChapterOrder: builder.mutation<any, ChapterOrderModel[]>({
+    updateChapterOrder: builder.mutation<void, ChapterOrderModel[]>({
       query: (chapterList) => {
         return {
           url: `/admin/chapter-numbers`,

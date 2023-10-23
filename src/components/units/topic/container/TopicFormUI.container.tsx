@@ -5,7 +5,7 @@ import EraEditModal from "../../era/EraEditModal";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { EraModel } from "../../../../types/eraType";
 import { TopicModel } from "../../../../types/topicTypes";
-import { ChapterModel } from "../../../../types/chapterTypes";
+import { GetChapterModel } from "../../../../types/chapterTypes";
 import ContentBox from "../../../commons/ContentBox";
 import { useEffect } from "react";
 import filterOption from "../../../../services/filterOption";
@@ -14,7 +14,7 @@ interface TopicFormUIProps {
   onFinish: (values: any) => Promise<void>;
   categoryList: CategoryModel[];
   eraList: EraModel[];
-  chapterList: ChapterModel[];
+  chapterList: GetChapterModel;
   initialValue: Omit<TopicModel, "number">;
   isLoading: boolean;
 }
@@ -60,7 +60,7 @@ function TopicFormUI({
               filterOption={filterOption}
               placeholder="단원 선택"
             >
-              {chapterList.map((chapter: ChapterModel) => (
+              {chapterList.map((chapter) => (
                 <Select.Option value={chapter.number} key={chapter.number}>
                   {`${chapter.number}. ${chapter.title}`}
                 </Select.Option>

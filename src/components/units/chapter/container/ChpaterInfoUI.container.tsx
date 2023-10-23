@@ -1,6 +1,6 @@
 import parse from "html-react-parser";
 import styled from "styled-components";
-import { ChapterInfoModel } from "../../../../types/chapterTypes";
+import { GetChapterInfoModel } from "../../../../types/chapterTypes";
 import ContentBox from "../../../commons/ContentBox";
 import { Button } from "antd";
 
@@ -19,7 +19,7 @@ const Info = styled.div`
 `;
 
 interface ChapterInfoProps {
-  chapterInfo: ChapterInfoModel;
+  chapterInfo: GetChapterInfoModel;
   toChapterInfoEdit: () => void;
 }
 
