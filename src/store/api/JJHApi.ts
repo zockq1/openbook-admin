@@ -8,16 +8,16 @@ export const JJHApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getJJHList: builder.query<GetJJHModel, any>({
-      query: () => `/jjh`,
+      query: () => `/admin/jjh`,
       providesTags: ["JJHList"],
     }),
     getSearch: builder.query<SearchModel, string>({
-      query: (search) => ` /search?searchKey=${search}`,
+      query: (search) => `/search?searchKey=${search}`,
     }),
     updateJJHOrder: builder.mutation<void, UpdateJJHModel>({
       query: (JJHList) => {
         return {
-          url: `/jjh`,
+          url: `/admin/jjh`,
           method: "PATCH",
           body: JJHList,
         };
@@ -27,7 +27,7 @@ export const JJHApi = createApi({
     updateJJH: builder.mutation<void, void>({
       query: (JJHList) => {
         return {
-          url: `/jjh/update`,
+          url: `/admin/jjh/update`,
           method: "PATCH",
         };
       },
