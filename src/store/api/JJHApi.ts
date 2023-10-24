@@ -12,7 +12,7 @@ export const JJHApi = createApi({
       providesTags: ["JJHList"],
     }),
     getSearch: builder.query<SearchModel, string>({
-      query: (search) => `/search/${search}`,
+      query: (search) => ` /search?searchKey=${search}`,
     }),
     updateJJHOrder: builder.mutation<void, UpdateJJHModel>({
       query: (JJHList) => {
