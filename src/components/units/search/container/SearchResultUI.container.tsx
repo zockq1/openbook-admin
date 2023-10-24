@@ -8,15 +8,16 @@ import { Link } from "react-router-dom";
 const StyledSearchResultUI = styled.div`
   strong {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
+    color: ${({ theme }) => theme.colors.red};
   }
+
   .search-title {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     font-size: ${({ theme }) => theme.fontSizes.large};
   }
 
-  .sub-title {
-    float: right;
-    color: ${({ theme }) => theme.colors.black};
+  a {
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 `;
 
@@ -62,16 +63,16 @@ function SearchResultUI({ searchResult, searchValue }: SearchResultUIProps) {
               <List.Item>
                 <List.Item.Meta
                   title={
-                    <>
-                      <Link
-                        to={`/topic/${topic.chapterNumber}/${topic.topicTitle}/topic-info`}
-                      >
-                        {formatSearchResult(`${topic.topicTitle}`, searchValue)}
-                      </Link>
-                      <span className="sub-title">
-                        {`${topic.chapterNumber}단원: ${topic.chapterTitle}`}
-                      </span>
-                    </>
+                    <Link
+                      to={`/topic/${topic.chapterNumber}/${topic.topicTitle}/topic-info`}
+                    >
+                      {formatSearchResult(`${topic.topicTitle}`, searchValue)}
+                    </Link>
+                  }
+                  description={
+                    <span className="sub-title">
+                      {`${topic.chapterNumber}단원: ${topic.chapterTitle}`}
+                    </span>
                   }
                 />
               </List.Item>
@@ -91,24 +92,27 @@ function SearchResultUI({ searchResult, searchValue }: SearchResultUIProps) {
               <List.Item>
                 <List.Item.Meta
                   title={
+                    <Link
+                      to={`/topic/${keyword.chapterNumber}/${keyword.topicTitle}/topic-info`}
+                    >
+                      {formatSearchResult(
+                        `${keyword.keywordName}`,
+                        searchValue
+                      )}
+                    </Link>
+                  }
+                  description={
                     <>
-                      <Link
-                        to={`/topic/${keyword.chapterNumber}/${keyword.topicTitle}/topic-info`}
-                      >
-                        {formatSearchResult(
-                          `${keyword.keywordName}`,
-                          searchValue
-                        )}
-                      </Link>
                       <span className="sub-title">
                         {`${keyword.chapterNumber}단원: ${keyword.chapterTitle} / ${keyword.topicTitle}`}
                       </span>
+                      <br />
+                      {formatSearchResult(
+                        `${keyword.keywordComment}`,
+                        searchValue
+                      )}
                     </>
                   }
-                  description={formatSearchResult(
-                    `${keyword.keywordComment}`,
-                    searchValue
-                  )}
                 />
               </List.Item>
             )}
