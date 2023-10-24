@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "./baseApi";
-import { GetJJHModel, UpdateJJHModel } from "../../types/JJHTypes";
+import { GetJJHModel, SearchModel, UpdateJJHModel } from "../../types/JJHTypes";
 
 export const JJHApi = createApi({
   reducerPath: "JJHApi",
@@ -10,6 +10,9 @@ export const JJHApi = createApi({
     getJJHList: builder.query<GetJJHModel, any>({
       query: () => `/jjh`,
       providesTags: ["JJHList"],
+    }),
+    getSearch: builder.query<SearchModel, string>({
+      query: (search) => `/search/${search}`,
     }),
     updateJJHOrder: builder.mutation<void, UpdateJJHModel>({
       query: (JJHList) => {
@@ -21,11 +24,21 @@ export const JJHApi = createApi({
       },
       invalidatesTags: ["JJHList"],
     }),
+    updateJJH: builder.mutation<void, void>({
+      query: (JJHList) => {
+        return {
+          url: `/jjh/update`,
+          method: "PATCH",
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useGetJJHListQuery,
+  useGetSearchQuery,
   useLazyGetJJHListQuery,
   useUpdateJJHOrderMutation,
+  useUpdateJJHMutation,
 } = JJHApi;

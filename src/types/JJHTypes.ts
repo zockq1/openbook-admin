@@ -15,3 +15,22 @@ export type UpdateJJHModel = {
   chapterList: JJHModel[];
   timelineList: JJHModel[];
 };
+
+export interface SearchModel {
+  chapterList: {
+    chapterNumber: number;
+    chapterTitle: string;
+  }[];
+  topicList: {
+    chapterNumber: number;
+    chapterTitle: string;
+    topicTitle: string;
+  }[];
+  keywordList: {
+    chapterNumber: number;
+    chapterTitle: string;
+    topicTitle: string;
+    keywordName: string;
+    keywordComment: string;
+  }[];
+}
