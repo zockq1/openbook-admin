@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "./baseApi";
 import {
   AddTimelineModel,
+  DeleteTimelineModel,
   GetTimelineModel,
   UpdateTimelineModel,
 } from "../../types/timelineTypes";
@@ -12,7 +13,7 @@ export const timelineApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getTimelineList: builder.query<GetTimelineModel, void>({
-      query: () => `/time-lines`,
+      query: () => `/admin/time-lines`,
       providesTags: ["TimelineList"],
     }),
     addtimeline: builder.mutation<void, AddTimelineModel>({
@@ -35,10 +36,10 @@ export const timelineApi = createApi({
       },
       invalidatesTags: ["TimelineList"],
     }),
-    deletetimeline: builder.mutation<void, number>({
-      query: (id) => {
+    deletetimeline: builder.mutation<void, DeleteTimelineModel>({
+      query: (deleteTimelineId) => {
         return {
-          url: `/admin/time-lines/${id}`,
+          url: `/admin/time-lines/${deleteTimelineId.id}`,
           method: "DELETE",
         };
       },

@@ -22,9 +22,10 @@ const Button = styled.button`
 `;
 
 function TimelineUI({ timeline, onDelete, onEdit }: TimelineProps) {
-  const { endDate, startDate, era, id } = timeline;
+  const { endDate, startDate, era, id, title } = timeline;
   return (
     <tr key={id}>
+      <td className="title">{title}</td>
       <td className="era">{era}</td>
       <td className="startDate">{startDate}</td>
       <td className="comment">{endDate}</td>

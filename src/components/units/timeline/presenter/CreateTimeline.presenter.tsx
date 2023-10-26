@@ -6,6 +6,7 @@ import { useGetEraListQuery } from "../../../../store/api/eraApi";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
 export type TimelineFormValues = {
+  title: string;
   era: string;
   startDate: number | "";
   endDate: number | "";
@@ -19,16 +20,17 @@ function CreateTimeline() {
   useNotificationErrorList([setError(eraListError, "시대 목록")]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-    const { era, startDate, endDate } = data;
+    const { era, startDate, endDate, title } = data;
     if (startDate === "" || endDate === "") return;
     try {
       addTimeline({
+        title,
         era,
         startDate,
         endDate,
       });
       reset({
+        title: "",
         era: "",
         startDate: "",
         endDate: "",

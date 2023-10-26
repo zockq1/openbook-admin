@@ -1,4 +1,5 @@
 export interface TimelineModel {
+  title: string;
   era: string;
   startDate: number;
   endDate: number;
@@ -8,9 +9,17 @@ export interface TimelineModel {
 
 export type GetTimelineModel = TimelineModel[];
 
-export type AddTimelineModel = Omit<TimelineModel, "id" | "jjhNumber">;
+export type AddTimelineModel = Pick<
+  TimelineModel,
+  "title" | "era" | "startDate" | "endDate"
+>;
 
 export type UpdateTimelineModel = {
   id: number;
-  updatedTimeline: Omit<TimelineModel, "id" | "jjhNumber">;
+  updatedTimeline: Pick<
+    TimelineModel,
+    "title" | "era" | "startDate" | "endDate"
+  >;
 };
+
+export type DeleteTimelineModel = Pick<TimelineModel, "id">;

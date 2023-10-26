@@ -4,6 +4,7 @@ import CreateTimeline from "../presenter/CreateTimeline.presenter";
 import Timeline from "../presenter/Timeline.presenter";
 
 const StyledTimeline = styled.table`
+  width: 100%;
   border-collapse: collapse;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   font-size: ${({ theme }) => theme.fontSizes.xs};
@@ -29,17 +30,21 @@ const StyledTimeline = styled.table`
     border-right: 1pt solid ${({ theme }) => theme.colors.border};
   }
 
-  .era {
-    width: 30%;
+  .title {
+    width: 20%;
     font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 
+  .era {
+    width: 20%;
+  }
+
   .startDate {
-    width: 25%;
+    width: 20%;
   }
 
   .endDate {
-    width: 25%;
+    width: 20%;
   }
 
   .option {
@@ -57,6 +62,7 @@ function TimelineListUI({ timelineList }: TimelineListProps) {
     <StyledTimeline>
       <thead>
         <tr>
+          <th className="title">제목</th>
           <th className="era">시대</th>
           <th className="startDate">시작 년도</th>
           <th className="endDate">종료 년도</th>

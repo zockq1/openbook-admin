@@ -23,10 +23,11 @@ function Timeline({ timeline }: TimelineProps) {
   const [updateTimeline] = useUpdatetimelineMutation();
   const { data: eraList, error: eraListError } = useGetEraListQuery();
   useNotificationErrorList([setError(eraListError, "시대 목록")]);
-  const { era, startDate, endDate, id } = timeline;
+  const { era, startDate, endDate, id, title } = timeline;
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { register, handleSubmit, control } = useForm<TimelineFormValues>({
     defaultValues: {
+      title,
       era,
       startDate,
       endDate,
@@ -40,6 +41,7 @@ function Timeline({ timeline }: TimelineProps) {
       await updateTimeline({
         id,
         updatedTimeline: {
+          title,
           era,
           startDate,
           endDate,
@@ -67,7 +69,7 @@ function Timeline({ timeline }: TimelineProps) {
       cancelText: "아니오",
       onOk: async () => {
         try {
-          await deleteTimeline(id).unwrap();
+          await deleteTimeline({ id }).unwrap();
         } catch (error) {
           mutationErrorNotification(error);
         }

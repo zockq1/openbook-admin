@@ -74,13 +74,15 @@ function TimelineFormUI({
 }: TimelineProps) {
   return (
     <StyledTimelineForm>
+      <td className="title">
+        <input type="text" {...register("title")} />
+      </td>
       <td className="era">
         <Controller
           name="era"
           control={control}
           render={({ field }) => (
             <Select
-              style={{ width: "150px" }}
               showSearch
               filterOption={filterOption}
               placeholder="시대 선택"

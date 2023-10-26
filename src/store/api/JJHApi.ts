@@ -25,7 +25,7 @@ export const JJHApi = createApi({
       invalidatesTags: ["JJHList"],
     }),
     updateJJH: builder.mutation<void, void>({
-      query: (JJHList) => {
+      query: () => {
         return {
           url: `/admin/jjh/update`,
           method: "PATCH",

@@ -16,8 +16,7 @@ const StyledContentBox = styled.div<StyledContentBoxProps>`
     "body body";
   padding: 10px;
   margin: 10px;
-  width: ${({ width }) =>
-    width === "half" ? "var(--width)" : "calc(var(--width) * 2 + 20)"};
+  width: ${({ width }) => (width === "half" ? "547.5px" : "1115px;")};
   height: ${({ height }) =>
     typeof height === "number" ? `${height}px` : height};
   border-radius: ${({ theme }) => theme.borderRadius.small};

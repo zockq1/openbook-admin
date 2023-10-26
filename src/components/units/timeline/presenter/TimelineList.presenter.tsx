@@ -12,7 +12,7 @@ function TimelineList() {
 
   if (!timelineList) {
     return (
-      <ContentBox title="연표" width="full">
+      <ContentBox title="연표" width="half">
         <TimelineListUI timelineList={[]} />
       </ContentBox>
     );
