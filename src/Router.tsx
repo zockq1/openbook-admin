@@ -6,6 +6,7 @@ import LoginPage from "./components/pages/LoginPage";
 import UserPage from "./components/pages/UserPage";
 import TimelinePage from "./components/pages/TimelinePage";
 import SearchPage from "./components/pages/SearchPage";
+import QuestionCategoryPage from "./components/pages/QuestionCategoryPage";
 
 const router = createBrowserRouter([
   {
@@ -13,13 +14,13 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/question",
+        path: "/exam",
         element: <QuestionPage />,
         children: [
-          { path: "/question/:round/question-list", element: null },
-          { path: "/question/:round/create-question", element: null },
-          { path: "/question/:round/:question/question-info", element: null },
-          { path: "/question/:round/:question/edit-question", element: null },
+          { path: "/exam/:round/question-list", element: null },
+          { path: "/exam/:round/create-question", element: null },
+          { path: "/exam/:round/:question/question-info", element: null },
+          { path: "/exam/:round/:question/edit-question", element: null },
         ],
       },
       {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/timeline",
         element: <TimelinePage />,
+      },
+      {
+        path: "/question-category",
+        element: <QuestionCategoryPage />,
       },
       {
         path: "/search/:search",

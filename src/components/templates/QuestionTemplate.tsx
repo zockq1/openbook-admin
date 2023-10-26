@@ -88,7 +88,7 @@ function QuestionTemplate({
             return {
               name: item.number + "회차",
               key: item.number.toString(),
-              onClick: () => navigate(`/question/${item.number}/question-list`),
+              onClick: () => navigate(`/exam/${item.number}/question-list`),
             };
           })}
         />
@@ -101,7 +101,7 @@ function QuestionTemplate({
           option={
             round && (
               <>
-                <Link to={`/question/${round}/create-question`}>
+                <Link to={`/exam/${round}/create-question`}>
                   <Button>문제 추가</Button>
                 </Link>
                 {roundDate && (
@@ -127,7 +127,7 @@ function QuestionTemplate({
                     name: item.toString(),
                     key: item.toString(),
                     onClick: () =>
-                      navigate(`/question/${round}/${item}/question-info`),
+                      navigate(`/exam/${round}/${item}/question-info`),
                   };
                 })
               : []
@@ -147,7 +147,7 @@ function QuestionTemplate({
               <>
                 <Button
                   onClick={() =>
-                    navigate(`/question/${round}/${question}/edit-question`)
+                    navigate(`/exam/${round}/${question}/edit-question`)
                   }
                 >
                   수정

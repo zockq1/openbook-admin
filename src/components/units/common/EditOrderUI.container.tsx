@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { KeywordModel } from "../../../types/keywordType";
 import { GetChapterModel } from "../../../types/chapterTypes";
 import { JJHOrderModel } from "../jjh/EditJJHOrder.presenter";
+import { GetQuestionCategoryModel } from "../../../types/questionCategory";
 
 const Item = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
@@ -27,6 +28,7 @@ interface EditOrderProps {
     | TopicListModel[]
     | KeywordModel[]
     | GetChapterModel
+    | GetQuestionCategoryModel
     | JJHOrderModel[];
   button: ReactNode;
   handleCancel: () => void;
