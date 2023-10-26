@@ -16,7 +16,7 @@ export const timelineApi = createApi({
       query: () => `/admin/time-lines`,
       providesTags: ["TimelineList"],
     }),
-    addtimeline: builder.mutation<void, AddTimelineModel>({
+    addTimeline: builder.mutation<void, AddTimelineModel>({
       query: (timeline: AddTimelineModel) => {
         return {
           url: `/admin/time-lines`,
@@ -26,7 +26,7 @@ export const timelineApi = createApi({
       },
       invalidatesTags: ["TimelineList"],
     }),
-    updatetimeline: builder.mutation<void, UpdateTimelineModel>({
+    updateTimeline: builder.mutation<void, UpdateTimelineModel>({
       query: (updatedTimeline: UpdateTimelineModel) => {
         return {
           url: `/admin/time-lines/${updatedTimeline.id}`,
@@ -36,7 +36,7 @@ export const timelineApi = createApi({
       },
       invalidatesTags: ["TimelineList"],
     }),
-    deletetimeline: builder.mutation<void, DeleteTimelineModel>({
+    deleteTimeline: builder.mutation<void, DeleteTimelineModel>({
       query: (deleteTimelineId) => {
         return {
           url: `/admin/time-lines/${deleteTimelineId.id}`,
@@ -51,7 +51,7 @@ export const timelineApi = createApi({
 export const {
   useGetTimelineListQuery,
   useLazyGetTimelineListQuery,
-  useAddtimelineMutation,
-  useDeletetimelineMutation,
-  useUpdatetimelineMutation,
+  useAddTimelineMutation,
+  useDeleteTimelineMutation,
+  useUpdateTimelineMutation,
 } = timelineApi;

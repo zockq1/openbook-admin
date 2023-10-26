@@ -5,8 +5,8 @@ import { Modal } from "antd";
 import { mutationErrorNotification } from "../../../../services/errorNotification";
 import { TimelineModel } from "../../../../types/timelineTypes";
 import {
-  useDeletetimelineMutation,
-  useUpdatetimelineMutation,
+  useDeleteTimelineMutation,
+  useUpdateTimelineMutation,
 } from "../../../../store/api/timelineApi";
 import { TimelineFormValues } from "./CreateTimeline.presenter";
 import TimelineUI from "../container/TimelineUI.container";
@@ -19,8 +19,8 @@ interface TimelineProps {
 }
 
 function Timeline({ timeline }: TimelineProps) {
-  const [deleteTimeline] = useDeletetimelineMutation();
-  const [updateTimeline] = useUpdatetimelineMutation();
+  const [deleteTimeline] = useDeleteTimelineMutation();
+  const [updateTimeline] = useUpdateTimelineMutation();
   const { data: eraList, error: eraListError } = useGetEraListQuery();
   useNotificationErrorList([setError(eraListError, "시대 목록")]);
   const { era, startDate, endDate, id, title } = timeline;
@@ -34,7 +34,7 @@ function Timeline({ timeline }: TimelineProps) {
     },
   });
   const onSubmit = handleSubmit(async (data) => {
-    const { era, startDate, endDate } = data;
+    const { era, startDate, endDate, title } = data;
     if (startDate === "" || endDate === "") return;
 
     try {

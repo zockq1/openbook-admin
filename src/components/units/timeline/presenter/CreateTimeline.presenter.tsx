@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { mutationErrorNotification } from "../../../../services/errorNotification";
-import { useAddtimelineMutation } from "../../../../store/api/timelineApi";
+import { useAddTimelineMutation } from "../../../../store/api/timelineApi";
 import TimelineFormUI from "../container/TimelineFormUI.container";
 import { useGetEraListQuery } from "../../../../store/api/eraApi";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
@@ -13,7 +13,7 @@ export type TimelineFormValues = {
 };
 
 function CreateTimeline() {
-  const [addTimeline] = useAddtimelineMutation();
+  const [addTimeline] = useAddTimelineMutation();
   const { data: eraList, error: eraListError } = useGetEraListQuery();
   const { register, handleSubmit, reset, control } =
     useForm<TimelineFormValues>();

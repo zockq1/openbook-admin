@@ -12,7 +12,7 @@ function TimelineList() {
 
   if (!timelineList) {
     return (
-      <ContentBox title="연표" width="half">
+      <ContentBox title="연표" width="half" option={<EraEditModal />}>
         <TimelineListUI timelineList={[]} />
       </ContentBox>
     );
