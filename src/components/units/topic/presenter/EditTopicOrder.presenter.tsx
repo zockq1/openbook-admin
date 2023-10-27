@@ -15,7 +15,8 @@ function EditTopicOrder() {
   const { chapter } = useParams();
   const chapterNumber = Number(chapter);
 
-  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const modalHandler = useModalHandler();
+  const { showModal, closeModal } = modalHandler;
   const { orderList, setOrderList, handleChange } = useOrderListHandler();
 
   const { data: topicList, error: topicListError } =
@@ -54,10 +55,9 @@ function EditTopicOrder() {
     <EditOrderUI
       orderList={orderList}
       button={<Button onClick={showModal}>순서 변경</Button>}
-      handleCancel={closeModal}
+      modalHandler={modalHandler}
       onSubmit={onSubmit}
       handleChange={handleChange}
-      isModalOpen={isModalOpen}
       isLoading={isLoading}
     />
   );

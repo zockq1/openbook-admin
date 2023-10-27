@@ -15,7 +15,8 @@ function EditkeywordOrder() {
   const { topic } = useParams();
   const topicTitle = String(topic);
 
-  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const modalHandler = useModalHandler();
+  const { showModal, closeModal } = modalHandler;
   const { orderList, setOrderList, handleChange } = useOrderListHandler();
 
   const { data: keywordList, error: keywordListError } =
@@ -58,10 +59,9 @@ function EditkeywordOrder() {
           변경
         </Button>
       }
-      handleCancel={closeModal}
+      modalHandler={modalHandler}
       onSubmit={onSubmit}
       handleChange={handleChange}
-      isModalOpen={isModalOpen}
       isLoading={isLoading}
     />
   );

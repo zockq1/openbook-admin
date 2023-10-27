@@ -11,7 +11,8 @@ import useModalHandler from "../../../hooks/useModalHandler";
 import { useOrderListHandler } from "../../../hooks/useOrderListHandler";
 
 function EditJJHOrder() {
-  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const modalHandler = useModalHandler();
+  const { showModal, closeModal } = modalHandler;
   const { orderList, setOrderList, handleChange } = useOrderListHandler();
 
   const { data: jjhList, error: jjhListError } = useGetJJHListQuery(
@@ -75,10 +76,9 @@ function EditJJHOrder() {
     <EditOrderUI
       orderList={orderList}
       button={<Button onClick={showModal}>순서 변경</Button>}
-      handleCancel={closeModal}
+      modalHandler={modalHandler}
       onSubmit={onSubmit}
       handleChange={handleChange}
-      isModalOpen={isModalOpen}
       isLoading={isLoading}
     />
   );

@@ -7,6 +7,7 @@ import {
   Droppable,
 } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { ModalHandler } from "../../../hooks/useModalHandler";
 
 const Item = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
@@ -28,23 +29,22 @@ export interface OrderModel {
 
 interface EditOrderProps {
   orderList: OrderModel[];
+  modalHandler: ModalHandler;
   button: ReactNode;
-  handleCancel: () => void;
   onSubmit: () => Promise<void>;
   handleChange: (result: DropResult) => void;
-  isModalOpen: boolean;
   isLoading: boolean;
 }
 
 function EditOrderUI({
   orderList,
+  modalHandler,
   button,
-  handleCancel,
   onSubmit,
   handleChange,
-  isModalOpen,
   isLoading,
 }: EditOrderProps) {
+  const { isModalOpen, closeModal } = modalHandler;
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function EditOrderUI({
       <Modal
         title="순서 변경"
         open={isModalOpen}
-        onCancel={handleCancel}
+        onCancel={closeModal}
         footer={[
           <Button
             key="submit"

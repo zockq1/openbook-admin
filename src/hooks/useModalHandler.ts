@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function useModalHandler() {
+export interface ModalHandler {
+  isModalOpen: boolean;
+  showModal: () => void;
+  closeModal: () => void;
+}
+
+function useModalHandler(): ModalHandler {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
