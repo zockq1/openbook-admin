@@ -79,7 +79,7 @@ function EditOrderUI({
                     const { title, id, isColored, date } = item;
                     return (
                       <Draggable
-                        draggableId={title}
+                        draggableId={id + title}
                         index={index}
                         key={id + title}
                       >
