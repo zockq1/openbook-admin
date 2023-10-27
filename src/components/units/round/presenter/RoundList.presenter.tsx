@@ -21,13 +21,15 @@ function RoundList() {
       title="회차 선택"
       option={<CreateRoundModal />}
       currentItemKey={String(round)}
-      itemList={roundList.map((item) => {
-        return {
-          name: item.number + "회차",
-          key: item.number.toString(),
-          onClick: () => navigate(`/exam/${item.number}/question-list`),
-        };
-      })}
+      itemList={[...roundList]
+        .sort((a, b) => a.number - b.number)
+        .map((item) => {
+          return {
+            name: item.number + "회차",
+            key: item.number.toString(),
+            onClick: () => navigate(`/exam/${item.number}/question-list`),
+          };
+        })}
     />
   );
 }

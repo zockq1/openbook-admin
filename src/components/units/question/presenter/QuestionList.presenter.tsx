@@ -34,17 +34,15 @@ function QuestionList() {
         )
       }
       currentItemKey={String(question)}
-      itemList={
-        questionList
-          ? questionList.map((item) => {
-              return {
-                name: item.toString(),
-                key: item.toString(),
-                onClick: () => navigate(`/exam/${round}/${item}/question-info`),
-              };
-            })
-          : []
-      }
+      itemList={[...questionList]
+        .sort((a, b) => a - b)
+        .map((item) => {
+          return {
+            name: item.toString(),
+            key: item.toString(),
+            onClick: () => navigate(`/exam/${round}/${item}/question-info`),
+          };
+        })}
     />
   );
 }
