@@ -26,6 +26,7 @@ function EditRoundModalUI({
         onOk={onSubmit}
         onCancel={closeModal}
         footer={null}
+        forceRender
       >
         <Form
           name="round-form"
