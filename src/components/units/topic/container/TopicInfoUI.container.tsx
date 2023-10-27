@@ -41,7 +41,7 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
             );
           })}
         </Descriptions.Item>
-        <Descriptions.Item span={3} label="상세설명">
+        <Descriptions.Item label="상세설명">
           {topicInfo.detail}
         </Descriptions.Item>
       </Descriptions>

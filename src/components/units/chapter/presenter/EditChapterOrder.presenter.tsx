@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
-import EditOrderUI from "../../common/EditOrderUI.container";
+import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
 import { Button } from "antd";
@@ -8,55 +8,55 @@ import {
   useGetChaptersQuery,
   useUpdateChapterOrderMutation,
 } from "../../../../store/api/chapterApi";
-import { GetChapterModel } from "../../../../types/chapterTypes";
+import useModal from "../../../../hooks/useModal";
 
 function EditChapterOrder() {
-  const { data: ChapterList, error: ChapterListError } = useGetChaptersQuery();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedChapterList, setEditedChapterList] = useState<GetChapterModel>(
-    []
-  );
+  const { isModalOpen, showModal, closeModal } = useModal();
+  const { data: chapterList, error: chapterListError } = useGetChaptersQuery();
+  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updateChapterOrder, { isLoading }] = useUpdateChapterOrderMutation();
 
-  useNotificationErrorList([setError(ChapterListError, "단원 목록")]);
+  useNotificationErrorList([setError(chapterListError, "단원 목록")]);
 
   useEffect(() => {
-    if (ChapterList?.length)
-      setEditedChapterList(
-        [...ChapterList].sort((a, b) => a.number - b.number)
+    if (chapterList?.length)
+      setOrderList(
+        [...chapterList]
+          .sort((a, b) => a.number - b.number)
+          .map((chapter) => {
+            return {
+              title: chapter.title,
+              id: chapter.id,
+              isColored: false,
+              number: chapter.number,
+              date: chapter.dateComment,
+            };
+          })
       );
-  }, [ChapterList]);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  }, [chapterList]);
 
   const onSubmit = async () => {
     await updateChapterOrder(
-      editedChapterList.map((item, index) => {
+      orderList.map((item, index) => {
         return { id: item.id, number: index };
       })
     );
-    setIsModalOpen(false);
+    closeModal();
   };
 
-  const handleChange = async (result: DropResult) => {
+  const handleChange = (result: DropResult) => {
     if (!result.destination) return;
-    const items = [...editedChapterList];
+    const items = [...orderList];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    setEditedChapterList(items);
+    setOrderList(items);
   };
 
   return (
     <EditOrderUI
-      orderList={editedChapterList}
+      orderList={orderList}
       button={<Button onClick={showModal}>순서 변경</Button>}
-      handleCancel={handleCancel}
+      handleCancel={closeModal}
       onSubmit={onSubmit}
       handleChange={handleChange}
       isModalOpen={isModalOpen}

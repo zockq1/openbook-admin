@@ -39,7 +39,7 @@ function KeywordList() {
 
   return (
     <KeywordListUI
-      keywordList={keywordList}
+      keywordList={[...keywordList].sort((a, b) => a.number - b.number)}
       onChange={handleChange}
       isKeywordQuestion={isKeywordQuestion}
     />

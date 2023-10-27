@@ -6,97 +6,83 @@ import {
   useUpdateJJHOrderMutation,
 } from "../../../store/api/JJHApi";
 import { DropResult } from "react-beautiful-dnd";
-import EditOrderUI from "../common/EditOrderUI.container";
+import EditOrderUI, { OrderModel } from "../common/EditOrderUI.container";
 import { Button } from "antd";
-
-export interface JJHOrderModel {
-  title: string;
-  number: number;
-  id: number;
-  type: "Chapter" | "Timeline";
-}
+import useModal from "../../../hooks/useModal";
 
 function EditJJHOrder() {
+  const { isModalOpen, showModal, closeModal } = useModal();
   const { data: jjhList, error: jjhListError } = useGetJJHListQuery(
     { count: 5 },
     { refetchOnMountOrArgChange: true }
   );
   useNotificationErrorList([setError(jjhListError, "정주행 목록")]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedJJHList, setEditedJJHList] = useState<JJHOrderModel[]>([]);
+  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updateJJHOrder, { isLoading }] = useUpdateJJHOrderMutation();
 
   useEffect(() => {
     if (jjhList) {
-      let newList: JJHOrderModel[] = jjhList.chapterList.map(
-        (chapter): JJHOrderModel => {
+      let newList: OrderModel[] = jjhList.chapterList.map(
+        (chapter): OrderModel => {
           const { jjhNumber, title, number, id } = chapter;
           return {
             title: `${number}단원: ${title}`,
             number: jjhNumber,
             id: id,
-            type: "Chapter",
+            isColored: false,
           };
         }
       );
       newList = newList.concat(
-        jjhList.timelineList.map((timeline): JJHOrderModel => {
-          const { endDate, startDate, era, jjhNumber, id } = timeline;
+        jjhList.timelineList.map((timeline): OrderModel => {
+          const { jjhNumber, id, endDate, era, startDate } = timeline;
           return {
             title: `연표 학습: ${era}(${startDate} ~ ${endDate})`,
             number: jjhNumber,
             id: id,
-            type: "Timeline",
+            isColored: true,
           };
         })
       );
-      setEditedJJHList(newList.sort((a, b) => a.number - b.number));
+      setOrderList(newList.sort((a, b) => a.number - b.number));
     }
-  }, [jjhList, setEditedJJHList]);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  }, [jjhList, setOrderList]);
 
   const onSubmit = async () => {
-    let newJJHList = editedJJHList.map((jjh, index) => ({
+    let newJJHList = orderList.map((jjh, index) => ({
       ...jjh,
       number: index,
     }));
     await updateJJHOrder({
       chapterList: newJJHList
-        .filter((item) => item.type === "Chapter")
+        .filter((item) => item.isColored === false)
         .map((chapter) => ({
           id: chapter.id,
           jjhNumber: chapter.number,
         })),
       timelineList: newJJHList
-        .filter((item) => item.type === "Timeline")
+        .filter((item) => item.isColored === true)
         .map((timeline) => ({
           id: timeline.id,
           jjhNumber: timeline.number,
         })),
     });
-    setIsModalOpen(false);
+    closeModal();
   };
 
   const handleChange = async (result: DropResult) => {
     if (!result.destination) return;
-    const items = [...editedJJHList];
+    const items = [...orderList];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    setEditedJJHList(items);
+    setOrderList(items);
   };
 
   return (
     <EditOrderUI
-      orderList={editedJJHList}
+      orderList={orderList}
       button={<Button onClick={showModal}>순서 변경</Button>}
-      handleCancel={handleCancel}
+      handleCancel={closeModal}
       onSubmit={onSubmit}
       handleChange={handleChange}
       isModalOpen={isModalOpen}

@@ -6,16 +6,15 @@ import {
   useGetQuestionCategoryListQuery,
   useUpdateQuestionCategoryOrderMutation,
 } from "../../../../store/api/questionCategoryApi";
-import EditOrderUI from "../../common/EditOrderUI.container";
+import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
 import { Button } from "antd";
-import { GetQuestionCategoryModel } from "../../../../types/questionCategory";
+import useModal from "../../../../hooks/useModal";
 
 function EditquestionCategoryOrder() {
+  const { isModalOpen, showModal, closeModal } = useModal();
   const { data: questionCategoryList, error: questionCategoryListError } =
     useGetQuestionCategoryListQuery();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedquestionCategoryList, setEditedquestionCategoryList] =
-    useState<GetQuestionCategoryModel>([]);
+  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updatequestionCategoryOrder, { isLoading }] =
     useUpdateQuestionCategoryOrderMutation();
 
@@ -25,41 +24,42 @@ function EditquestionCategoryOrder() {
 
   useEffect(() => {
     if (questionCategoryList?.length)
-      setEditedquestionCategoryList(
-        [...questionCategoryList].sort((a, b) => a.number - b.number)
+      setOrderList(
+        [...questionCategoryList]
+          .sort((a, b) => a.number - b.number)
+          .map((questionCategory) => {
+            return {
+              title: questionCategory.title,
+              id: questionCategory.id,
+              number: questionCategory.number,
+              isColored: false,
+            };
+          })
       );
   }, [questionCategoryList]);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const onSubmit = async () => {
     await updatequestionCategoryOrder(
-      editedquestionCategoryList.map((item, index) => {
+      orderList.map((item, index) => {
         return { id: item.id, number: index };
       })
     );
-    setIsModalOpen(false);
+    closeModal();
   };
 
   const handleChange = async (result: DropResult) => {
     if (!result.destination) return;
-    const items = [...editedquestionCategoryList];
+    const items = [...orderList];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    setEditedquestionCategoryList(items);
+    setOrderList(items);
   };
 
   return (
     <EditOrderUI
-      orderList={editedquestionCategoryList}
+      orderList={orderList}
       button={<Button onClick={showModal}>순서 변경</Button>}
-      handleCancel={handleCancel}
+      handleCancel={closeModal}
       onSubmit={onSubmit}
       handleChange={handleChange}
       isModalOpen={isModalOpen}

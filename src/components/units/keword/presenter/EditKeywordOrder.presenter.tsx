@@ -7,64 +7,64 @@ import {
   useGetKeywordListQuery,
   useUpdateKeywordOrderMutation,
 } from "../../../../store/api/keywordApi";
-import { KeywordModel } from "../../../../types/keywordType";
-import EditOrderUI from "../../common/EditOrderUI.container";
+import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
 import { Button } from "antd";
+import useModal from "../../../../hooks/useModal";
 
 function EditkeywordOrder() {
+  const { isModalOpen, showModal, closeModal } = useModal();
   const { topic } = useParams();
   const topicTitle = String(topic);
   const { data: keywordList, error: keywordListError } =
     useGetKeywordListQuery(topicTitle);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedkeywordList, setEditedkeywordList] = useState<KeywordModel[]>(
-    []
-  );
+  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updatekeywordOrder, { isLoading }] = useUpdateKeywordOrderMutation();
 
   useNotificationErrorList([setError(keywordListError, "주제 목록")]);
 
   useEffect(() => {
     if (keywordList?.length)
-      setEditedkeywordList(
-        [...keywordList].sort((a, b) => a.number - b.number)
+      setOrderList(
+        [...keywordList]
+          .sort((a, b) => a.number - b.number)
+          .map((keyword) => {
+            return {
+              title: keyword.name,
+              id: keyword.id,
+              number: keyword.number,
+              isColored: false,
+              date: keyword.dateComment,
+            };
+          })
       );
   }, [keywordList]);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const onSubmit = async () => {
     await updatekeywordOrder(
-      editedkeywordList.map((item, index) => {
+      orderList.map((item, index) => {
         return { id: item.id, number: index };
       })
     );
-    setIsModalOpen(false);
+    closeModal();
   };
 
   const handleChange = async (result: DropResult) => {
     if (!result.destination) return;
-    const items = [...editedkeywordList];
+    const items = [...orderList];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    setEditedkeywordList(items);
+    setOrderList(items);
   };
 
   return (
     <EditOrderUI
-      orderList={editedkeywordList}
+      orderList={orderList}
       button={
         <Button onClick={showModal} size="small">
           변경
         </Button>
       }
-      handleCancel={handleCancel}
+      handleCancel={closeModal}
       onSubmit={onSubmit}
       handleChange={handleChange}
       isModalOpen={isModalOpen}

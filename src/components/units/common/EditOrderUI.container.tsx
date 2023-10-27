@@ -6,12 +6,7 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
-import { TopicListModel } from "../../../types/topicTypes";
 import styled from "styled-components";
-import { KeywordModel } from "../../../types/keywordType";
-import { GetChapterModel } from "../../../types/chapterTypes";
-import { JJHOrderModel } from "../jjh/EditJJHOrder.presenter";
-import { GetQuestionCategoryModel } from "../../../types/questionCategory";
 
 const Item = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.regular};
@@ -23,17 +18,20 @@ const Item = styled.div`
   }
 `;
 
+export interface OrderModel {
+  title: string;
+  number: number;
+  id: number;
+  isColored: boolean;
+  date?: string;
+}
+
 interface EditOrderProps {
-  orderList:
-    | TopicListModel
-    | KeywordModel[]
-    | GetChapterModel
-    | GetQuestionCategoryModel
-    | JJHOrderModel[];
+  orderList: OrderModel[];
   button: ReactNode;
   handleCancel: () => void;
   onSubmit: () => Promise<void>;
-  handleChange: (result: DropResult) => Promise<void>;
+  handleChange: (result: DropResult) => void;
   isModalOpen: boolean;
   isLoading: boolean;
 }
@@ -77,19 +75,13 @@ function EditOrderUI({
             <Droppable droppableId="played">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  {orderList.map((item, i: number) => {
-                    let name = "";
-                    let colored = false;
-                    if ("name" in item) name = item.name;
-                    if ("title" in item) name = item.title;
-                    if ("dateComment" in item && item.dateComment)
-                      name += `(${item.dateComment})`;
-                    if ("type" in item) colored = item.type === "Timeline";
+                  {orderList.map((item, index: number) => {
+                    const { title, id, isColored, date } = item;
                     return (
                       <Draggable
-                        draggableId={`${name}`}
-                        index={i}
-                        key={`${name}`}
+                        draggableId={title}
+                        index={index}
+                        key={id + title}
                       >
                         {(provided, snapshot) => {
                           return (
@@ -98,8 +90,8 @@ function EditOrderUI({
                               {...provided.dragHandleProps}
                               ref={provided.innerRef}
                             >
-                              <Item className={colored ? "colored" : ""}>
-                                {name}
+                              <Item className={isColored ? "colored" : ""}>
+                                {date ? `${title}(${date})` : title}
                               </Item>
                             </div>
                           );
