@@ -58,11 +58,7 @@ function EditquestionCategoryOrder() {
   return (
     <EditOrderUI
       orderList={editedquestionCategoryList}
-      button={
-        <Button onClick={showModal} size="small">
-          변경
-        </Button>
-      }
+      button={<Button onClick={showModal}>순서 변경</Button>}
       handleCancel={handleCancel}
       onSubmit={onSubmit}
       handleChange={handleChange}

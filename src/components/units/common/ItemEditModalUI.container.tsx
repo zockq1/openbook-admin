@@ -26,7 +26,7 @@ function ItemEditModalUI({
   isModalOpen,
 }: ItemEditModalUIProps) {
   return (
-    <div style={{ display: "inline", marginLeft: "20px" }}>
+    <div>
       <Button type="primary" onClick={showModal}>
         {`${title} 설정`}
       </Button>

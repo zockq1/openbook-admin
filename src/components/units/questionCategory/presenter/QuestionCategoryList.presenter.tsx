@@ -4,6 +4,8 @@ import setError from "../../../../services/setError";
 import QuestionCategoryListUI from "../container/QuestionCategoryListUI.container";
 import ContentBox from "../../../commons/ContentBox";
 import EditquestionCategoryOrder from "./EditQuestionCategoryOrder.presenter";
+import CategoryEditModal from "../../category/CategoryEditModal.presenter";
+import EraEditModal from "../../era/EraEditModal.presenter";
 
 function QuestionCategoryList() {
   const { data: questionCategoryList, error: questionCategoryListError } =
@@ -14,7 +16,17 @@ function QuestionCategoryList() {
 
   if (!questionCategoryList) {
     return (
-      <ContentBox title="연표" width="half">
+      <ContentBox
+        title="문제 분류 관리"
+        width="half"
+        option={
+          <>
+            <EditquestionCategoryOrder />
+            <CategoryEditModal />
+            <EraEditModal />
+          </>
+        }
+      >
         <QuestionCategoryListUI questionCategoryList={[]} />
       </ContentBox>
     );
@@ -22,9 +34,15 @@ function QuestionCategoryList() {
 
   return (
     <ContentBox
-      title="연표"
+      title="문제 분류 관리"
       width="half"
-      option={<EditquestionCategoryOrder />}
+      option={
+        <>
+          <EditquestionCategoryOrder />
+          <CategoryEditModal />
+          <EraEditModal />
+        </>
+      }
     >
       <QuestionCategoryListUI
         questionCategoryList={[...questionCategoryList].sort(
