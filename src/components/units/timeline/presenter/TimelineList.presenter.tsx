@@ -3,7 +3,7 @@ import useNotificationErrorList from "../../../../hooks/useNotificationErrorList
 import setError from "../../../../services/setError";
 import TimelineListUI from "../container/TimelineListUI.container";
 import ContentBox from "../../../commons/ContentBox";
-import EraEditModal from "../../era/EraEditModal";
+import EraEditModal from "../../era/EraEditModal.presenter";
 
 function TimelineList() {
   const { data: timelineList, error: timelineListError } =

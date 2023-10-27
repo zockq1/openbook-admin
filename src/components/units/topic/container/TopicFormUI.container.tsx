@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select, Space } from "antd";
 import { CategoryModel } from "../../../../types/categoryType";
-import CategoryEditModal from "../../category/CategoryEditModal";
-import EraEditModal from "../../era/EraEditModal";
+import CategoryEditModal from "../../category/CategoryEditModal.presenter";
+import EraEditModal from "../../era/EraEditModal.presenter";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { EraModel } from "../../../../types/eraType";
 import { TopicModel } from "../../../../types/topicTypes";
