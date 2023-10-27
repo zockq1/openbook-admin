@@ -14,7 +14,7 @@ export const choicesApi = createApi({
   tagTypes: ["ChoiceList"],
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getChoices: builder.query<GetChoiceModel[], GetQuestionModel>({
+    getChoiceList: builder.query<GetChoiceModel[], GetQuestionModel>({
       query: ({ roundNumber, questionNumber }) =>
         `/admin/rounds/${roundNumber}/questions/${questionNumber}/choices/`,
       providesTags: ["ChoiceList"],
@@ -63,8 +63,7 @@ export const choicesApi = createApi({
 });
 
 export const {
-  useGetChoicesQuery,
-  useLazyGetChoicesQuery,
+  useGetChoiceListQuery,
   useAddChoiceCommentMutation,
   useAddChoiceMutation,
   useUpdateChoiceMutation,
