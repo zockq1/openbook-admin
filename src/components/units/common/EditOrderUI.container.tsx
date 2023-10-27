@@ -25,7 +25,7 @@ const Item = styled.div`
 
 interface EditOrderProps {
   orderList:
-    | TopicListModel[]
+    | TopicListModel
     | KeywordModel[]
     | GetChapterModel
     | GetQuestionCategoryModel

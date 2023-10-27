@@ -3,34 +3,65 @@ export interface ExtraDateModel {
   extraDateComment: string;
 }
 
-export interface TopicModel {
+export type GetTopicModel = {
+  title: string;
   number: number;
   chapter: number;
-  title: string;
-  category: string;
-  era: string;
+  questionCategory: {
+    id: number | null;
+    title: string;
+  };
   dateComment: string;
   extraDateList: ExtraDateModel[];
   detail: string;
-}
+};
 
-export interface UpdateTopicModel {
-  updatedTopic: TopicModel;
+export type TopicListModel = {
   title: string;
-}
-
-export interface TopicOrderModel {
   number: number;
-  title: string;
-}
-
-export interface TopicListModel {
-  number: number;
-  category: string;
-  title: string;
-  era: string;
+  questionCategory: {
+    title: string;
+  };
   dateComment: string;
   descriptionCount: number;
   choiceCount: number;
   keywordCount: number;
-}
+}[];
+
+export type AddTopicModel = {
+  title: string;
+  number: number;
+  chapter: number;
+  questionCategory: { id: number };
+  dateComment: string;
+  extraDateList: ExtraDateModel[];
+  detail: string;
+};
+
+export type UpdateTopicModel = {
+  updatedTopic: {
+    number: number;
+    chapter: number;
+    title: string;
+    questionCategory: { id: number };
+    dateComment: string;
+    extraDateList: ExtraDateModel[];
+    detail: string;
+  };
+  prevTitle: string;
+};
+
+export type TopicOrderModel = {
+  number: number;
+  title: string;
+};
+
+export type TopicFormModel = {
+  title: string;
+  number: number;
+  chapter: number;
+  questionCategory: number;
+  dateComment: string;
+  extraDateList: ExtraDateModel[];
+  detail: string;
+};

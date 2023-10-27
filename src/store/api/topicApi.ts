@@ -1,7 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
+  AddTopicModel,
+  GetTopicModel,
   TopicListModel,
-  TopicModel,
   TopicOrderModel,
   UpdateTopicModel,
 } from "../../types/topicTypes";
@@ -12,16 +13,16 @@ export const topicApi = createApi({
   tagTypes: ["TopicList", "TopicInfo"],
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getTopic: builder.query<TopicModel, string>({
+    getTopic: builder.query<GetTopicModel, string>({
       query: (title) => `/admin/topics/${title}`,
       providesTags: ["TopicInfo"],
     }),
-    getChapterTopicList: builder.query<TopicListModel[], number>({
+    getChapterTopicList: builder.query<TopicListModel, number>({
       query: (chapter) => `/admin/chapters/${chapter}/topics`,
       providesTags: ["TopicList"],
     }),
-    addTopic: builder.mutation<any, TopicModel>({
-      query: (topic: TopicModel) => {
+    addTopic: builder.mutation<void, AddTopicModel>({
+      query: (topic) => {
         return {
           url: `/admin/topics`,
           method: "POST",
@@ -30,10 +31,10 @@ export const topicApi = createApi({
       },
       invalidatesTags: ["TopicList"],
     }),
-    updateTopic: builder.mutation<any, UpdateTopicModel>({
-      query: ({ updatedTopic, title }: UpdateTopicModel) => {
+    updateTopic: builder.mutation<void, UpdateTopicModel>({
+      query: ({ updatedTopic, prevTitle }: UpdateTopicModel) => {
         return {
-          url: `/admin/topics/${title}`,
+          url: `/admin/topics/${prevTitle}`,
           method: "PATCH",
           body: updatedTopic,
         };

@@ -1,16 +1,16 @@
 import { Button, Descriptions } from "antd";
-import { TopicModel } from "../../../../types/topicTypes";
 import ContentBox from "../../../commons/ContentBox";
 import DeleteTopicButton from "../presenter/DeleteTopicButton.presenter";
 import KeywordList from "../../keword/presenter/KeywordList.presenter";
+import { GetTopicModel } from "../../../../types/topicTypes";
 
 interface TopicInfoProps {
-  topicInfo: TopicModel;
+  topicInfo: GetTopicModel;
   toEditTopic: () => void;
 }
 
 function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
-  const { title, category, chapter, era, dateComment } = topicInfo;
+  const { title, questionCategory, chapter, dateComment } = topicInfo;
   return (
     <ContentBox
       width="full"
@@ -27,9 +27,10 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
           <KeywordList />
         </Descriptions.Item>
         <Descriptions.Item label="주제">{title}</Descriptions.Item>
-        <Descriptions.Item label="분류">{category}</Descriptions.Item>
+        <Descriptions.Item label="문제 분류">
+          {questionCategory.title}
+        </Descriptions.Item>
         <Descriptions.Item label="단원">{chapter}</Descriptions.Item>
-        <Descriptions.Item label="시대">{era}</Descriptions.Item>
         <Descriptions.Item label="년도">{dateComment}</Descriptions.Item>
         <Descriptions.Item label="추가 년도">
           {topicInfo.extraDateList.map((item, index) => {

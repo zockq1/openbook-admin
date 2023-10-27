@@ -17,7 +17,7 @@ function EditTopicOrder() {
   const { data: topicList, error: topicListError } =
     useGetChapterTopicListQuery(chapterNumber);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedTopicList, setEditedTopicList] = useState<TopicListModel[]>([]);
+  const [editedTopicList, setEditedTopicList] = useState<TopicListModel>([]);
   const [updateTopicOrder, { isLoading }] = useUpdateTopicOrderMutation();
 
   useNotificationErrorList([setError(topicListError, "주제 목록")]);

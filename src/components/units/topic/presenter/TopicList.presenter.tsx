@@ -20,7 +20,7 @@ function TopicList() {
 
   if (!topicList) {
     return (
-      <ContentBox title="단원 선택">
+      <ContentBox title="주제 선택">
         <Empty />
       </ContentBox>
     );
@@ -32,9 +32,8 @@ function TopicList() {
       currentItemKey={topicTitle}
       tableHead={[
         { name: "number", title: "순서" },
-        { name: "category", title: "분류" },
         { name: "title", title: "주제명" },
-        { name: "era", title: "시대" },
+        { name: "questionCategoryTitle", title: "문제 분류" },
         { name: "dateComment", title: "년도" },
       ]}
       itemList={[...topicList]
@@ -43,9 +42,8 @@ function TopicList() {
           return {
             data: {
               number: item.number + 1,
-              category: item.category,
               title: item.title,
-              era: item.era,
+              questionCategory: item.questionCategory.title,
               dateComment: item.dateComment,
             },
             key: item.title,

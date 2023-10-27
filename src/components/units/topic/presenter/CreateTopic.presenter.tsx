@@ -4,14 +4,17 @@ import {
   useGetChapterTopicListQuery,
 } from "../../../../store/api/topicApi";
 import { mutationErrorNotification } from "../../../../services/errorNotification";
-import { ExtraDateModel, TopicModel } from "../../../../types/topicTypes";
+import {
+  AddTopicModel,
+  ExtraDateModel,
+  TopicFormModel,
+} from "../../../../types/topicTypes";
 import { Spin } from "antd";
-import { useGetCategoryListQuery } from "../../../../store/api/categoryApi";
-import { useGetEraListQuery } from "../../../../store/api/eraApi";
 import TopicFormUI from "../container/TopicFormUI.container";
 import { useGetChaptersQuery } from "../../../../store/api/chapterApi";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
+import { useGetQuestionCategoryListQuery } from "../../../../store/api/questionCategoryApi";
 
 function CreateTopic() {
   const navigate = useNavigate();
@@ -19,38 +22,35 @@ function CreateTopic() {
   const chapterNumber = Number(chapter);
   const [addTopic, { isLoading }] = useAddTopicMutation();
   const { data: chapterList, error: chapterError } = useGetChaptersQuery();
-  const { data: categoryList, error: categoryListError } =
-    useGetCategoryListQuery();
-  const { data: eraList, error: eraListError } = useGetEraListQuery();
+  const { data: questionCategoryList, error: questionCategoryListError } =
+    useGetQuestionCategoryListQuery();
   const { data: topicList, error: topicListError } =
     useGetChapterTopicListQuery(chapterNumber);
 
   useNotificationErrorList([
-    setError(categoryListError, "분류 목록"),
-    setError(eraListError, "시대 목록"),
+    setError(questionCategoryListError, "문제 분류 목록"),
     setError(chapterError, "단원 목록"),
     setError(topicListError, "주제 목록"),
   ]);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: TopicFormModel) => {
     if (!topicList) {
       return;
     }
     const {
       chapter,
       title,
-      category,
-      era,
+      questionCategory,
       detail,
       dateComment,
       extraDateList,
     } = values;
-    let newTopic: TopicModel = {
+
+    let newTopic: AddTopicModel = {
       number: topicList.length,
       chapter,
       title,
-      category,
-      era,
+      questionCategory: { id: questionCategory },
       detail: detail ? detail : "",
       dateComment,
       extraDateList: [],
@@ -73,20 +73,18 @@ function CreateTopic() {
     }
   };
 
-  if (!categoryList || !eraList || !chapterList || !topicList) {
+  if (!questionCategoryList || !chapterList || !topicList) {
     return <Spin />;
   }
 
   return (
     <TopicFormUI
       onFinish={onFinish}
-      categoryList={categoryList}
-      eraList={eraList}
+      questionCategoryList={questionCategoryList}
       chapterList={[...chapterList].sort((a, b) => a.number - b.number)}
       initialValue={{
         chapter: chapterNumber,
-        category: "",
-        era: "",
+        questionCategory: { id: null, title: "" },
         dateComment: "",
         detail: "",
         extraDateList: [],

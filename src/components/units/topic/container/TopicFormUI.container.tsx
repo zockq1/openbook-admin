@@ -1,41 +1,36 @@
 import { Button, Form, Input, Select, Space } from "antd";
-import { CategoryModel } from "../../../../types/categoryType";
-import CategoryEditModal from "../../category/CategoryEditModal.presenter";
-import EraEditModal from "../../era/EraEditModal.presenter";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { EraModel } from "../../../../types/eraType";
-import { TopicModel } from "../../../../types/topicTypes";
 import { GetChapterModel } from "../../../../types/chapterTypes";
 import ContentBox from "../../../commons/ContentBox";
 import { useEffect } from "react";
 import filterOption from "../../../../services/filterOption";
+import { GetQuestionCategoryModel } from "../../../../types/questionCategory";
+import { GetTopicModel } from "../../../../types/topicTypes";
 
 interface TopicFormUIProps {
   onFinish: (values: any) => Promise<void>;
-  categoryList: CategoryModel[];
-  eraList: EraModel[];
+  questionCategoryList: GetQuestionCategoryModel;
   chapterList: GetChapterModel;
-  initialValue: Omit<TopicModel, "number">;
+  initialValue: Omit<GetTopicModel, "number">;
   isLoading: boolean;
 }
 
 function TopicFormUI({
   onFinish,
-  categoryList,
-  eraList,
+  questionCategoryList,
   initialValue,
   chapterList,
   isLoading,
 }: TopicFormUIProps) {
   const {
-    category,
-    era,
+    questionCategory,
     dateComment,
     detail,
     extraDateList,
     title,
     chapter: chapterNumber,
   } = initialValue;
+  const questionCategoryId = questionCategory.id;
 
   useEffect(() => {
     window.scrollTo({ top: 400, left: 0, behavior: "smooth" });
@@ -79,56 +74,28 @@ function TopicFormUI({
           </Form.Item>
         </Form.Item>
 
-        <Form.Item label="분류" style={{ marginBottom: 0 }}>
+        <Form.Item label="문제 분류" style={{ marginBottom: 0 }}>
           <Form.Item
-            name="category"
-            rules={[{ required: true, message: "분류를 선택해 주세요!" }]}
+            name="questionCategory"
+            rules={[{ required: true, message: "문제 분류를 선택해 주세요!" }]}
             style={{
               display: "inline-block",
             }}
-            initialValue={category}
+            initialValue={questionCategoryId}
           >
             <Select
               style={{ width: "250px" }}
               showSearch
               filterOption={filterOption}
-              placeholder="분류 선택"
+              placeholder="문제 분류 선택"
             >
-              {categoryList.map((category: CategoryModel) => (
-                <Select.Option value={category.name} key={category.name}>
-                  {category.name}
+              {questionCategoryList.map((category) => (
+                <Select.Option value={category.id} key={category.id}>
+                  {category.title}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
-
-          <CategoryEditModal />
-        </Form.Item>
-
-        <Form.Item label="시대" style={{ marginBottom: 0 }}>
-          <Form.Item
-            name="era"
-            rules={[{ required: true, message: "시대를 선택해 주세요!" }]}
-            style={{
-              display: "inline-block",
-            }}
-            initialValue={era}
-          >
-            <Select
-              style={{ width: "250px" }}
-              showSearch
-              filterOption={filterOption}
-              placeholder="시대 선택"
-            >
-              {eraList.map((era: EraModel) => (
-                <Select.Option value={era.name} key={era.name}>
-                  {era.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <EraEditModal />
         </Form.Item>
 
         <Form.Item
