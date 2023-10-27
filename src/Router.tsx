@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import TopicPage from "./components/pages/TopicPage";
-import QuestionPage from "./components/pages/QuestionPage";
 import LoginPage from "./components/pages/LoginPage";
 import UserPage from "./components/pages/UserPage";
 import TimelinePage from "./components/pages/TimelinePage";
 import SearchPage from "./components/pages/SearchPage";
 import QuestionCategoryPage from "./components/pages/QuestionCategoryPage";
+import ExamPage from "./components/pages/ExamPage";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/exam",
-        element: <QuestionPage />,
+        element: <ExamPage />,
         children: [
           { path: "/exam/:round/question-list", element: null },
           { path: "/exam/:round/create-question", element: null },
