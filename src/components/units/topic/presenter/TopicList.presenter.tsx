@@ -33,7 +33,7 @@ function TopicList() {
       tableHead={[
         { name: "number", title: "순서" },
         { name: "title", title: "주제명" },
-        { name: "questionCategoryTitle", title: "문제 분류" },
+        { name: "questionCategory", title: "문제 분류" },
         { name: "dateComment", title: "년도" },
       ]}
       itemList={[...topicList]
