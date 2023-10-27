@@ -11,7 +11,7 @@ export const roundApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["RoundList"],
   endpoints: (builder) => ({
-    getRounds: builder.query<RoundModel[], void>({
+    getRoundList: builder.query<RoundModel[], void>({
       query: () => "/rounds",
       providesTags: ["RoundList"],
     }),
@@ -52,7 +52,7 @@ export const roundApi = createApi({
 });
 
 export const {
-  useGetRoundsQuery,
+  useGetRoundListQuery,
   useGetRoundDateQuery,
   useLazyGetRoundDateQuery,
   useAddRoundMutation,
