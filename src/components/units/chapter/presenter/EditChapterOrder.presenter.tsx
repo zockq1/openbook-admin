@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { DropResult } from "react-beautiful-dnd";
-import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
+import { useEffect } from "react";
+import EditOrderUI from "../../common/EditOrderUI.container";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
 import { Button } from "antd";
@@ -8,12 +7,14 @@ import {
   useGetChaptersQuery,
   useUpdateChapterOrderMutation,
 } from "../../../../store/api/chapterApi";
-import useModal from "../../../../hooks/useModal";
+import useModalHandler from "../../../../hooks/useModalHandler";
+import { useOrderListHandler } from "../../../../hooks/useOrderListHandler";
 
 function EditChapterOrder() {
-  const { isModalOpen, showModal, closeModal } = useModal();
+  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const { orderList, setOrderList, handleChange } = useOrderListHandler();
+
   const { data: chapterList, error: chapterListError } = useGetChaptersQuery();
-  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updateChapterOrder, { isLoading }] = useUpdateChapterOrderMutation();
 
   useNotificationErrorList([setError(chapterListError, "단원 목록")]);
@@ -33,7 +34,7 @@ function EditChapterOrder() {
             };
           })
       );
-  }, [chapterList]);
+  }, [chapterList, setOrderList]);
 
   const onSubmit = async () => {
     await updateChapterOrder(
@@ -42,14 +43,6 @@ function EditChapterOrder() {
       })
     );
     closeModal();
-  };
-
-  const handleChange = (result: DropResult) => {
-    if (!result.destination) return;
-    const items = [...orderList];
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setOrderList(items);
   };
 
   return (

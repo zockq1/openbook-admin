@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
-import { DropResult } from "react-beautiful-dnd";
+import { useEffect } from "react";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
 import {
   useGetQuestionCategoryListQuery,
   useUpdateQuestionCategoryOrderMutation,
 } from "../../../../store/api/questionCategoryApi";
-import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
+import EditOrderUI from "../../common/EditOrderUI.container";
 import { Button } from "antd";
-import useModal from "../../../../hooks/useModal";
+import useModalHandler from "../../../../hooks/useModalHandler";
+import { useOrderListHandler } from "../../../../hooks/useOrderListHandler";
 
 function EditquestionCategoryOrder() {
-  const { isModalOpen, showModal, closeModal } = useModal();
+  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const { orderList, setOrderList, handleChange } = useOrderListHandler();
+
   const { data: questionCategoryList, error: questionCategoryListError } =
     useGetQuestionCategoryListQuery();
-  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updatequestionCategoryOrder, { isLoading }] =
     useUpdateQuestionCategoryOrderMutation();
 
@@ -36,7 +37,7 @@ function EditquestionCategoryOrder() {
             };
           })
       );
-  }, [questionCategoryList]);
+  }, [questionCategoryList, setOrderList]);
 
   const onSubmit = async () => {
     await updatequestionCategoryOrder(
@@ -45,14 +46,6 @@ function EditquestionCategoryOrder() {
       })
     );
     closeModal();
-  };
-
-  const handleChange = async (result: DropResult) => {
-    if (!result.destination) return;
-    const items = [...orderList];
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setOrderList(items);
   };
 
   return (

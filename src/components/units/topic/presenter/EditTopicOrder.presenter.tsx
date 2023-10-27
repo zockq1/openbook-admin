@@ -2,22 +2,24 @@ import {
   useGetChapterTopicListQuery,
   useUpdateTopicOrderMutation,
 } from "../../../../store/api/topicApi";
-import { useEffect, useState } from "react";
-import { DropResult } from "react-beautiful-dnd";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
+import EditOrderUI from "../../common/EditOrderUI.container";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
 import { Button } from "antd";
-import useModal from "../../../../hooks/useModal";
+import useModalHandler from "../../../../hooks/useModalHandler";
+import { useOrderListHandler } from "../../../../hooks/useOrderListHandler";
 
 function EditTopicOrder() {
-  const { isModalOpen, showModal, closeModal } = useModal();
   const { chapter } = useParams();
   const chapterNumber = Number(chapter);
+
+  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const { orderList, setOrderList, handleChange } = useOrderListHandler();
+
   const { data: topicList, error: topicListError } =
     useGetChapterTopicListQuery(chapterNumber);
-  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updateTopicOrder, { isLoading }] = useUpdateTopicOrderMutation();
 
   useNotificationErrorList([setError(topicListError, "주제 목록")]);
@@ -37,7 +39,7 @@ function EditTopicOrder() {
             };
           })
       );
-  }, [topicList]);
+  }, [topicList, setOrderList]);
 
   const onSubmit = async () => {
     await updateTopicOrder(
@@ -46,14 +48,6 @@ function EditTopicOrder() {
       })
     );
     closeModal();
-  };
-
-  const handleChange = async (result: DropResult) => {
-    if (!result.destination) return;
-    const items = [...orderList];
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setOrderList(items);
   };
 
   return (

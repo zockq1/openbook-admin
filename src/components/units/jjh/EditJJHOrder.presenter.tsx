@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useNotificationErrorList from "../../../hooks/useNotificationErrorList";
 import setError from "../../../services/setError";
 import {
   useGetJJHListQuery,
   useUpdateJJHOrderMutation,
 } from "../../../store/api/JJHApi";
-import { DropResult } from "react-beautiful-dnd";
 import EditOrderUI, { OrderModel } from "../common/EditOrderUI.container";
 import { Button } from "antd";
-import useModal from "../../../hooks/useModal";
+import useModalHandler from "../../../hooks/useModalHandler";
+import { useOrderListHandler } from "../../../hooks/useOrderListHandler";
 
 function EditJJHOrder() {
-  const { isModalOpen, showModal, closeModal } = useModal();
+  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const { orderList, setOrderList, handleChange } = useOrderListHandler();
+
   const { data: jjhList, error: jjhListError } = useGetJJHListQuery(
     { count: 5 },
     { refetchOnMountOrArgChange: true }
   );
   useNotificationErrorList([setError(jjhListError, "정주행 목록")]);
-  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updateJJHOrder, { isLoading }] = useUpdateJJHOrderMutation();
 
   useEffect(() => {
@@ -68,14 +69,6 @@ function EditJJHOrder() {
         })),
     });
     closeModal();
-  };
-
-  const handleChange = async (result: DropResult) => {
-    if (!result.destination) return;
-    const items = [...orderList];
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setOrderList(items);
   };
 
   return (

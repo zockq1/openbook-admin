@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { DropResult } from "react-beautiful-dnd";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useNotificationErrorList from "../../../../hooks/useNotificationErrorList";
 import setError from "../../../../services/setError";
@@ -7,17 +6,20 @@ import {
   useGetKeywordListQuery,
   useUpdateKeywordOrderMutation,
 } from "../../../../store/api/keywordApi";
-import EditOrderUI, { OrderModel } from "../../common/EditOrderUI.container";
+import EditOrderUI from "../../common/EditOrderUI.container";
 import { Button } from "antd";
-import useModal from "../../../../hooks/useModal";
+import useModalHandler from "../../../../hooks/useModalHandler";
+import { useOrderListHandler } from "../../../../hooks/useOrderListHandler";
 
 function EditkeywordOrder() {
-  const { isModalOpen, showModal, closeModal } = useModal();
   const { topic } = useParams();
   const topicTitle = String(topic);
+
+  const { isModalOpen, showModal, closeModal } = useModalHandler();
+  const { orderList, setOrderList, handleChange } = useOrderListHandler();
+
   const { data: keywordList, error: keywordListError } =
     useGetKeywordListQuery(topicTitle);
-  const [orderList, setOrderList] = useState<OrderModel[]>([]);
   const [updatekeywordOrder, { isLoading }] = useUpdateKeywordOrderMutation();
 
   useNotificationErrorList([setError(keywordListError, "주제 목록")]);
@@ -37,7 +39,7 @@ function EditkeywordOrder() {
             };
           })
       );
-  }, [keywordList]);
+  }, [keywordList, setOrderList]);
 
   const onSubmit = async () => {
     await updatekeywordOrder(
@@ -46,14 +48,6 @@ function EditkeywordOrder() {
       })
     );
     closeModal();
-  };
-
-  const handleChange = async (result: DropResult) => {
-    if (!result.destination) return;
-    const items = [...orderList];
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setOrderList(items);
   };
 
   return (
