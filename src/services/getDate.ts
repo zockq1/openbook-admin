@@ -17,7 +17,9 @@ function getDate(date: number): string {
       return acc;
     }, [])
     .reverse()
-    .join("");
+    .join("")
+    .replace("00월", "")
+    .replace("00일", "");
 }
 
 export default getDate;
