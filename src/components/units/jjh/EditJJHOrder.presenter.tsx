@@ -37,9 +37,9 @@ function EditJJHOrder() {
       );
       newList = newList.concat(
         jjhList.timelineList.map((timeline): OrderModel => {
-          const { jjhNumber, id, endDate, era, startDate } = timeline;
+          const { jjhNumber, id, title } = timeline;
           return {
-            title: `연표 학습: ${era}(${startDate} ~ ${endDate})`,
+            title: `연표 학습: ${title}`,
             number: jjhNumber,
             id: id,
             isColored: true,

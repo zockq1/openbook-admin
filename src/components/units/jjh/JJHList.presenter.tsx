@@ -36,9 +36,9 @@ function JJHList() {
       );
       newList = newList.concat(
         jjhList.timelineList.map((timeline): JJHListModel => {
-          const { endDate, startDate, era, jjhNumber } = timeline;
+          const { jjhNumber, title } = timeline;
           return {
-            title: `연표 학습: ${era}(${startDate} ~ ${endDate})`,
+            title,
             number: jjhNumber,
             type: "연표",
           };
