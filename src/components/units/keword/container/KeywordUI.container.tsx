@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { KeywordModel } from "../../../../types/keywordType";
+import getDate from "../../../../services/getDate";
 
 interface KeywordProps {
   keyword: KeywordModel;
@@ -46,7 +47,7 @@ function KeywordUI({
         <td className="dateComment">{dateComment}</td>
         <td className="extraDate">
           {extraDateList.map((date) => (
-            <div key={date.extraDate}>{date.extraDate}</div>
+            <div key={date.extraDate}>{getDate(date.extraDate)}</div>
           ))}
         </td>
         <td className="extraDateComment">

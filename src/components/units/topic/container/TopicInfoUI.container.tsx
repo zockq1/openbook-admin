@@ -3,6 +3,7 @@ import ContentBox from "../../../commons/ContentBox";
 import DeleteTopicButton from "../presenter/DeleteTopicButton.presenter";
 import KeywordList from "../../keword/presenter/KeywordList.presenter";
 import { GetTopicModel } from "../../../../types/topicTypes";
+import getDate from "../../../../services/getDate";
 
 interface TopicInfoProps {
   topicInfo: GetTopicModel;
@@ -36,7 +37,7 @@ function TopicInfoUI({ topicInfo, toEditTopic }: TopicInfoProps) {
           {topicInfo.extraDateList.map((item, index) => {
             return (
               <div key={index}>
-                {item.extraDate + "/" + item.extraDateComment}
+                {`${getDate(item.extraDate)} | ${item.extraDateComment}`}
               </div>
             );
           })}

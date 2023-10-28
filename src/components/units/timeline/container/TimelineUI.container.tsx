@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { TimelineModel } from "../../../../types/timelineTypes";
+import getDate from "../../../../services/getDate";
 
 interface TimelineProps {
   timeline: TimelineModel;
@@ -27,8 +28,8 @@ function TimelineUI({ timeline, onDelete, onEdit }: TimelineProps) {
     <tr key={id}>
       <td className="title">{title}</td>
       <td className="era">{era}</td>
-      <td className="startDate">{startDate}</td>
-      <td className="comment">{endDate}</td>
+      <td className="startDate">{getDate(startDate)}</td>
+      <td className="comment">{getDate(endDate)}</td>
       <td className="option">
         <Button className="white" onClick={onEdit}>
           수정
