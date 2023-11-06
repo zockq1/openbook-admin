@@ -3,6 +3,7 @@ import {
   AddKeywordModel,
   KeywordModel,
   KeywordOrderModel,
+  KeywordSelectModel,
   UpdateKeywordModel,
 } from "../../types/keywordType";
 import baseQueryWithReauth from "./baseApi";
@@ -14,6 +15,10 @@ export const keywordApi = createApi({
   endpoints: (builder) => ({
     getKeywordList: builder.query<KeywordModel[], string>({
       query: (topicTitle) => `/topics/${topicTitle}/keywords`,
+      providesTags: ["KeywordList"],
+    }),
+    getAllKeywordList: builder.query<KeywordSelectModel[], void>({
+      query: () => `/admin/keywords`,
       providesTags: ["KeywordList"],
     }),
     addKeyword: builder.mutation({
@@ -67,6 +72,7 @@ export const keywordApi = createApi({
 
 export const {
   useGetKeywordListQuery,
+  useGetAllKeywordListQuery,
   useLazyGetKeywordListQuery,
   useUpdateKeywordOrderMutation,
   useAddKeywordMutation,

@@ -1,55 +1,17 @@
-import { useGetChaptersQuery } from "../../../../store/api/chapterApi";
-import { useLazyGetKeywordListQuery } from "../../../../store/api/keywordApi";
-import { useLazyGetChapterTopicListQuery } from "../../../../store/api/topicApi";
-import { useEffect, useState } from "react";
-import { KeywordModel } from "../../../../types/keywordType";
-import { useParams } from "react-router-dom";
+import { useGetAllKeywordListQuery } from "../../../../store/api/keywordApi";
+import { useState } from "react";
 import CommentFormUI from "../container/CommentFormUI.container";
+import { Spin } from "antd";
 
 interface CommentFormProps {
   addComment: (id: number) => Promise<boolean>;
 }
 
 function CommentForm({ addComment }: CommentFormProps) {
-  const { question } = useParams();
-  const { data: chapterList } = useGetChaptersQuery();
-  const [getTopicListTrigger, { data: topicList }] =
-    useLazyGetChapterTopicListQuery();
-  const [getKeywordListTrigger, { data: keywordList }] =
-    useLazyGetKeywordListQuery();
-  const [chapterNumber, setChapterNumber] = useState("");
-  const [topicTitle, setTopicTitle] = useState("");
+  const { data: keywordList } = useGetAllKeywordListQuery();
   const [commentId, setCommentId] = useState<number | null>(null);
-  const [currentKeywordList, setCurrentKeywordList] = useState<KeywordModel[]>(
-    []
-  );
 
-  useEffect(() => {
-    setCurrentKeywordList(keywordList || []);
-  }, [keywordList, topicTitle]);
-
-  useEffect(() => {
-    setTopicTitle("");
-    setCurrentKeywordList([]);
-    setCommentId(null);
-    setChapterNumber("");
-  }, [question]);
-
-  const handleChapterChange = (value: string) => {
-    if (value === chapterNumber) return;
-    getTopicListTrigger(Number(value));
-    setTopicTitle("");
-    setCurrentKeywordList([]);
-    setCommentId(null);
-    setChapterNumber(value);
-  };
-
-  const handleTocpiChange = (value: string) => {
-    if (value === topicTitle) return;
-    getKeywordListTrigger(value);
-    setTopicTitle(value);
-    setCommentId(null);
-  };
+  if (!keywordList) return <Spin />;
 
   const handleSubmit = async () => {
     if (commentId === null) return;
@@ -63,14 +25,8 @@ function CommentForm({ addComment }: CommentFormProps) {
 
   return (
     <CommentFormUI
-      chapterList={chapterList}
-      chapterNumber={chapterNumber}
-      topicList={topicList}
-      topicTitle={topicTitle}
-      keywordList={currentKeywordList}
-      onChapterChange={handleChapterChange}
+      keywordList={keywordList}
       onSubmit={handleSubmit}
-      onTocpiChange={handleTocpiChange}
       setCommentId={setCommentId}
       commentId={commentId}
     />
