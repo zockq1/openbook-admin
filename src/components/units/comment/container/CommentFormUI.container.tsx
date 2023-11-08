@@ -38,7 +38,7 @@ function CommentFormUI({
         >
           {keywordList.map((keyword) => (
             <Select.Option value={keyword.id} key={keyword.id}>
-              {keyword.name}
+              {`${keyword.name}(${keyword.topicTitle})`}
             </Select.Option>
           ))}
         </Select>

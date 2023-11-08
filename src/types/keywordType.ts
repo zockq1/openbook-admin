@@ -48,4 +48,5 @@ export interface KeywordOrderModel {
 export interface KeywordSelectModel {
   id: number;
   name: string;
+  topicTitle: string;
 }
