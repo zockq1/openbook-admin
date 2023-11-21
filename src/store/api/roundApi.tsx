@@ -12,7 +12,7 @@ export const roundApi = createApi({
   tagTypes: ["RoundList"],
   endpoints: (builder) => ({
     getRoundList: builder.query<RoundModel[], void>({
-      query: () => "/rounds",
+      query: () => "/admin/rounds",
       providesTags: ["RoundList"],
     }),
     getRoundDate: builder.query<RoundDateModel, number>({
