@@ -90,6 +90,7 @@ function QuestionCategoryFormUI({
               filterOption={filterOption}
               placeholder="시대 선택"
               {...field}
+              style={{ width: "100%" }}
             >
               {eraList.map((era: EraModel) => (
                 <Select.Option value={era.name} key={era.name}>
@@ -109,6 +110,7 @@ function QuestionCategoryFormUI({
               showSearch
               filterOption={filterOption}
               placeholder="분류 선택"
+              style={{ width: "100%" }}
               {...field}
             >
               {categoryList.map((category: CategoryModel) => (
