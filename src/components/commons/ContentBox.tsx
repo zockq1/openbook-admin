@@ -7,7 +7,7 @@ interface StyledContentBoxProps {
 }
 
 const StyledContentBox = styled.div<StyledContentBoxProps>`
-  --width: 547.5px;
+  --width: 50%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: minmax(50px, max-content) minmax(50px, max-content);
@@ -16,7 +16,8 @@ const StyledContentBox = styled.div<StyledContentBoxProps>`
     "body body";
   padding: 10px;
   margin: 10px;
-  width: ${({ width }) => (width === "half" ? "547.5px" : "1115px;")};
+  width: ${({ width }) => (width === "half" ? "45%" : "1115px;")};
+  min-width: 500px;
   height: ${({ height }) =>
     typeof height === "number" ? `${height}px` : height};
   border-radius: ${({ theme }) => theme.borderRadius.small};
