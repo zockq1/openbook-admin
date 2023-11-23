@@ -24,7 +24,7 @@ function ChoiceFormUI({
   onSubmit,
 }: ChoiceFormUIProps) {
   return (
-    <ContentBox title="선지 추가">
+    <ContentBox title="선지 추가" width="half" height="auto">
       <ChoiceFormGridContainer>
         {choiceType === "Image" ? (
           <ImageUpload

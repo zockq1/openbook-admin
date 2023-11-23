@@ -12,6 +12,7 @@ function QuestionInfoUI({ questionInfo, toEditQuestion }: QuestionInfoProps) {
   return (
     <ContentBox
       title="문제 정보"
+      width="half"
       option={
         <>
           <Button onClick={toEditQuestion}>수정</Button>

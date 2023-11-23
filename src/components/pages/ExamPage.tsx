@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { ColumnFlex, RowFlex } from "../commons/FlexLayout";
+import { RowFlex } from "../commons/FlexLayout";
 import RoundList from "../units/round/presenter/RoundList.presenter";
 import QuestionList from "../units/question/presenter/QuestionList.presenter";
 import CreateQuestion from "../units/question/presenter/CreateQuestion.presenter";
@@ -19,14 +19,10 @@ function ExamPage() {
       {location.pathname.endsWith("edit-question") && <EditQuestion />}
       {location.pathname.endsWith("question-info") && (
         <>
-          <ColumnFlex>
-            <QuestionInfo />
-            <Description />
-          </ColumnFlex>
-          <ColumnFlex>
-            <ChoiceForm />
-            <ChoiceList />
-          </ColumnFlex>
+          <QuestionInfo />
+          <ChoiceForm />
+          <Description />
+          <ChoiceList />
         </>
       )}
     </RowFlex>

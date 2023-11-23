@@ -43,7 +43,7 @@ function DescriptionUI({
   }, [description]);
 
   return (
-    <ContentBox title="보기">
+    <ContentBox title="보기" width="half">
       <div>
         <Space style={{ float: "right" }}>
           {!isEditing && <EditOutlined onClick={onEdit} />}
