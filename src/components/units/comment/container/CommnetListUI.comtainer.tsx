@@ -10,19 +10,23 @@ interface CommentListUIProps {
 function CommentListUI({ commentList, handleDelete }: CommentListUIProps) {
   return (
     <>
-      <List
-        dataSource={commentList}
-        renderItem={(item) => (
-          <List.Item
-            actions={[<DeleteOutlined onClick={() => handleDelete(item.id)} />]}
-          >
-            <List.Item.Meta
-              title={item.name}
-              description={`${item.chapterNumber}단원: ${item.topicTitle} `}
-            />
-          </List.Item>
-        )}
-      />
+      {commentList.length > 0 && (
+        <List
+          dataSource={commentList}
+          renderItem={(item) => (
+            <List.Item
+              actions={[
+                <DeleteOutlined onClick={() => handleDelete(item.id)} />,
+              ]}
+            >
+              <List.Item.Meta
+                title={item.name}
+                description={`${item.chapterNumber}단원: ${item.topicTitle} `}
+              />
+            </List.Item>
+          )}
+        />
+      )}
     </>
   );
 }
