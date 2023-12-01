@@ -4,10 +4,14 @@ import ImageUpload from "../../../commons/ImageUpload";
 import { ChoiceType } from "../../../../types/questionTypes";
 import ContentBox from "../../../commons/ContentBox";
 
-const ChoiceFormGridContainer = styled.div`
+interface ChoiceFormGridContainerProps {
+  choiceType: ChoiceType;
+}
+
+const ChoiceFormGridContainer = styled.div<ChoiceFormGridContainerProps>`
   display: grid;
   grid-template-columns: 1fr 56.23px;
-  width: 100%;
+  width: ${({ choiceType }) => (choiceType === "Image" ? "200px" : "100%")};
 `;
 
 interface ChoiceFormUIProps {
@@ -25,7 +29,7 @@ function ChoiceFormUI({
 }: ChoiceFormUIProps) {
   return (
     <ContentBox title="선지 추가" width="half" height="auto">
-      <ChoiceFormGridContainer>
+      <ChoiceFormGridContainer choiceType={choiceType}>
         {choiceType === "Image" ? (
           <ImageUpload
             setImgFile={setChoice}
