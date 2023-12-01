@@ -12,7 +12,7 @@ interface ChoiceFormGridContainerProps {
 }
 
 const ChoiceGridContainer = styled.div<ChoiceFormGridContainerProps>`
-  width: 100px;
+  width: ${({ choiceType }) => (choiceType === "Image" ? "100px" : "100%")};
 `;
 
 const ChoiceNameBox = styled.div`

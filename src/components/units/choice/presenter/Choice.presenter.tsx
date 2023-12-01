@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mutationErrorNotification } from "../../../../services/errorNotification";
 import {
   useAddChoiceCommentMutation,
@@ -19,6 +19,10 @@ function Choice({ choiceInfo }: ChoiceProps) {
   const [updateChoice] = useUpdateChoiceMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editChoice, setEditChoice] = useState(choice);
+
+  useEffect(() => {
+    setEditChoice(choice);
+  }, [choice]);
 
   const handleEdit = () => {
     setIsEditing(true);
