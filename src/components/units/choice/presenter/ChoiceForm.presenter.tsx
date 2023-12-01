@@ -41,7 +41,7 @@ function ChoiceForm() {
       return;
     }
     try {
-      addChoice({
+      await addChoice({
         roundNumber: roundNumber,
         questionNumber: questionNumber,
         choice: {
