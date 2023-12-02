@@ -73,7 +73,9 @@ function KeywordUI({
             {questionList.map((choice, index) => {
               return (
                 <div key={index}>
-                  {`${choice.roundNumber}회 ${choice.questionNumber}번 문제: ${choice.choice}`}
+                  {`${choice.roundNumber}회 ${choice.questionNumber}번 문제: ${
+                    choice.choice ? choice.choice : "보기"
+                  }`}
                 </div>
               );
             })}
