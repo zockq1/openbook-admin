@@ -35,7 +35,7 @@ function QuestionCategoryList() {
   return (
     <ContentBox
       title="문제 분류 관리"
-      width="half"
+      width="full"
       option={
         <>
           <EditquestionCategoryOrder />
